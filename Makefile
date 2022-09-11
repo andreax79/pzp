@@ -1,0 +1,41 @@
+SHELL=/bin/bash -e
+
+help:
+	@echo - make black ------ Format code
+	@echo - make clean ------ Clean virtual environment
+	@echo - make coverage --- Run tests coverage
+	@echo - make docs ------- Make docs
+	@echo - make lint ------- Run lint
+	@echo - make test ------- Run test
+	@echo - make typecheck -- Typecheck
+	@echo - make venv ------- Create virtual environment
+
+black:
+	black -S pzp tests examples setup.py
+
+clean:
+	-rm -rf build dist
+	-rm -rf *.egg-info
+	-rm -rf bin lib share pyvenv.cfg
+
+coverage:
+	python3 -m coverage run --source=pzp setup.py test && python3 -m coverage report -m
+
+.PHONY: docs
+docs:
+	@mkdocs build
+	@mkdocs gh-deploy
+
+lint:
+	flake8 pzp tests
+
+test:
+	pytest
+
+typecheck:
+	mypy --strict --no-warn-unused-ignores pzp
+
+venv:
+	python3 -m virtualenv .
+	. bin/activate; pip install -Ur requirements.txt
+	. bin/activate; pip install -Ur requirements-dev.txt

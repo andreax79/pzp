@@ -1,0 +1,30 @@
+site_name: pzp documentation
+docs_dir:  docs
+
+theme:
+  name: readthedocs
+  highlightjs: true
+
+plugins:
+- search
+- autorefs
+- mkdocstrings:
+    watch:
+    - pzp
+    - examples
+
+nav:
+  - Pzp Docs: index.md
+  - Examples:
+    - "file selector": examples/file_selector.md
+    - "number selector": examples/number_selector.md
+  - API:
+    - "pzp": api/module.md
+    - "pzp.ansi": api/ansi.md
+    - "pzp.finder": api/finder.md
+    - "pzp.screen": api/screen.md
+  - License: license.md
+
+markdown_extensions:
+  - markdown_include.include:
+      base_path: .

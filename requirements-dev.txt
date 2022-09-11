@@ -1,0 +1,11 @@
+coverage
+flake8
+mypy
+tox
+black
+twine<3.4
+pytest
+mkdocs
+mkdocstrings[python]
+mkdocs-material
+markdown_include
