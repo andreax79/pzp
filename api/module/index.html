@@ -47,7 +47,9 @@
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/example/">example.py</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/file_selector/">file selector</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -55,6 +57,10 @@
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">pzp</a>
     <ul class="current">
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../finder/">pzp.finder</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
               </ul>
               <ul>
@@ -101,7 +107,164 @@
 
 
 
+<div class="doc doc-object doc-attribute">
 
+
+
+<h2 id="pzp.__version__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>PZP Version</p>
+  </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="pzp.pzp" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pzp</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">max_lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Open pzp and return the selected element</p>
+
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">pzp</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()))</span>
+<span class="go">PosixPath(&#39;README.md&#39;)</span>
+</code></pre></div>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>items</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<span title="typing.Callable">Callable</span>[[], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]], <span title="typing.Iterator">Iterator</span>[<span title="typing.Any">Any</span>], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]]</code>
+          </td>
+          <td><p>Items</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_lines</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>Max display lines</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>format_fn</code></td>
+          <td>
+                <code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], str]</code>
+          </td>
+          <td><p>Items format function</p></td>
+          <td>
+                <code>lambda x: str(x)</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>layout</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pzp.finder.Layout" href="../finder/#pzp.finder.Layout">Layout</a></code>
+          </td>
+          <td><p>Finder layout</p></td>
+          <td>
+                <code>Layout.REVERSE_LIST</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>info_style</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="pzp.finder.InfoStyle" href="../finder/#pzp.finder.InfoStyle">InfoStyle</a></code>
+          </td>
+          <td><p>Determines the display style of finder info</p></td>
+          <td>
+                <code>InfoStyle.DEFAULT</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pzp/__init__.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pzp</span><span class="p">(</span>
+    <span class="n">items</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
+    <span class="n">max_lines</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">format_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+    <span class="n">layout</span><span class="p">:</span> <span class="n">Layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span>
+    <span class="n">info_style</span><span class="p">:</span> <span class="n">InfoStyle</span> <span class="o">=</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Open pzp and return the selected element</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; pzp(items=list(Path(&#39;.&#39;).iterdir()))</span>
+<span class="sd">        PosixPath(&#39;README.md&#39;)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        items: Items</span>
+<span class="sd">        max_lines: Max display lines</span>
+<span class="sd">        format_fn: Items format function</span>
+<span class="sd">        layout: Finder layout</span>
+<span class="sd">        info_style: Determines the display style of finder info</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">finder</span> <span class="o">=</span> <span class="n">Finder</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">,</span> <span class="n">max_lines</span><span class="o">=</span><span class="n">max_lines</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="n">format_fn</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">info_style</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">finder</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
 
 
 
@@ -114,8 +277,8 @@
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../examples/example/" class="btn btn-neutral float-left" title="example.py"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../examples/number_selector/" class="btn btn-neutral float-left" title="number selector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../finder/" class="btn btn-neutral float-right" title="pzp.finder">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -138,10 +301,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../examples/example/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../examples/number_selector/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../license/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../finder/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

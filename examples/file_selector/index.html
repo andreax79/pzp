@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>example.py - pzp documentation</title>
+    <title>file selector - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "example.py";
-        var mkdocs_page_input_path = "examples/example.md";
+        var mkdocs_page_name = "file selector";
+        var mkdocs_page_input_path = "examples/file_selector.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -47,12 +47,18 @@
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">example.py</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">file selector</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../number_selector/">number selector</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../api/module/">pzp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/finder/">pzp.finder</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/screen/">pzp.screen</a>
                   </li>
               </ul>
               <ul>
@@ -74,7 +80,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Examples &raquo;</li>
-      <li>example.py</li>
+      <li>file selector</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -84,16 +90,13 @@
             <div class="section" itemprop="articleBody">
               
                 <pre><code>#!/usr/bin/env python
+from pathlib import Path
 from pzp import pzp
 
 
-def num_format(item):
-    return f&quot;{item}&quot;
-
-
 def main():
-    line = pzp(range(0, 1000), format_fn=num_format)
-    print(line)
+    item = pzp(items=list(Path('.').iterdir()))
+    print(str(item) if item else '')
 
 
 if __name__ == &quot;__main__&quot;:
@@ -104,7 +107,7 @@ if __name__ == &quot;__main__&quot;:
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../.." class="btn btn-neutral float-left" title="Pzp Docs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../api/module/" class="btn btn-neutral float-right" title="pzp">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../number_selector/" class="btn btn-neutral float-right" title="number selector">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -130,7 +133,7 @@ if __name__ == &quot;__main__&quot;:
       <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../api/module/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../number_selector/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
