@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-import sys
-
 __all__ = ["get_char"]
 
+import sys
 import termios
 import tty
 

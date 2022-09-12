@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-import sys
+from msvcrt import getwch  # type: ignore
 
 __all__ = ["get_char"]
-
-from msvcrt import getwch  # type: ignore
 
 NULL = "\0"
 WIN_ESC = "\xe0"
@@ -23,6 +21,6 @@ KEYS_MAPPING = {
 def get_char() -> str:
     ch: str = getwch()
     if ch == WIN_ESC:
-        ch = sys.stdin.read(1)
+        ch = getwch()
         return KEYS_MAPPING.get(ch, NULL)
     return ch
