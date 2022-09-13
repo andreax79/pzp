@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import sys
 from enum import Enum
 from collections import ChainMap
-from typing import Any, Callable, Iterator, Dict, Optional, Sequence, Union
+from typing import Any, Callable, Iterator, Dict, Optional, Sequence, TextIO, Union
 from .input import get_char
 from .keys import ACTIONS, KEYS
 from .ansi import (  # noqa
@@ -80,6 +81,7 @@ class Finder:
         info_style: InfoStyle = InfoStyle.DEFAULT,
         pointer_str: str = DEFAULT_POINTER,
         prompt_str: str = DEFAULT_PROMPT,
+        output_stream: TextIO = sys.stderr,
     ):
         """
         Initializate Finder object
@@ -102,6 +104,7 @@ class Finder:
         self.pointer_str = pointer_str
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
+        self.output_stream = output_stream
         self.keycodes_actions: Dict[str, str] = dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in ACTIONS.items()]))
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
@@ -186,7 +189,7 @@ class Finder:
         self.refresh_candidates()
         # Calculate the required height and setup the screen
         height = self.height if self.height is not None else self.candidates_len + self.margin_lines
-        self.screen: Screen = Screen(fullscreen=self.fullscreen, height=height)
+        self.screen: Screen = Screen(stream=self.output_stream, fullscreen=self.fullscreen, height=height)
         # Filter the items, calculate the screen offset
         self.apply_filter()
         self.update_screen(erase=False)
