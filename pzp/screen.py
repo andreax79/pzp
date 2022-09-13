@@ -68,8 +68,9 @@ class Screen:
     def cleanup(self) -> None:
         "Clean screen and restore cursor position"
         self.erase_screen()
-        self.write(f"{CURSOR_RESTORE_POS}")
-        self.move_up(self.height - 1)
+        if self.fullscreen:
+            self.write(f"{CURSOR_RESTORE_POS}")
+            self.move_up(self.height - 1)
         self.flush()
 
     def erase_screen(self) -> None:

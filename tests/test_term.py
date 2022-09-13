@@ -1,21 +1,23 @@
 from pzp.finder import Finder
 from pzp.screen import Screen
-from typing import TextIO
 import pyte
 
-class FakeIO(TextIO):
+
+class FakeIO:
     def __init__(self, stream):
         self.stream = stream
 
-    def write(self, s: str) -> int:
+    def write(self, s):
         if s:
             return self.stream.feed(s.replace("\n", "\r\n"))
         else:
             return 0
 
+    def flush(self):
+        pass
 
-class FakeTerminal():
 
+class FakeTerminal:
     def __init__(self):
         self.screen = pyte.Screen(80, 24)
         self.stream = pyte.Stream(self.screen)
@@ -72,7 +74,7 @@ def test_term():
     assert finder.selected == 0
 
     assert finder.prepare_result() == "0x99"
-    #print(terminal)
+    # print(terminal)
     # assert terminal.cursor.y == finder.height + lines - 1
 
     finder.screen.cleanup()

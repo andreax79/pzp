@@ -3,7 +3,7 @@
 from .finder import Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT
 from typing import Any, Callable, Iterator, Optional, Sequence, Union
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 "PZP Version"
 
 __all__ = ["pzp"]
