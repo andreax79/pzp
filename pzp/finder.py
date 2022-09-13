@@ -2,10 +2,10 @@
 
 from enum import Enum
 from collections import ChainMap
-from typing import Any, Callable, Iterator, Dict, List, Optional, Sequence, Union
+from typing import Any, Callable, Iterator, Dict, Optional, Sequence, Union
 from .input import get_char
 from .keys import ACTIONS, KEYS
-from .ansi import (
+from .ansi import (  # noqa
     NL,
     SPACE,
     ERASE_LINE,
@@ -35,26 +35,14 @@ __all__ = [
     "Finder",
     "Layout",
     "InfoStyle",
-    "BLACK",
-    "RED",
-    "GREEN",
-    "YELLOW",
-    "BLUE",
-    "PURPLE",
-    "CYAN",
-    "WHITE",
-    "BLACK_BG",
-    "RED_BG",
-    "GREEN_BG",
-    "YELLOW_BG",
-    "BLUE_BG",
-    "PURPLE_BG",
-    "CYAN_BG",
-    "WHITE_BG",
-    "NORMAL",
-    "BOLD",
-    "NEGATIVE",
+    "DEFAULT_POINTER",
+    "DEFAULT_PROMPT",
 ]
+
+DEFAULT_POINTER = ">"
+"Default pointer"
+DEFAULT_PROMPT = ">"
+"Default input prompt"
 
 
 class Confirm(Exception):
@@ -67,6 +55,7 @@ class Cancel(Exception):
 
 class Layout(Enum):
     "Finder layouts"
+
     REVERSE_LIST = "reverse-list"
     " Display from the top of the screen, prompt at the bottom "
 
@@ -84,29 +73,43 @@ class Finder:
     def __init__(
         self,
         candidates: Union[Callable[[], Sequence[Any]], Iterator[Any], Sequence[Any]],
-        max_lines: Optional[int] = None,
+        fullscreen: bool = True,
+        height: Optional[int] = None,
         format_fn: Callable[[Any], str] = lambda x: str(x),
         layout: Layout = Layout.REVERSE_LIST,
         info_style: InfoStyle = InfoStyle.DEFAULT,
+        pointer_str: str = DEFAULT_POINTER,
+        prompt_str: str = DEFAULT_PROMPT,
     ):
+        """
+        Initializate Finder object
+
+        Args:
+            candidates: Candidates
+            fullscreen: Full screen mode
+            height: Finder window height
+            format_fn: Items format function
+            layout: Finder layout
+            info_style: Determines the display style of finder info
+            pointer_str: Pointer to the current line
+            prompt_str: Input prompt
+        """
+        self.fullscreen = fullscreen
+        self.height = height
         self.format_fn = format_fn
-        self.screen: Screen = Screen()
         self.layout: Layout = layout
         self.info_style: InfoStyle = info_style
+        self.pointer_str = pointer_str
+        self.no_pointer_str = " " * len(pointer_str)
+        self.prompt_str = prompt_str
         self.keycodes_actions: Dict[str, str] = dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in ACTIONS.items()]))
-        # Calculate max lines
-        if max_lines is None:
-            margin = self.info_lines + 1  # info lines + prompt
-            self.max_lines = self.screen.height - margin
-        else:
-            self.max_lines = max_lines
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
             self.get_items_fn: Union[None, Callable[[], Sequence[Any]], Iterator[Any]] = candidates
+            self.candidates: Sequence[Any] = []
         else:
             self.get_items_fn = None
-            self.candidates: Sequence[Any] = candidates
-        self.refresh_candidates()
+            self.candidates = candidates
 
     def show(self, input: Optional[str] = None) -> Any:
         """
@@ -118,13 +121,7 @@ class Finder:
         Returns:
             item: the selected item
         """
-        self.input: str = input or ""
-        self.selected: int = 0
-        self.offset: int = 0
-        self.screen_items: List[Any] = []
-        self.screen.init()
-        self.apply_filter()
-        self.update_screen(erase=False)
+        self.setup(input=input)
         try:
             while True:
                 self.process_key(get_char())
@@ -135,18 +132,64 @@ class Finder:
         except Cancel:
             return None
         finally:
-            self.screen.erase_lines(self.max_lines + self.info_lines)
-            self.screen.cleanup(self.max_lines + self.info_lines)
+            self.screen.cleanup()
+
+    @property
+    def screen_items(self) -> Sequence[Any]:
+        "Candidates to be displayed on the screen"
+        return self.matching_candidates[self.offset : self.offset + self.max_candidates]
 
     @property
     def screen_items_len(self) -> int:
         "Number of items on the screen"
-        return len(self.screen_items) if self.screen_items else 0
+        return len(self.screen_items)
+
+    @property
+    def candidates_len(self) -> int:
+        "Number of candidates"
+        return len(self.candidates)
+
+    @property
+    def matching_candidates_len(self) -> int:
+        "Number of matching candidates"
+        return len(self.matching_candidates)
 
     @property
     def info_lines(self) -> int:
         "Number of info lines"
         return 1 if self.info_style == InfoStyle.DEFAULT else 0
+
+    @property
+    def prompt_lines(self) -> int:
+        "Number of prompt lines"
+        return len(self.prompt_str.split(f"{NL}"))
+
+    @property
+    def margin_lines(self) -> int:
+        "Screen margin"
+        return self.info_lines + self.prompt_lines
+
+    @property
+    def max_candidates(self) -> int:
+        "Maximun number of candidates printables on the screen"
+        return self.screen.height - self.margin_lines
+
+    def setup(self, input: Optional[str] = None) -> None:
+        """
+        Setup Finder execution
+
+        Args:
+            input: initial search string
+        """
+        self.input: str = input or ""
+        # Load the candidate list
+        self.refresh_candidates()
+        # Calculate the required height and setup the screen
+        height = self.height if self.height is not None else self.candidates_len + self.margin_lines
+        self.screen: Screen = Screen(fullscreen=self.fullscreen, height=height)
+        # Filter the items, calculate the screen offset
+        self.apply_filter()
+        self.update_screen(erase=False)
 
     def refresh_candidates(self) -> None:
         "Load/reload the candidate list"
@@ -154,7 +197,10 @@ class Finder:
         if isinstance(self.get_items_fn, Iterator):
             self.candidates = list(self.get_items_fn)
         elif callable(self.get_items_fn):
-            self.candiates = self.get_items_fn()
+            self.candidates = list(self.get_items_fn())
+        # Reset selected/offset
+        self.selected: int = 0
+        self.offset: int = 0
 
     def process_key(self, ch: str) -> None:
         "Process the pressed key"
@@ -168,9 +214,9 @@ class Finder:
         elif action == "up":  # Move one line up
             self.selected = self.selected - 1
         elif action == "page-down":  # Move one page down
-            self.selected = self.selected + self.max_lines
+            self.selected = self.selected + self.max_candidates
         elif action == "page-up":  # Move one page up
-            self.selected = self.selected - self.max_lines
+            self.selected = self.selected - self.max_candidates
         elif action == "backward-delete-char":  # Delete one characted
             if self.input:
                 self.input = self.input[:-1]
@@ -181,22 +227,21 @@ class Finder:
 
     def apply_filter(self) -> None:
         "Filter the items, calculate the screen offset"
-        self.filtered_items: Sequence[Any] = list(filter(self.match, self.candidates))
-        self.selected = max(min(self.selected, len(self.filtered_items) - 1), 0)
+        self.matching_candidates: Sequence[Any] = list(filter(self.match, self.candidates))
+        # Adject selected
+        self.selected = max(min(self.selected, self.matching_candidates_len - 1), 0)
         # Calculate the offset
-        if self.selected >= self.offset + self.max_lines:
-            self.offset = self.selected - self.max_lines + 1
+        if self.selected >= self.offset + self.max_candidates:
+            self.offset = self.selected - self.max_candidates + 1
         elif self.selected < self.offset:
             self.offset = self.selected
         if self.offset < 0:
             self.offset = 0
-        # Items to be displayed
-        self.screen_items = self.filtered_items[self.offset : self.offset + self.max_lines]
 
     def update_screen(self, erase: bool = True) -> None:
         "Update the screen - erase the old items, print the filtered items and the prompt"
         if erase:
-            self.screen.erase_lines(self.max_lines + self.info_lines)
+            self.screen.erase_screen()
         if self.layout == Layout.REVERSE_LIST:
             self.print_items()
             self.print_empty_lines()
@@ -206,22 +251,29 @@ class Finder:
 
     def print_items(self) -> None:
         for i, item in enumerate(self.screen_items):
-            if i + self.offset == self.selected:
-                self.screen.write(f"{ERASE_LINE}{RED}{BOLD}{BLACK_BG}>{NORMAL} {BOLD}{self.format_fn(item)}{NORMAL}{NL}")
+            is_selected = i + self.offset == self.selected
+            if is_selected:
+                self.screen.write(
+                    f"{ERASE_LINE}{RED}{BOLD}{BLACK_BG}{self.pointer_str}{NORMAL} {BOLD}{self.format_fn(item)}{NORMAL}{NL}"
+                )
             else:
-                self.screen.write(f"{ERASE_LINE}{BLACK_BG} {NORMAL} {self.format_fn(item)}{NL}")
+                self.screen.write(f"{ERASE_LINE}{BLACK_BG}{self.no_pointer_str}{NORMAL} {self.format_fn(item)}{NL}")
 
     def print_empty_lines(self) -> None:
-        self.screen.write(f"{NL}" * (min(len(self.candidates), self.max_lines - self.screen_items_len)))
+        if self.fullscreen:
+            lines = self.max_candidates - self.screen_items_len
+        else:
+            lines = min(self.candidates_len, self.max_candidates - self.screen_items_len)
+        self.screen.write(f"{NL}" * lines)
 
     def print_info(self) -> None:
         "Print info"
         if self.info_style == InfoStyle.DEFAULT:
-            self.screen.write(f"  {ERASE_LINE}{YELLOW}{len(self.filtered_items)}/{len(self.candidates)}{NORMAL}{NL}")
+            self.screen.write(f"  {ERASE_LINE}{YELLOW}{self.matching_candidates_len}/{self.candidates_len}{NORMAL}{NL}")
 
     def print_prompt(self) -> None:
         "Print prompt"
-        self.screen.write(f"{ERASE_LINE}{CYAN}>{NORMAL} {self.input}")
+        self.screen.write(f"{ERASE_LINE}{CYAN}{self.prompt_str}{NORMAL} {self.input}")
 
     def match(self, item: Any) -> bool:
         return self.input.lower() in self.format_fn(item).lower()
@@ -229,6 +281,6 @@ class Finder:
     def prepare_result(self) -> Any:
         "Output the selected item, if any"
         try:
-            return self.filtered_items[self.selected]
+            return self.matching_candidates[self.selected]
         except IndexError:
             return None
