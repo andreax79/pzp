@@ -20,7 +20,7 @@ KEYS_MAPPING = {
 
 def get_char() -> str:
     ch: str = getwch()
-    if ch == WIN_ESC:
-        ch = getwch()
+    if ch == WIN_ESC:  # When reading arrow/insert/del key, the first call returnx 0xe0
+        ch = getwch()  # The second call returns the key code
         return KEYS_MAPPING.get(ch, NULL)
     return ch
