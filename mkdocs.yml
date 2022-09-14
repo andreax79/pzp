@@ -21,7 +21,10 @@ nav:
   - API:
     - "pzp": api/module.md
     - "pzp.ansi": api/ansi.md
+    - "pzp.exceptions": api/exceptions.md
     - "pzp.finder": api/finder.md
+    - "pzp.input": api/input.md
+    - "pzp.keys": api/keys.md
     - "pzp.screen": api/screen.md
   - License: license.md
 

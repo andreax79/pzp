@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
-__all__ = ["KEYS", "ACTIONS"]
+from collections import ChainMap
+from typing import Dict, Optional, Sequence
+
+__all__ = [
+    "KEYS",
+    "ACTIONS",
+    "get_keycodes_actions",
+]
 
 KEYS = {
     "ctrl-a": "\x01",
@@ -29,6 +36,10 @@ KEYS = {
     "ctrl-x": "\x18",
     "ctrl-y": "\x19",
     "ctrl-z": "\x1a",
+    "ctrl-\\": "\x1c",
+    "ctrl-]": "\x1d",
+    "ctrl-^": "\x1e",
+    "ctrl-/": "\x1f",
     "pgup": "pgup",
     "page-up": "pgup",
     "pgdn": "pgdn",
@@ -58,3 +69,20 @@ ACTIONS = {
     "page-up": ["page-up", "pgup"],
     "page-down": ["page-down", "pgdn"],
 }
+
+
+def get_keycodes_actions(actions: Optional[Dict[str, Sequence[str]]] = None) -> Dict[str, str]:
+    """
+    Get keycodes to actions mapping
+
+    Args:
+        actions: Custom key binding
+
+    Returns:
+        keycodes_actions: key => action mapping
+    """
+    if actions is not None:
+        actions = dict(ACTIONS, **actions)
+    else:
+        actions = ACTIONS
+    return dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in actions.items()]))

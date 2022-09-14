@@ -2,10 +2,10 @@
 
 import sys
 from enum import Enum
-from collections import ChainMap
 from typing import Any, Callable, Iterator, Dict, Optional, Sequence, TextIO, Union
 from .input import get_char
-from .keys import ACTIONS, KEYS
+from .keys import get_keycodes_actions
+from .exceptions import AcceptAction, AbortAction, CustomAction
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -34,6 +34,7 @@ from .screen import Screen
 
 __all__ = [
     "Finder",
+    "CustomAction",
     "Layout",
     "InfoStyle",
     "DEFAULT_POINTER",
@@ -44,14 +45,6 @@ DEFAULT_POINTER = ">"
 "Default pointer"
 DEFAULT_PROMPT = ">"
 "Default input prompt"
-
-
-class Confirm(Exception):
-    pass
-
-
-class Cancel(Exception):
-    pass
 
 
 class Layout(Enum):
@@ -81,6 +74,7 @@ class Finder:
         info_style: InfoStyle = InfoStyle.DEFAULT,
         pointer_str: str = DEFAULT_POINTER,
         prompt_str: str = DEFAULT_PROMPT,
+        actions: Optional[Dict[str, Sequence[str]]] = None,
         output_stream: TextIO = sys.stderr,
     ):
         """
@@ -95,6 +89,8 @@ class Finder:
             info_style: Determines the display style of finder info
             pointer_str: Pointer to the current line
             prompt_str: Input prompt
+            actions: Custom key binding
+            output_stream: Output stream
         """
         self.fullscreen = fullscreen
         self.height = height
@@ -105,7 +101,7 @@ class Finder:
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
         self.output_stream = output_stream
-        self.keycodes_actions: Dict[str, str] = dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in ACTIONS.items()]))
+        self.keycodes_actions = get_keycodes_actions(actions)
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
             self.get_items_fn: Union[None, Callable[[], Sequence[Any]], Iterator[Any]] = candidates
@@ -130,9 +126,9 @@ class Finder:
                 self.process_key(get_char())
                 self.apply_filter()
                 self.update_screen()
-        except Confirm:
-            return self.prepare_result()
-        except Cancel:
+        except AcceptAction as accept:
+            return accept.selected_item
+        except AbortAction:
             return None
         finally:
             self.screen.cleanup()
@@ -209,9 +205,11 @@ class Finder:
         "Process the pressed key"
         action = self.keycodes_actions.get(ch)
         if action == "accept":  # Confirm
-            raise Confirm
+            raise AcceptAction(action, self.prepare_result(), ch)
         elif action == "abort":  # Cancel
-            raise Cancel
+            raise AbortAction(action, None, ch)
+        elif action == "custom":
+            raise CustomAction(action, self.prepare_result(), ch)
         elif action == "down":  # Move one line down
             self.selected = self.selected + 1
         elif action == "up":  # Move one line up
