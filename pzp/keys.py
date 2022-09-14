@@ -82,7 +82,7 @@ def get_keycodes_actions(actions: Optional[Dict[str, Sequence[str]]] = None) -> 
         keycodes_actions: key => action mapping
     """
     if actions is not None:
-        actions = dict(ACTIONS, **actions)
+        actions_items = dict(ACTIONS, **actions).items()
     else:
-        actions = ACTIONS
-    return dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in actions.items()]))
+        actions_items = ACTIONS.items()
+    return dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in actions_items]))

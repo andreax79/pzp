@@ -39,12 +39,15 @@ __all__ = [
     "InfoStyle",
     "DEFAULT_POINTER",
     "DEFAULT_PROMPT",
+    "DEFAULT_HEADER",
 ]
 
 DEFAULT_POINTER = ">"
 "Default pointer"
 DEFAULT_PROMPT = ">"
 "Default input prompt"
+DEFAULT_HEADER = ""
+"Default header"
 
 
 class Layout(Enum):
@@ -74,6 +77,7 @@ class Finder:
         info_style: InfoStyle = InfoStyle.DEFAULT,
         pointer_str: str = DEFAULT_POINTER,
         prompt_str: str = DEFAULT_PROMPT,
+        header_str: str = DEFAULT_HEADER,
         actions: Optional[Dict[str, Sequence[str]]] = None,
         output_stream: TextIO = sys.stderr,
     ):
@@ -89,6 +93,7 @@ class Finder:
             info_style: Determines the display style of finder info
             pointer_str: Pointer to the current line
             prompt_str: Input prompt
+            header_str: Header
             actions: Custom key binding
             output_stream: Output stream
         """
@@ -100,6 +105,7 @@ class Finder:
         self.pointer_str = pointer_str
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
+        self.header_str = header_str
         self.output_stream = output_stream
         self.keycodes_actions = get_keycodes_actions(actions)
         # Get the candidates
@@ -164,9 +170,14 @@ class Finder:
         return len(self.prompt_str.split(f"{NL}"))
 
     @property
+    def header_lines(self) -> int:
+        "Number of header lines"
+        return len(self.header_str.split(f"{NL}")) if self.header_str else 0
+
+    @property
     def margin_lines(self) -> int:
         "Screen margin"
-        return self.info_lines + self.prompt_lines
+        return self.info_lines + self.prompt_lines + self.header_lines
 
     @property
     def max_candidates(self) -> int:
@@ -244,13 +255,20 @@ class Finder:
         if erase:
             self.screen.erase_screen()
         if self.layout == Layout.REVERSE_LIST:
+            self.print_header()
             self.print_items()
             self.print_empty_lines()
             self.print_info()
             self.print_prompt()
         self.screen.flush()
 
+    def print_header(self) -> None:
+        "Print header"
+        if self.header_str:
+            self.screen.write(f"{ERASE_LINE}{self.header_str}{NL}")
+
     def print_items(self) -> None:
+        "Print candidates"
         for i, item in enumerate(self.screen_items):
             is_selected = i + self.offset == self.selected
             if is_selected:
@@ -261,6 +279,7 @@ class Finder:
                 self.screen.write(f"{ERASE_LINE}{BLACK_BG}{self.no_pointer_str}{NORMAL} {self.format_fn(item)}{NL}")
 
     def print_empty_lines(self) -> None:
+        "Print empty lines"
         if self.fullscreen:
             lines = self.max_candidates - self.screen_items_len
         else:

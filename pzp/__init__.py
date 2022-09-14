@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from .finder import CustomAction, Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT
+from .finder import CustomAction, Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER
 from typing import Any, Callable, Dict, Iterator, Optional, Sequence, Union
 
 __version__ = "0.0.5"
@@ -18,6 +18,7 @@ def pzp(
     info_style: InfoStyle = InfoStyle.DEFAULT,
     pointer_str: str = DEFAULT_POINTER,
     prompt_str: str = DEFAULT_PROMPT,
+    header_str: str = DEFAULT_HEADER,
     actions: Optional[Dict[str, Sequence[str]]] = None,
     input: Optional[str] = None,
 ) -> Any:
@@ -37,6 +38,7 @@ def pzp(
         info_style: Determines the display style of finder info
         pointer_str: Pointer to the current line
         prompt_str: Input prompt
+        header_str: Header
         actions: Custom key binding
 
     Returns:
@@ -51,6 +53,7 @@ def pzp(
         info_style=info_style,
         pointer_str=pointer_str,
         prompt_str=prompt_str,
+        header_str=header_str,
         actions=actions,
     )
     return finder.show(input=input)
