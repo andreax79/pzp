@@ -142,7 +142,7 @@ class Finder:
     @property
     def screen_items(self) -> Sequence[Any]:
         "Candidates to be displayed on the screen"
-        return self.matching_candidates[self.offset : self.offset + self.max_candidates]
+        return self.matching_candidates[self.offset : self.offset + self.max_candidates_lines]
 
     @property
     def screen_items_len(self) -> int:
@@ -180,7 +180,7 @@ class Finder:
         return self.info_lines + self.prompt_lines + self.header_lines
 
     @property
-    def max_candidates(self) -> int:
+    def max_candidates_lines(self) -> int:
         "Maximun number of candidates printables on the screen"
         return self.screen.height - self.margin_lines
 
@@ -226,9 +226,9 @@ class Finder:
         elif action == "up":  # Move one line up
             self.selected = self.selected - 1
         elif action == "page-down":  # Move one page down
-            self.selected = self.selected + self.max_candidates
+            self.selected = self.selected + self.max_candidates_lines
         elif action == "page-up":  # Move one page up
-            self.selected = self.selected - self.max_candidates
+            self.selected = self.selected - self.max_candidates_lines
         elif action == "backward-delete-char":  # Delete one characted
             if self.input:
                 self.input = self.input[:-1]
@@ -243,8 +243,8 @@ class Finder:
         # Adject selected
         self.selected = max(min(self.selected, self.matching_candidates_len - 1), 0)
         # Calculate the offset
-        if self.selected >= self.offset + self.max_candidates:
-            self.offset = self.selected - self.max_candidates + 1
+        if self.selected >= self.offset + self.max_candidates_lines:
+            self.offset = self.selected - self.max_candidates_lines + 1
         elif self.selected < self.offset:
             self.offset = self.selected
         if self.offset < 0:
@@ -280,10 +280,7 @@ class Finder:
 
     def print_empty_lines(self) -> None:
         "Print empty lines"
-        if self.fullscreen:
-            lines = self.max_candidates - self.screen_items_len
-        else:
-            lines = min(self.candidates_len, self.max_candidates - self.screen_items_len)
+        lines = self.max_candidates_lines - self.screen_items_len
         self.screen.write(f"{NL}" * lines)
 
     def print_info(self) -> None:
