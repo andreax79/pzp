@@ -25,6 +25,7 @@ nav:
     - "pzp.finder": api/finder.md
     - "pzp.input": api/input.md
     - "pzp.keys": api/keys.md
+    - "pzp.line_editor": api/line_editor.md
     - "pzp.screen": api/screen.md
   - License: license.md
 

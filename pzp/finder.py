@@ -6,6 +6,7 @@ from typing import Any, Callable, Iterator, Dict, Optional, Sequence, TextIO, Un
 from .input import get_char
 from .keys import get_keycodes_actions
 from .exceptions import AcceptAction, AbortAction, CustomAction
+from .line_editor import LineEditor
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -26,7 +27,7 @@ from .ansi import (  # noqa
     PURPLE_BG,
     CYAN_BG,
     WHITE_BG,
-    NORMAL,
+    RESET,
     BOLD,
     NEGATIVE,
 )
@@ -191,7 +192,7 @@ class Finder:
         Args:
             input: initial search string
         """
-        self.input: str = input or ""
+        self.input = LineEditor(input or "")
         # Load the candidate list
         self.refresh_candidates()
         # Calculate the required height and setup the screen
@@ -219,8 +220,16 @@ class Finder:
             raise AcceptAction(action, self.prepare_result(), ch)
         elif action == "abort":  # Cancel
             raise AbortAction(action, None, ch)
-        elif action == "custom":
+        elif action == "custom":  # Custom action
             raise CustomAction(action, self.prepare_result(), ch)
+        elif action == "backward-char":  # Move backward
+            self.input.backward_char()
+        elif action == "forward-char":  # Move forward
+            self.input.forward_char()
+        elif action == "beginning-of-line":  # Move to beginning of line
+            self.input.beginning_of_line()
+        elif action == "end-of-line":  # Move to end of line
+            self.input.end_of_line()
         elif action == "down":  # Move one line down
             self.selected = self.selected + 1
         elif action == "up":  # Move one line up
@@ -230,12 +239,13 @@ class Finder:
         elif action == "page-up":  # Move one page up
             self.selected = self.selected - self.max_candidates_lines
         elif action == "backward-delete-char":  # Delete one characted
-            if self.input:
-                self.input = self.input[:-1]
+            self.input.delete_backward_char()
+        elif action == "delete-char":  # Delete one characted
+            self.input.delete_char()
         elif action == "ignore":  # Skip
             pass
-        elif ch >= SPACE:  # Append the character to line
-            self.input = self.input + ch
+        elif ch >= SPACE:  # Add the character to line
+            self.input.insert(ch)
 
     def apply_filter(self) -> None:
         "Filter the items, calculate the screen offset"
@@ -265,35 +275,36 @@ class Finder:
     def print_header(self) -> None:
         "Print header"
         if self.header_str:
-            self.screen.write(f"{ERASE_LINE}{self.header_str}{NL}")
+            self.screen.erase_line().write(self.header_str).nl()
 
     def print_items(self) -> None:
         "Print candidates"
         for i, item in enumerate(self.screen_items):
             is_selected = i + self.offset == self.selected
+            self.screen.erase_line()
             if is_selected:
-                self.screen.write(
-                    f"{ERASE_LINE}{RED}{BOLD}{BLACK_BG}{self.pointer_str}{NORMAL} {BOLD}{self.format_fn(item)}{NORMAL}{NL}"
-                )
+                self.screen.write(f"{RED}{BOLD}{BLACK_BG}{self.pointer_str} ").reset().bold()
             else:
-                self.screen.write(f"{ERASE_LINE}{BLACK_BG}{self.no_pointer_str}{NORMAL} {self.format_fn(item)}{NL}")
+                self.screen.write(f"{BLACK_BG}{self.no_pointer_str} ").reset()
+            self.screen.write(self.format_fn(item)).reset().nl()
 
     def print_empty_lines(self) -> None:
         "Print empty lines"
         lines = self.max_candidates_lines - self.screen_items_len
-        self.screen.write(f"{NL}" * lines)
+        self.screen.nl(lines)
 
     def print_info(self) -> None:
         "Print info"
         if self.info_style == InfoStyle.DEFAULT:
-            self.screen.write(f"  {ERASE_LINE}{YELLOW}{self.matching_candidates_len}/{self.candidates_len}{NORMAL}{NL}")
+            self.screen.erase_line().write(f"  {YELLOW}{self.matching_candidates_len}/{self.candidates_len}").reset().nl()
 
     def print_prompt(self) -> None:
         "Print prompt"
-        self.screen.write(f"{ERASE_LINE}{CYAN}{self.prompt_str}{NORMAL} {self.input}")
+        self.screen.erase_line().write(f"{CYAN}{self.prompt_str} ").reset()
+        self.input.print(self.screen)
 
     def match(self, item: Any) -> bool:
-        return self.input.lower() in self.format_fn(item).lower()
+        return str(self.input).lower() in self.format_fn(item).lower()
 
     def prepare_result(self) -> Any:
         "Output the selected item, if any"

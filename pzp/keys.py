@@ -52,6 +52,8 @@ KEYS = {
     "down": "down",
     "right": "right",
     "left": "left",
+    "home": "home",
+    "end": "end",
     "nl": "\n",
     "enter": "\r",
     "tab": "\t",
@@ -63,11 +65,16 @@ ACTIONS = {
     "abort": ["ctrl-c", "ctrl-g", "ctrl-q", "esc"],
     "accept": ["enter"],
     "backward-delete-char": ["ctrl-h", "bspace"],
+    "delete-char": ["ctrl-d", "del"],
     "down": ["ctrl-j", "ctrl-n", "down"],
     "up": ["ctrl-k", "ctrl-p", "up"],
-    "ignore": ["null", "left", "right", "insert", "del"],
+    "ignore": ["null", "insert"],
     "page-up": ["page-up", "pgup"],
     "page-down": ["page-down", "pgdn"],
+    "backward-char": ["ctrl-b", "left"],
+    "forward-char": ["ctrl-f", "right"],
+    "beginning-of-line": ["ctrl-a", "home"],
+    "end-of-line": ["ctrl-e", "end"],
 }
 
 

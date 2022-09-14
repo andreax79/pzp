@@ -10,6 +10,12 @@ def test_import_ansi():
     assert ansi
 
 
+def test_import_exceptions():
+    from pzp import exceptions
+
+    assert exceptions
+
+
 def test_import_finder():
     from pzp import finder
 
@@ -26,6 +32,12 @@ def test_import_keys():
     from pzp import keys
 
     assert keys
+
+
+def test_line_editor():
+    from pzp import line_editor
+
+    assert line_editor
 
 
 def test_import_screen():

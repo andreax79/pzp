@@ -7,14 +7,16 @@ __all__ = ["get_char"]
 NULL = "\0"
 WIN_ESC = "\xe0"
 KEYS_MAPPING = {
-    "H": "up",
-    "P": "down",
-    "M": "right",
-    "K": "left",
-    "R": "insert",
-    "S": "del",
-    "I": "pgup",
-    "Q": "pgdn",
+    "\x47": "home",
+    "\x48": "up",
+    "\x49": "pgup",
+    "\x4b": "left",
+    "\x4d": "right",
+    "\x4f": "end",
+    "\x50": "down",
+    "\x51": "pgdn",
+    "\x52": "insert",
+    "\x53": "del",
 }
 
 

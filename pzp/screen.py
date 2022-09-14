@@ -17,7 +17,7 @@ from .ansi import (  # noqa
     PURPLE,
     CYAN,
     WHITE,
-    NORMAL,
+    RESET,
     BOLD,
     NEGATIVE,
 )
@@ -55,30 +55,58 @@ class Screen:
     def get_terminal_height(cls) -> int:
         return shutil.get_terminal_size(fallback=(DEFAULT_WIDTH, DEFAULT_HEIGHT)).lines
 
-    def write(self, line: str) -> None:
+    def write(self, line: str) -> "Screen":
         "Add data to be written on the stream"
         self.data.append(line)
+        return self
 
-    def flush(self) -> None:
+    def flush(self) -> "Screen":
         "Write data to the stream and flush it"
         self.stream.write("".join(self.data))
         self.data = []
         self.stream.flush()
+        return self
 
-    def cleanup(self) -> None:
+    def cleanup(self) -> "Screen":
         "Clean screen and restore cursor position"
         self.erase_screen()
         if self.fullscreen:
             self.write(f"{CURSOR_RESTORE_POS}")
             self.move_up(self.height - 1)
         self.flush()
+        return self
 
-    def erase_screen(self) -> None:
+    def nl(self, lines: int = 1) -> "Screen":
+        """
+        Add n newlines
+
+        Args:
+            lines: number of newlines to be added
+        """
+        self.data.append(f"{NL}" * lines)
+        return self
+
+    def reset(self) -> "Screen":
+        "Reset style and color"
+        self.write(f"{RESET}")
+        return self
+
+    def bold(self) -> "Screen":
+        "Set bold mode"
+        self.write(f"{BOLD}")
+        return self
+
+    def erase_screen(self) -> "Screen":
         "Erase the screen"
         lines: int = self.height - 1
-        self.erase_lines(lines)
+        return self.erase_lines(lines)
 
-    def erase_lines(self, lines: int) -> None:
+    def erase_line(self) -> "Screen":
+        "Erase the current line"
+        self.write(f"{ERASE_LINE}")
+        return self
+
+    def erase_lines(self, lines: int) -> "Screen":
         """
         Erase n lines
 
@@ -87,9 +115,9 @@ class Screen:
         """
         self.move_up(lines)
         self.write(f"{ERASE_LINE}{NL}" * lines)
-        self.move_up(lines)
+        return self.move_up(lines)
 
-    def move_up(self, lines: int) -> None:
+    def move_up(self, lines: int) -> "Screen":
         """
         Move cursor up
         If the cursor is already at the edge of the screen, this has no effect.
@@ -97,9 +125,9 @@ class Screen:
         Args:
             lines: number of lines
         """
-        self.write(f"{ESC}[{lines}A")
+        return self.write(f"{ESC}[{lines}A")
 
-    def move_down(self, lines: int) -> None:
+    def move_down(self, lines: int) -> "Screen":
         """
         Move cursor down
         If the cursor is already at the edge of the screen, this has no effect.
@@ -107,4 +135,28 @@ class Screen:
         Args:
             lines: number of lines
         """
-        self.write(f"{ESC}[{lines}B")
+        return self.write(f"{ESC}[{lines}B")
+
+    def move_right(self, characters: int) -> "Screen":
+        """
+        Move cursor right
+        If the cursor is already at the edge of the screen, this has no effect.
+
+        Args:
+            characters: number of characters
+        """
+        if characters > 0:
+            return self.write(f"{ESC}[{characters}C")
+        return self
+
+    def move_left(self, characters: int) -> "Screen":
+        """
+        Move cursor left
+        If the cursor is already at the edge of the screen, this has no effect.
+
+        Args:
+            characters: number of characters
+        """
+        if characters > 0:
+            return self.write(f"{ESC}[{characters}D")
+        return self

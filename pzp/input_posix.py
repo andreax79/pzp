@@ -7,7 +7,7 @@ import termios
 import tty
 
 NULL = "\0"
-ESC = "\u001b"
+ESC = "\x1b"
 
 
 def get_char() -> str:
@@ -28,11 +28,17 @@ def get_char() -> str:
                     ch = "right"
                 elif ch == "D":
                     ch = "left"
+                elif ch == "1":
+                    ch = "home"
+                    sys.stdin.read(1)  # skip ~
                 elif ch == "2":
                     ch = "insert"
                     sys.stdin.read(1)  # skip ~
                 elif ch == "3":
                     ch = "del"
+                    sys.stdin.read(1)  # skip ~
+                elif ch == "4":
+                    ch = "end"
                     sys.stdin.read(1)  # skip ~
                 elif ch == "5":
                     ch = "pgup"

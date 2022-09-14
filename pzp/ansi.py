@@ -23,7 +23,7 @@ __all__ = [
     "PURPLE_BG",
     "CYAN_BG",
     "WHITE_BG",
-    "NORMAL",
+    "RESET",
     "BOLD",
     "NEGATIVE",
 ]
@@ -73,7 +73,7 @@ CYAN_BG = f"{ESC}[46m"
 WHITE_BG = f"{ESC}[47m"
 "White background color"
 
-NORMAL = f"{ESC}[0m"
+RESET = f"{ESC}[0m"
 "Reset styles and colors"
 BOLD = f"{ESC}[1m"
 "Set bold mode"
