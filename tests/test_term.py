@@ -41,6 +41,24 @@ def test_screen():
     screen.move_up(5)
     screen.flush()
     assert terminal.cursor.y == 5
+    screen.move_right(0)
+    screen.flush()
+    assert terminal.cursor.x == 0
+    screen.move_right(10)
+    screen.flush()
+    assert terminal.cursor.x == 10
+    screen.move_right(100)
+    screen.flush()
+    assert terminal.cursor.x == 79
+    screen.move_left(0)
+    screen.flush()
+    assert terminal.cursor.x == 79
+    screen.move_left(20)
+    screen.flush()
+    assert terminal.cursor.x == 59
+    screen.move_left(200)
+    screen.flush()
+    assert terminal.cursor.x == 0
 
 
 def test_term():
