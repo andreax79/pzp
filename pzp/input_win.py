@@ -27,7 +27,6 @@ def get_char() -> str:
     Returns:
         char: the pressed key or the key description (e.g. "home")
     """
-    try:
     ch: str = getwch()
     if ch == WIN_ESC:  # When reading arrow/insert/del key, the first call returnx 0xe0
         ch = getwch()  # The second call returns the key code
