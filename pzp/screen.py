@@ -111,7 +111,7 @@ class Screen:
     def erase_screen(self) -> "Screen":
         "Erase the screen"
         lines: int = self.height - 1
-        return self.erase_lines(lines)
+        return self.erase_line().erase_lines(lines)
 
     def erase_line(self) -> "Screen":
         "Erase the current line"
