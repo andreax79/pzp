@@ -2,11 +2,13 @@
 
 from collections import ChainMap
 from typing import Dict, Optional, Sequence
+from .input import get_char
 
 __all__ = [
     "KEYS",
     "ACTIONS",
-    "get_keycodes_actions",
+    "KeyEvent",
+    "KeysHandlers",
 ]
 
 KEYS = {
@@ -93,3 +95,31 @@ def get_keycodes_actions(actions: Optional[Dict[str, Sequence[str]]] = None) -> 
     else:
         actions_items = ACTIONS.items()
     return dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in actions_items]))
+
+
+class KeyEvent:
+    def __init__(self, ch: str, action: Optional[str]) -> None:
+        """
+        Key Event
+
+        Args:
+            ch: Pressed key
+            action: Action
+
+        Attributes:
+            ch: Pressed key
+            action: Action
+        """
+        self.ch = ch
+        self.action = action
+
+
+class KeysHandlers:
+    def __init__(self, actions: Optional[Dict[str, Sequence[str]]] = None) -> None:
+        self.keycodes_actions = get_keycodes_actions(actions)
+
+    def get_key_event(self, ch: Optional[str] = None) -> KeyEvent:
+        if ch is None:
+            ch = get_char()
+        action = self.keycodes_actions.get(ch)
+        return KeyEvent(ch=ch, action=action)

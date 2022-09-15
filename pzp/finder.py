@@ -3,10 +3,10 @@
 import sys
 from enum import Enum
 from typing import Any, Callable, Iterator, Dict, Optional, Sequence, TextIO, Union
-from .input import get_char
-from .keys import get_keycodes_actions
-from .exceptions import AcceptAction, AbortAction, CustomAction
+from .keys import KeysHandlers, KeyEvent
+from .exceptions import AcceptAction, AbortAction, CustomAction, MissingHander
 from .line_editor import LineEditor
+from .actions import Action, ActionsHandler
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -67,7 +67,7 @@ class InfoStyle(Enum):
     " Do not display finder info"
 
 
-class Finder:
+class Finder(ActionsHandler):
     def __init__(
         self,
         candidates: Union[Callable[[], Sequence[Any]], Iterator[Any], Sequence[Any]],
@@ -98,6 +98,7 @@ class Finder:
             actions: Custom key binding
             output_stream: Output stream
         """
+        super().__init__()
         self.fullscreen = fullscreen
         self.height = height
         self.format_fn = format_fn
@@ -108,7 +109,7 @@ class Finder:
         self.prompt_str = prompt_str
         self.header_str = header_str
         self.output_stream = output_stream
-        self.keycodes_actions = get_keycodes_actions(actions)
+        self.keys_handlers = KeysHandlers(actions)
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
             self.get_items_fn: Union[None, Callable[[], Sequence[Any]], Iterator[Any]] = candidates
@@ -130,7 +131,7 @@ class Finder:
         self.setup(input=input)
         try:
             while True:
-                self.process_key(get_char())
+                self.process_key()
                 self.apply_filter()
                 self.update_screen()
         except AcceptAction as accept:
@@ -213,39 +214,51 @@ class Finder:
         self.selected: int = 0
         self.offset: int = 0
 
-    def process_key(self, ch: str) -> None:
+    @Action("accept")
+    def accept(self, key_event: KeyEvent) -> None:
+        "Confirm"
+        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result())
+
+    @Action("abort")
+    def abort(self, key_event: KeyEvent) -> None:
+        "Cancel"
+        raise AbortAction(action="abort", ch=key_event.ch)
+
+    @Action("down")
+    def down(self) -> None:
+        "Move one line down"
+        self.selected = self.selected + 1
+
+    @Action("up")
+    def up(self) -> None:
+        "Move one line up"
+        self.selected = self.selected - 1
+
+    @Action("page-down")
+    def page_down(self) -> None:
+        "Move one page down"
+        self.selected = self.selected + self.max_candidates_lines
+
+    @Action("page-up")
+    def page_up(self) -> None:
+        "Move one page up"
+        self.selected = self.selected - self.max_candidates_lines
+
+    @Action("ignore")
+    def ignore(self) -> None:
+        "Do nothing"
+        pass
+
+    def process_key(self, ch: Optional[str] = None) -> None:
         "Process the pressed key"
-        action = self.keycodes_actions.get(ch)
-        if action == "accept":  # Confirm
-            raise AcceptAction(action, self.prepare_result(), ch)
-        elif action == "abort":  # Cancel
-            raise AbortAction(action, None, ch)
-        elif action == "custom":  # Custom action
-            raise CustomAction(action, self.prepare_result(), ch)
-        elif action == "backward-char":  # Move backward
-            self.input.backward_char()
-        elif action == "forward-char":  # Move forward
-            self.input.forward_char()
-        elif action == "beginning-of-line":  # Move to beginning of line
-            self.input.beginning_of_line()
-        elif action == "end-of-line":  # Move to end of line
-            self.input.end_of_line()
-        elif action == "down":  # Move one line down
-            self.selected = self.selected + 1
-        elif action == "up":  # Move one line up
-            self.selected = self.selected - 1
-        elif action == "page-down":  # Move one page down
-            self.selected = self.selected + self.max_candidates_lines
-        elif action == "page-up":  # Move one page up
-            self.selected = self.selected - self.max_candidates_lines
-        elif action == "backward-delete-char":  # Delete one characted
-            self.input.delete_backward_char()
-        elif action == "delete-char":  # Delete one characted
-            self.input.delete_char()
-        elif action == "ignore":  # Skip
-            pass
-        elif ch >= SPACE:  # Add the character to line
-            self.input.insert(ch)
+        key_event = self.keys_handlers.get_key_event(ch)
+        try:
+            self.input.process_key_event(key_event)
+        except MissingHander:
+            try:
+                self.process_key_event(key_event)
+            except MissingHander:
+                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result())  # type: ignore
 
     def apply_filter(self) -> None:
         "Filter the items, calculate the screen offset"

@@ -8,6 +8,7 @@ __all__ = [
     "AcceptAction",
     "AbortAction",
     "CustomAction",
+    "MissingHander",
 ]
 
 
@@ -23,21 +24,20 @@ class GenericAction(PZPException):
 
     Args:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
+        selected_item: selected item, if any
 
     Attributes:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
-
+        selected_item: selected item, if any
     """
 
-    def __init__(self, action: str, selected_item: Any, ch: str):
+    def __init__(self, action: str, ch: str, selected_item: Any = None):
         super().__init__(action)
         self.action = action
-        self.selected_item = selected_item
         self.ch = ch
+        self.selected_item = selected_item
 
 
 class AcceptAction(GenericAction):
@@ -47,18 +47,17 @@ class AcceptAction(GenericAction):
 
     Args:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
+        selected_item: selected item, if any
 
     Attributes:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
-
+        selected_item: selected item, if any
     """
 
-    def __init__(self, action: str, selected_item: Any, ch: str):
-        super().__init__(action, selected_item, ch)
+    def __init__(self, action: str, ch: str, selected_item: Any = None):
+        super().__init__(action, ch, selected_item)
 
 
 class AbortAction(GenericAction):
@@ -68,18 +67,17 @@ class AbortAction(GenericAction):
 
     Args:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
+        selected_item: selected item, if any
 
     Attributes:
         action: action
-        selected_item: selected item, if any
         ch: pressed key
-
+        selected_item: selected item, if any
     """
 
-    def __init__(self, action: str, selected_item: Any, ch: str):
-        super().__init__(action, selected_item, ch)
+    def __init__(self, action: str, ch: str, selected_item: Any = None):
+        super().__init__(action, ch, selected_item)
 
 
 class CustomAction(GenericAction):
@@ -96,8 +94,26 @@ class CustomAction(GenericAction):
         action: action
         selected_item: selected item, if any
         ch: pressed key
-
     """
 
-    def __init__(self, action: str, selected_item: Any, ch: str):
-        super().__init__(action, selected_item, ch)
+    def __init__(self, action: str, ch: str, selected_item: Any = None):
+        super().__init__(action, ch, selected_item)
+
+
+class MissingHander(PZPException):
+    """
+    The MissingHander exception is raised when there is no handler for an action.
+
+    Args:
+        action: action
+        ch: pressed key
+
+    Attributes:
+        action: action
+        ch: pressed key
+    """
+
+    def __init__(self, action: str, ch: str):
+        super().__init__(action)
+        self.action = action
+        self.ch = ch

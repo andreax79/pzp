@@ -11,6 +11,12 @@ ESC = "\x1b"
 
 
 def get_char() -> str:
+    """
+    Read a keypress and return the resulting character as a string.
+
+    Returns:
+        char: the pressed key or the key description (e.g. "home")
+    """
     try:
         fd = sys.stdin.fileno()
         attrs = termios.tcgetattr(fd)

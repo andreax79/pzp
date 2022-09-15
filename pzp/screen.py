@@ -39,6 +39,12 @@ class Screen:
             stream: Output stream
             fullscreen: Full screen mode
             height: Screen height
+
+        Attributes:
+            stream: Output stream
+            data: Data to be written on the stream
+            fullscreen: Full screen mode
+            height: Screen height
         """
         self.stream: TextIO = stream
         self.data: List[str] = []
@@ -53,6 +59,12 @@ class Screen:
 
     @classmethod
     def get_terminal_height(cls) -> int:
+        """
+        Get the terminal height
+
+        Returns:
+            height: terminal height
+        """
         return shutil.get_terminal_size(fallback=(DEFAULT_WIDTH, DEFAULT_HEIGHT)).lines
 
     def write(self, line: str) -> "Screen":

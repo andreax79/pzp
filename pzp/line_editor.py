@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
+from inspect import getmembers
 from typing import Optional, TYPE_CHECKING
+from .ansi import SPACE
+from .actions import Action, ActionsHandler
+from .keys import KeyEvent
 
 if TYPE_CHECKING:
     from .screen import Screen
@@ -8,7 +12,7 @@ if TYPE_CHECKING:
 __all__ = ["LineEditor"]
 
 
-class LineEditor:
+class LineEditor(ActionsHandler):
     def __init__(self, line: Optional[str] = None) -> None:
         """
         Line editor
@@ -16,6 +20,7 @@ class LineEditor:
         Args:
             line: Initial value
         """
+        super().__init__()
         self.line = line or ""
         self.cursor_pos: int = len(self.line)
 
@@ -27,37 +32,48 @@ class LineEditor:
         "Set cursor position (relative to current position)"
         self.cursor_pos = max(min(self.cursor_pos + characters, len(self.line)), 0)
 
+    def insert(self, ch: str) -> None:
+        "Insert characters at the current cursor position"
+        if ch >= SPACE:  # Add the character to line
+            self.line = self.line[0 : self.cursor_pos] + ch + self.line[self.cursor_pos :]
+            self.adj_cursor_pos(len(ch))
+
+    @Action("backward-char")
     def backward_char(self) -> None:
         "Move the cursor back one character"
         self.set_cursor_pos(self.cursor_pos - 1)
 
+    @Action("forward-char")
     def forward_char(self) -> None:
         "Move the cursor forward one character"
         self.set_cursor_pos(self.cursor_pos + 1)
 
+    @Action("beginning-of-line")
     def beginning_of_line(self) -> None:
         "Move the cursor to the line start"
         self.set_cursor_pos(0)
 
+    @Action("end-of-line")
     def end_of_line(self) -> None:
         "Move the cursor to the line end"
         self.set_cursor_pos(len(self))
 
-    def insert(self, ch: str) -> None:
-        "Insert characters at the current cursor position"
-        self.line = self.line[0 : self.cursor_pos] + ch + self.line[self.cursor_pos :]
-        self.adj_cursor_pos(len(ch))
-
+    @Action("backward-delete-char")
     def delete_backward_char(self) -> None:
         "Delete the previous character"
         if self.cursor_pos > 0:
             self.line = self.line[: self.cursor_pos - 1] + self.line[self.cursor_pos :]
         self.adj_cursor_pos(-1)
 
+    @Action("delete-char")
     def delete_char(self) -> None:
         "Delete the current character"
         self.line = self.line[: self.cursor_pos] + self.line[self.cursor_pos + 1 :]
         self.adj_cursor_pos(0)
+
+    @Action("default")
+    def default(self, key_event: KeyEvent) -> None:
+        self.insert(key_event.ch)
 
     def print(self, screen: "Screen") -> None:
         """
