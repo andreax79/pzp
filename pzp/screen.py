@@ -98,6 +98,16 @@ class Screen:
         self.data.append(f"{NL}" * lines)
         return self
 
+    def space(self, num: int = 1) -> "Screen":
+        """
+        Add n spaces
+
+        Args:
+            num: number of spaces
+        """
+        self.data.append(" " * num)
+        return self
+
     def reset(self) -> "Screen":
         "Reset style and color"
         self.write(f"{RESET}")

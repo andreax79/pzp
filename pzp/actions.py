@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import inspect
-from typing import Any, Callable, Dict, Union
-from .keys import KeyEvent
+from typing import Any, Callable, Dict, Optional, Sequence, Union
+from .keys import KeyEvent, KeysHandler, KeysBinding
 from .exceptions import MissingHander
 
 ActionHandler = Union[Callable[[Any], None], Callable[[Any, KeyEvent], None]]
@@ -14,38 +14,58 @@ __all__ = [
 
 
 class Action:
-    def __init__(self, action: str) -> None:
+    def __init__(self, action: str, keys: Optional[Sequence[str]] = None) -> None:
         """
         Action decorator
 
         Args:
             action: Action
         """
-        self.action = action
+        self.action: str = action
+        self.keys: Sequence[str] = keys or []
 
     def __call__(self, func: ActionHandler) -> ActionHandler:
         setattr(func, "pzp_action", self.action)
+        setattr(func, "pzp_keys", self.keys)
         return func
 
 
 class ActionsHandler:
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        keys_handler: Optional[KeysHandler] = None,
+        keys_binding: Optional[KeysBinding] = None,
+    ) -> None:
         """
         Action handler decorator
 
         Args:
-            action: Action
+            keys_handler: Keys handler
+            keys_binding: Optional[Dict[str, Sequence[str]]] = None,
 
         Attributes:
             actions: map action names to action handlers
+            keys_handler: Keys handler
         """
+        if keys_handler:
+            self.keys_handler = keys_handler
+            if keys_binding:
+                keys_handler.update(keys_binding)
+        else:
+            self.keys_handler = KeysHandler(keys_binding)
+        # Collect the methods with the Action decorator
         self.actions: Dict[str, ActionHandler] = {}
         for name, member in inspect.getmembers(self):
-            action = getattr(member, "pzp_action", None)
+            action: Optional[str] = getattr(member, "pzp_action", None)
             if action is not None:
                 self.actions[action] = member
-            if name == "default":
-                self.actions["default"] = member
+                # Default action
+                if name == "default":
+                    self.actions["default"] = member
+                # Keys binding
+                keys: Optional[Sequence[str]] = getattr(member, "pzp_keys", None)
+                if keys:
+                    self.keys_handler.set_keys_binding(keys, action)
 
     def process_key_event(self, key_event: KeyEvent) -> None:
         """
@@ -61,6 +81,7 @@ class ActionsHandler:
         fn = self.actions.get(action)
         if not fn:
             raise MissingHander(action=action, ch=key_event.ch)
+        # Check if the function has the key_event argument
         if "key_event" in inspect.getargs(fn.__code__).args:
             fn(key_event=key_event)  # type: ignore
         else:

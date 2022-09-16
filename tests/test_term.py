@@ -31,7 +31,7 @@ class FakeTerminal:
         return "\n".join(self.screen.display)
 
 
-def test_screen():
+def test_screen_movements():
     terminal = FakeTerminal()
     screen = Screen(stream=terminal.output_stream, fullscreen=True, height=24)
     assert terminal.cursor.y == 0
@@ -59,6 +59,27 @@ def test_screen():
     screen.move_left(200)
     screen.flush()
     assert terminal.cursor.x == 0
+
+
+def test_screen():
+    terminal = FakeTerminal()
+    screen = Screen(stream=terminal.output_stream, fullscreen=True, height=24)
+    assert terminal.cursor.x == 0
+    assert terminal.cursor.y == 0
+    screen.space(10).flush()
+    assert terminal.cursor.x == 10
+    assert terminal.cursor.y == 0
+    screen.nl(10).flush()
+    assert terminal.cursor.x == 0
+    assert terminal.cursor.y == 10
+    screen.space().flush()
+    assert terminal.cursor.x == 1
+    assert terminal.cursor.y == 10
+    screen.nl().flush()
+    assert terminal.cursor.x == 0
+    assert terminal.cursor.y == 11
+    screen.space(10).erase_line().flush()
+    assert terminal.cursor.x == 10
 
 
 def test_term():

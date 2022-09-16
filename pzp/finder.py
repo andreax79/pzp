@@ -2,8 +2,8 @@
 
 import sys
 from enum import Enum
-from typing import Any, Callable, Iterator, Dict, Optional, Sequence, TextIO, Union
-from .keys import KeysHandlers, KeyEvent
+from typing import Any, Callable, Iterator, Optional, Sequence, TextIO, Union
+from .keys import KeyEvent, KeysBinding
 from .exceptions import AcceptAction, AbortAction, CustomAction, MissingHander
 from .line_editor import LineEditor
 from .actions import Action, ActionsHandler
@@ -45,7 +45,7 @@ __all__ = [
 
 DEFAULT_POINTER = ">"
 "Default pointer"
-DEFAULT_PROMPT = ">"
+DEFAULT_PROMPT = "> "
 "Default input prompt"
 DEFAULT_HEADER = ""
 "Default header"
@@ -79,7 +79,7 @@ class Finder(ActionsHandler):
         pointer_str: str = DEFAULT_POINTER,
         prompt_str: str = DEFAULT_PROMPT,
         header_str: str = DEFAULT_HEADER,
-        actions: Optional[Dict[str, Sequence[str]]] = None,
+        keys_binding: Optional[KeysBinding] = None,
         output_stream: TextIO = sys.stderr,
     ):
         """
@@ -95,10 +95,10 @@ class Finder(ActionsHandler):
             pointer_str: Pointer to the current line
             prompt_str: Input prompt
             header_str: Header
-            actions: Custom key binding
+            keys_binding: Custom keys binding
             output_stream: Output stream
         """
-        super().__init__()
+        super().__init__(keys_binding=keys_binding)
         self.fullscreen = fullscreen
         self.height = height
         self.format_fn = format_fn
@@ -109,7 +109,6 @@ class Finder(ActionsHandler):
         self.prompt_str = prompt_str
         self.header_str = header_str
         self.output_stream = output_stream
-        self.keys_handlers = KeysHandlers(actions)
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
             self.get_items_fn: Union[None, Callable[[], Sequence[Any]], Iterator[Any]] = candidates
@@ -117,29 +116,6 @@ class Finder(ActionsHandler):
         else:
             self.get_items_fn = None
             self.candidates = candidates
-
-    def show(self, input: Optional[str] = None) -> Any:
-        """
-        Open pzp and return the selected element
-
-        Args:
-            input: initial search string
-
-        Returns:
-            item: the selected item
-        """
-        self.setup(input=input)
-        try:
-            while True:
-                self.process_key()
-                self.apply_filter()
-                self.update_screen()
-        except AcceptAction as accept:
-            return accept.selected_item
-        except AbortAction:
-            return None
-        finally:
-            self.screen.cleanup()
 
     @property
     def screen_items(self) -> Sequence[Any]:
@@ -193,7 +169,7 @@ class Finder(ActionsHandler):
         Args:
             input: initial search string
         """
-        self.input = LineEditor(input or "")
+        self.input = LineEditor(line=input or "", keys_handler=self.keys_handler)
         # Load the candidate list
         self.refresh_candidates()
         # Calculate the required height and setup the screen
@@ -202,6 +178,29 @@ class Finder(ActionsHandler):
         # Filter the items, calculate the screen offset
         self.apply_filter()
         self.update_screen(erase=False)
+
+    def show(self, input: Optional[str] = None) -> Any:
+        """
+        Open pzp and return the selected element
+
+        Args:
+            input: initial search string
+
+        Returns:
+            item: the selected item
+        """
+        self.setup(input=input)
+        try:
+            while True:
+                self.process_key()
+                self.apply_filter()
+                self.update_screen()
+        except AcceptAction as accept:
+            return accept.selected_item
+        except AbortAction:
+            return None
+        finally:
+            self.screen.cleanup()
 
     def refresh_candidates(self) -> None:
         "Load/reload the candidate list"
@@ -214,44 +213,9 @@ class Finder(ActionsHandler):
         self.selected: int = 0
         self.offset: int = 0
 
-    @Action("accept")
-    def accept(self, key_event: KeyEvent) -> None:
-        "Confirm"
-        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result())
-
-    @Action("abort")
-    def abort(self, key_event: KeyEvent) -> None:
-        "Cancel"
-        raise AbortAction(action="abort", ch=key_event.ch)
-
-    @Action("down")
-    def down(self) -> None:
-        "Move one line down"
-        self.selected = self.selected + 1
-
-    @Action("up")
-    def up(self) -> None:
-        "Move one line up"
-        self.selected = self.selected - 1
-
-    @Action("page-down")
-    def page_down(self) -> None:
-        "Move one page down"
-        self.selected = self.selected + self.max_candidates_lines
-
-    @Action("page-up")
-    def page_up(self) -> None:
-        "Move one page up"
-        self.selected = self.selected - self.max_candidates_lines
-
-    @Action("ignore")
-    def ignore(self) -> None:
-        "Do nothing"
-        pass
-
     def process_key(self, ch: Optional[str] = None) -> None:
         "Process the pressed key"
-        key_event = self.keys_handlers.get_key_event(ch)
+        key_event = self.keys_handler.get_key_event(ch)
         try:
             self.input.process_key_event(key_event)
         except MissingHander:
@@ -296,10 +260,10 @@ class Finder(ActionsHandler):
             is_selected = i + self.offset == self.selected
             self.screen.erase_line()
             if is_selected:
-                self.screen.write(f"{RED}{BOLD}{BLACK_BG}{self.pointer_str} ").reset().bold()
+                self.screen.write(f"{RED}{BOLD}{BLACK_BG}{self.pointer_str}").reset().bold()
             else:
-                self.screen.write(f"{BLACK_BG}{self.no_pointer_str} ").reset()
-            self.screen.write(self.format_fn(item)).reset().nl()
+                self.screen.write(f"{BLACK_BG}{self.no_pointer_str}").reset()
+            self.screen.space(1).write(self.format_fn(item)).reset().nl()
 
     def print_empty_lines(self) -> None:
         "Print empty lines"
@@ -309,11 +273,11 @@ class Finder(ActionsHandler):
     def print_info(self) -> None:
         "Print info"
         if self.info_style == InfoStyle.DEFAULT:
-            self.screen.erase_line().write(f"  {YELLOW}{self.matching_candidates_len}/{self.candidates_len}").reset().nl()
+            self.screen.erase_line().space(2).write(f"{YELLOW}{self.matching_candidates_len}/{self.candidates_len}").reset().nl()
 
     def print_prompt(self) -> None:
         "Print prompt"
-        self.screen.erase_line().write(f"{CYAN}{self.prompt_str} ").reset()
+        self.screen.erase_line().write(f"{CYAN}{self.prompt_str}").reset()
         self.input.print(self.screen)
 
     def match(self, item: Any) -> bool:
@@ -325,3 +289,38 @@ class Finder(ActionsHandler):
             return self.matching_candidates[self.selected]
         except IndexError:
             return None
+
+    @Action("accept", keys=["enter"])
+    def accept(self, key_event: KeyEvent) -> None:
+        "Confirm"
+        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result())
+
+    @Action("abort", keys=["ctrl-c", "ctrl-g", "ctrl-q", "esc"])
+    def abort(self, key_event: KeyEvent) -> None:
+        "Cancel"
+        raise AbortAction(action="abort", ch=key_event.ch)
+
+    @Action("down", keys=["ctrl-j", "ctrl-n", "down"])
+    def down(self) -> None:
+        "Move one line down"
+        self.selected = self.selected + 1
+
+    @Action("up", keys=["ctrl-k", "ctrl-p", "up"])
+    def up(self) -> None:
+        "Move one line up"
+        self.selected = self.selected - 1
+
+    @Action("page-down", keys=["page-down", "pgdn"])
+    def page_down(self) -> None:
+        "Move one page down"
+        self.selected = self.selected + self.max_candidates_lines
+
+    @Action("page-up", keys=["page-up", "pgup"])
+    def page_up(self) -> None:
+        "Move one page up"
+        self.selected = self.selected - self.max_candidates_lines
+
+    @Action("ignore", keys=["null", "insert"])
+    def ignore(self) -> None:
+        "Do nothing"
+        pass

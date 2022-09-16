@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from .finder import CustomAction, Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER
-from typing import Any, Callable, Dict, Iterator, Optional, Sequence, Union
+from .keys import KeysBinding
+from typing import Any, Callable, Iterator, Optional, Sequence, Union
 
 __version__ = "0.0.9"
 "PZP Version"
@@ -19,7 +20,7 @@ def pzp(
     pointer_str: str = DEFAULT_POINTER,
     prompt_str: str = DEFAULT_PROMPT,
     header_str: str = DEFAULT_HEADER,
-    actions: Optional[Dict[str, Sequence[str]]] = None,
+    keys_binding: Optional[KeysBinding] = None,
     input: Optional[str] = None,
 ) -> Any:
     """
@@ -39,7 +40,7 @@ def pzp(
         pointer_str: Pointer to the current line
         prompt_str: Input prompt
         header_str: Header
-        actions: Custom key binding
+        keys_binding: Custom keys binding
 
     Returns:
         item: the selected item
@@ -54,6 +55,6 @@ def pzp(
         pointer_str=pointer_str,
         prompt_str=prompt_str,
         header_str=header_str,
-        actions=actions,
+        keys_binding=keys_binding,
     )
     return finder.show(input=input)

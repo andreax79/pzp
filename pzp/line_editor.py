@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
-from inspect import getmembers
 from typing import Optional, TYPE_CHECKING
 from .ansi import SPACE
 from .actions import Action, ActionsHandler
-from .keys import KeyEvent
+from .keys import KeyEvent, KeysHandler
 
 if TYPE_CHECKING:
     from .screen import Screen
@@ -13,14 +12,15 @@ __all__ = ["LineEditor"]
 
 
 class LineEditor(ActionsHandler):
-    def __init__(self, line: Optional[str] = None) -> None:
+    def __init__(self, line: Optional[str] = None, keys_handler: Optional[KeysHandler] = None) -> None:
         """
         Line editor
 
         Args:
             line: Initial value
+            keys_handler: Keys handler
         """
-        super().__init__()
+        super().__init__(keys_handler=keys_handler)
         self.line = line or ""
         self.cursor_pos: int = len(self.line)
 
@@ -38,34 +38,34 @@ class LineEditor(ActionsHandler):
             self.line = self.line[0 : self.cursor_pos] + ch + self.line[self.cursor_pos :]
             self.adj_cursor_pos(len(ch))
 
-    @Action("backward-char")
+    @Action("backward-char", keys=["ctrl-b", "left"])
     def backward_char(self) -> None:
         "Move the cursor back one character"
         self.set_cursor_pos(self.cursor_pos - 1)
 
-    @Action("forward-char")
+    @Action("forward-char", keys=["ctrl-f", "right"])
     def forward_char(self) -> None:
         "Move the cursor forward one character"
         self.set_cursor_pos(self.cursor_pos + 1)
 
-    @Action("beginning-of-line")
+    @Action("beginning-of-line", keys=["ctrl-a", "home"])
     def beginning_of_line(self) -> None:
         "Move the cursor to the line start"
         self.set_cursor_pos(0)
 
-    @Action("end-of-line")
+    @Action("end-of-line", keys=["ctrl-e", "end"])
     def end_of_line(self) -> None:
         "Move the cursor to the line end"
         self.set_cursor_pos(len(self))
 
-    @Action("backward-delete-char")
+    @Action("backward-delete-char", keys=["ctrl-h", "bspace"])
     def delete_backward_char(self) -> None:
         "Delete the previous character"
         if self.cursor_pos > 0:
             self.line = self.line[: self.cursor_pos - 1] + self.line[self.cursor_pos :]
         self.adj_cursor_pos(-1)
 
-    @Action("delete-char")
+    @Action("delete-char", keys=["ctrl-d", "del"])
     def delete_char(self) -> None:
         "Delete the current character"
         self.line = self.line[: self.cursor_pos] + self.line[self.cursor_pos + 1 :]

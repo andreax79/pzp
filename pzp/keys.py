@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-from collections import ChainMap
 from typing import Dict, Optional, Sequence
 from .input import get_char
 
 __all__ = [
     "KEYS",
-    "ACTIONS",
     "KeyEvent",
-    "KeysHandlers",
+    "KeysHandler",
+    "KeysBinding",
 ]
+
+KeysBinding = Dict[str, Sequence[str]]
 
 KEYS = {
     "ctrl-a": "\x01",
@@ -63,39 +64,6 @@ KEYS = {
     "esc": "\x1b",
 }
 
-ACTIONS = {
-    "abort": ["ctrl-c", "ctrl-g", "ctrl-q", "esc"],
-    "accept": ["enter"],
-    "backward-delete-char": ["ctrl-h", "bspace"],
-    "delete-char": ["ctrl-d", "del"],
-    "down": ["ctrl-j", "ctrl-n", "down"],
-    "up": ["ctrl-k", "ctrl-p", "up"],
-    "ignore": ["null", "insert"],
-    "page-up": ["page-up", "pgup"],
-    "page-down": ["page-down", "pgdn"],
-    "backward-char": ["ctrl-b", "left"],
-    "forward-char": ["ctrl-f", "right"],
-    "beginning-of-line": ["ctrl-a", "home"],
-    "end-of-line": ["ctrl-e", "end"],
-}
-
-
-def get_keycodes_actions(actions: Optional[Dict[str, Sequence[str]]] = None) -> Dict[str, str]:
-    """
-    Get keycodes to actions mapping
-
-    Args:
-        actions: Custom key binding
-
-    Returns:
-        keycodes_actions: key => action mapping
-    """
-    if actions is not None:
-        actions_items = dict(ACTIONS, **actions).items()
-    else:
-        actions_items = ACTIONS.items()
-    return dict(ChainMap(*[{KEYS[v]: k for v in vlist} for k, vlist in actions_items]))
-
 
 class KeyEvent:
     def __init__(self, ch: str, action: Optional[str]) -> None:
@@ -113,10 +81,35 @@ class KeyEvent:
         self.ch = ch
         self.action = action
 
+    def __str__(self) -> str:
+        return f"<{self.ch}, {self.action or '-'}>"
 
-class KeysHandlers:
-    def __init__(self, actions: Optional[Dict[str, Sequence[str]]] = None) -> None:
-        self.keycodes_actions = get_keycodes_actions(actions)
+
+class KeysHandler:
+    def __init__(self, keys_binding: Optional[KeysBinding] = None) -> None:
+        """
+        Keys handler
+
+        Args:
+            keys_binding: Custom key binding
+
+        Attributes:
+            keycodes_actions: key => action mapping
+        """
+        self.keycodes_actions: Dict[str, str] = {}
+        if keys_binding:
+            self.update(keys_binding)
+
+    def update(self, keys_binding: KeysBinding) -> None:
+        for action, keys in keys_binding.items():
+            self.set_keys_binding(keys, action)
+
+    def set_keys_binding(self, keys: Sequence[str], action: str) -> None:
+        for key in keys:
+            self.set_key_binding(key, action)
+
+    def set_key_binding(self, key: str, action: str) -> None:
+        self.keycodes_actions[KEYS[key] if len(key) > 1 else key] = action
 
     def get_key_event(self, ch: Optional[str] = None) -> KeyEvent:
         if ch is None:
