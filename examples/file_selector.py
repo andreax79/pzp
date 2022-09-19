@@ -4,8 +4,8 @@ from pzp import pzp
 
 
 def main():
-    item = pzp(candidates=list(Path('.').iterdir()))
-    print(str(item) if item else '')
+    item = pzp(candidates=Path(".").iterdir())
+    print(str(item) if item else "")
 
 
 if __name__ == "__main__":

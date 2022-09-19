@@ -3,17 +3,11 @@
 from pzp.input import get_char
 from pzp.keys import KEYS
 
-NULL = "\0"
-UP = "↑"
-DOWN = "↓"
-RIGHT = "→"
-LEFT = "←"
-
 CR = "\r"
-ESC = "\u001b"
 
 keycodes = {v: k for k, v in KEYS.items()}
 ch = ""
+print("Press enter to exit")
 while ch != CR:
     ch = get_char()
     key = keycodes.get(ch)
