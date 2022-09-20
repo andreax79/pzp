@@ -2,7 +2,8 @@
 
 from .finder import CustomAction, Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER
 from .keys import KeysBinding
-from typing import Any, Callable, Iterator, Optional, Sequence, Union
+from .matcher import Matcher, ExtendedMatcher
+from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
 __version__ = "0.0.9"
 "PZP Version"
@@ -21,6 +22,7 @@ def pzp(
     prompt_str: str = DEFAULT_PROMPT,
     header_str: str = DEFAULT_HEADER,
     keys_binding: Optional[KeysBinding] = None,
+    matcher: Union[Matcher, Type[Matcher]] = ExtendedMatcher,
     input: Optional[str] = None,
 ) -> Any:
     """
@@ -41,6 +43,7 @@ def pzp(
         prompt_str: Input prompt
         header_str: Header
         keys_binding: Custom keys binding
+        matcher: Matcher
 
     Returns:
         item: the selected item
@@ -56,5 +59,6 @@ def pzp(
         prompt_str=prompt_str,
         header_str=header_str,
         keys_binding=keys_binding,
+        matcher=matcher,
     )
     return finder.show(input=input)

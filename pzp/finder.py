@@ -2,11 +2,12 @@
 
 import sys
 from enum import Enum
-from typing import Any, Callable, Iterator, Optional, Sequence, TextIO, Union
+from typing import Any, Callable, Iterator, Optional, Sequence, TextIO, Type, Union
 from .keys import KeyEvent, KeysBinding
 from .exceptions import AcceptAction, AbortAction, CustomAction, MissingHander
 from .line_editor import LineEditor
 from .actions import Action, ActionsHandler
+from .matcher import Matcher, ExtendedMatcher
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -80,6 +81,7 @@ class Finder(ActionsHandler):
         prompt_str: str = DEFAULT_PROMPT,
         header_str: str = DEFAULT_HEADER,
         keys_binding: Optional[KeysBinding] = None,
+        matcher: Union[Matcher, Type[Matcher]] = ExtendedMatcher,
         output_stream: TextIO = sys.stderr,
     ):
         """
@@ -96,6 +98,7 @@ class Finder(ActionsHandler):
             prompt_str: Input prompt
             header_str: Header
             keys_binding: Custom keys binding
+            matcher: Matcher
             output_stream: Output stream
         """
         super().__init__(keys_binding=keys_binding)
@@ -108,6 +111,7 @@ class Finder(ActionsHandler):
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
         self.header_str = header_str
+        self.matcher = matcher() if callable(matcher) else matcher
         self.output_stream = output_stream
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
@@ -226,7 +230,9 @@ class Finder(ActionsHandler):
 
     def apply_filter(self) -> None:
         "Filter the items, calculate the screen offset"
-        self.matching_candidates: Sequence[Any] = list(filter(self.match, self.candidates))
+        self.matching_candidates: Sequence[Any] = self.matcher.filter(
+            pattern=str(self.input), candidates=self.candidates, format_fn=self.format_fn
+        )
         # Adject selected
         self.selected = max(min(self.selected, self.matching_candidates_len - 1), 0)
         # Calculate the offset

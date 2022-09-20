@@ -18,6 +18,7 @@ nav:
   - Examples:
     - "file selector": examples/file_selector.md
     - "number selector": examples/number_selector.md
+    - "text selector": examples/text_selector.md
   - API:
     - "pzp": api/module.md
     - "pzp.actions": api/actions.md
@@ -27,6 +28,7 @@ nav:
     - "pzp.input": api/input.md
     - "pzp.keys": api/keys.md
     - "pzp.line_editor": api/line_editor.md
+    - "pzp.matcher": api/matcher.md
     - "pzp.screen": api/screen.md
   - License: license.md
 

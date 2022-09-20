@@ -68,7 +68,7 @@ KEYS = {
 class KeyEvent:
     def __init__(self, ch: str, action: Optional[str]) -> None:
         """
-        Key Event
+        Key Event represents a key action on the keyboard.
 
         Args:
             ch: Pressed key
@@ -88,7 +88,7 @@ class KeyEvent:
 class KeysHandler:
     def __init__(self, keys_binding: Optional[KeysBinding] = None) -> None:
         """
-        Keys handler
+        Keys handler is a collection of bindings of keys to actions.
 
         Args:
             keys_binding: Custom key binding
@@ -105,10 +105,12 @@ class KeysHandler:
             self.set_keys_binding(keys, action)
 
     def set_keys_binding(self, keys: Sequence[str], action: str) -> None:
+        "Add a binding for one or more keys to an action"
         for key in keys:
             self.set_key_binding(key, action)
 
     def set_key_binding(self, key: str, action: str) -> None:
+        "Add a binding for one key to an action"
         self.keycodes_actions[KEYS[key] if len(key) > 1 else key] = action
 
     def get_key_event(self, ch: Optional[str] = None) -> KeyEvent:
