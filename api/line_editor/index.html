@@ -51,6 +51,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul class="current">
@@ -71,6 +73,8 @@
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">pzp.line_editor</a>
     <ul class="current">
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../matcher/">pzp.matcher</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
@@ -139,7 +143,8 @@
 
         <details class="quote">
           <summary>Source code in <code>pzp/line_editor.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
@@ -218,14 +223,15 @@
 <span class="normal">91</span>
 <span class="normal">92</span>
 <span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">LineEditor</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Line editor</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            line: Initial value</span>
+<span class="sd">            keys_handler: Keys handler</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_handler</span><span class="o">=</span><span class="n">keys_handler</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 
@@ -243,34 +249,34 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">ch</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="p">:]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-b&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Move the cursor back one character&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-f&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">forward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Move the cursor forward one character&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-a&quot;</span><span class="p">,</span> <span class="s2">&quot;home&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">beginning_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Move the cursor to the line start&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-e&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">end_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Move the cursor to the line end&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-h&quot;</span><span class="p">,</span> <span class="s2">&quot;bspace&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">delete_backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Delete the previous character&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">)</span>
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-d&quot;</span><span class="p">,</span> <span class="s2">&quot;del&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">delete_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Delete the current character&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
@@ -316,7 +322,7 @@
 
 
 <h3 id="pzp.line_editor.LineEditor.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -346,12 +352,23 @@
                 <code>None</code>
           </td>
         </tr>
+        <tr>
+          <td><code>keys_handler</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="pzp.keys.KeysHandler" href="../keys/#pzp.keys.KeysHandler">KeysHandler</a>]</code>
+          </td>
+          <td><p>Keys handler</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
@@ -360,14 +377,15 @@
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Line editor</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        line: Initial value</span>
+<span class="sd">        keys_handler: Keys handler</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_handler</span><span class="o">=</span><span class="n">keys_handler</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -476,7 +494,7 @@
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">)</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-b&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor back one character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -505,7 +523,7 @@
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">)</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-a&quot;</span><span class="p">,</span> <span class="s2">&quot;home&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">beginning_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor to the line start&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -536,7 +554,7 @@
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">)</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-h&quot;</span><span class="p">,</span> <span class="s2">&quot;bspace&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">delete_backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Delete the previous character&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -568,7 +586,7 @@
 <span class="normal">69</span>
 <span class="normal">70</span>
 <span class="normal">71</span>
-<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">)</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-d&quot;</span><span class="p">,</span> <span class="s2">&quot;del&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">delete_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Delete the current character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
@@ -598,7 +616,7 @@
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">)</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-e&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">end_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor to the line end&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
@@ -627,7 +645,7 @@
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
-<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">)</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-f&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">forward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor forward one character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -777,7 +795,7 @@
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../keys/" class="btn btn-neutral float-left" title="pzp.keys"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../screen/" class="btn btn-neutral float-right" title="pzp.screen">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../matcher/" class="btn btn-neutral float-right" title="pzp.matcher">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -803,7 +821,7 @@
       <span><a href="../keys/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../screen/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../matcher/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

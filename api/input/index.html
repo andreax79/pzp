@@ -51,6 +51,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul class="current">
@@ -71,6 +73,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../keys/">pzp.keys</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../line_editor/">pzp.line_editor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../matcher/">pzp.matcher</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
@@ -120,6 +124,69 @@
 
 
 
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="pzp.input.get_char" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_char</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Read a keypress and return the resulting character as a string.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>char</code></td>          <td>
+                <code>str</code>
+          </td>
+          <td><p>the pressed key or the key description (e.g. "home")</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>pzp/input_win.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read a keypress and return the resulting character as a string.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        char: the pressed key or the key description (e.g. &quot;home&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">WIN_ESC</span><span class="p">:</span>  <span class="c1"># When reading arrow/insert/del key, the first call returnx 0xe0</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">()</span>  <span class="c1"># The second call returns the key code</span>
+        <span class="k">return</span> <span class="n">KEYS_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">NULL</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ch</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
 
 
 

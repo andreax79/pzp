@@ -51,6 +51,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul class="current">
@@ -71,6 +73,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../keys/">pzp.keys</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../line_editor/">pzp.line_editor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../matcher/">pzp.matcher</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
@@ -166,7 +170,7 @@
 
 
 <h2 id="pzp.finder.DEFAULT_PROMPT" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_PROMPT</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span></code>
+<code class="highlight language-python"><span class="n">DEFAULT_PROMPT</span> <span class="o">=</span> <span class="s1">&#39;&gt; &#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -357,8 +361,7 @@ that is mapped to the "custom" action.</p>
 
         <details class="quote">
           <summary>Source code in <code>pzp/finder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 70</span>
-<span class="normal"> 71</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 71</span>
 <span class="normal"> 72</span>
 <span class="normal"> 73</span>
 <span class="normal"> 74</span>
@@ -614,7 +617,12 @@ that is mapped to the "custom" action.</p>
 <span class="normal">324</span>
 <span class="normal">325</span>
 <span class="normal">326</span>
-<span class="normal">327</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finder</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finder</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">candidates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
@@ -626,7 +634,8 @@ that is mapped to the "custom" action.</p>
         <span class="n">pointer_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_POINTER</span><span class="p">,</span>
         <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROMPT</span><span class="p">,</span>
         <span class="n">header_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HEADER</span><span class="p">,</span>
-        <span class="n">actions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">matcher</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Matcher</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">Matcher</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ExtendedMatcher</span><span class="p">,</span>
         <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -642,10 +651,11 @@ that is mapped to the "custom" action.</p>
 <span class="sd">            pointer_str: Pointer to the current line</span>
 <span class="sd">            prompt_str: Input prompt</span>
 <span class="sd">            header_str: Header</span>
-<span class="sd">            actions: Custom key binding</span>
+<span class="sd">            keys_binding: Custom keys binding</span>
+<span class="sd">            matcher: Matcher</span>
 <span class="sd">            output_stream: Output stream</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_binding</span><span class="o">=</span><span class="n">keys_binding</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen</span> <span class="o">=</span> <span class="n">fullscreen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span> <span class="o">=</span> <span class="n">format_fn</span>
@@ -655,8 +665,8 @@ that is mapped to the "custom" action.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointer_str</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt_str</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">header_str</span> <span class="o">=</span> <span class="n">header_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span> <span class="o">=</span> <span class="n">matcher</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">matcher</span><span class="p">)</span> <span class="k">else</span> <span class="n">matcher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_stream</span> <span class="o">=</span> <span class="n">output_stream</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys_handlers</span> <span class="o">=</span> <span class="n">KeysHandlers</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
         <span class="c1"># Get the candidates</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span> <span class="ow">or</span> <span class="n">callable</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_items_fn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">candidates</span>
@@ -664,29 +674,6 @@ that is mapped to the "custom" action.</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_items_fn</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">=</span> <span class="n">candidates</span>
-
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Open pzp and return the selected element</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            input: initial search string</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            item: the selected item</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">process_key</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">AcceptAction</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">accept</span><span class="o">.</span><span class="n">selected_item</span>
-        <span class="k">except</span> <span class="n">AbortAction</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">screen_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
@@ -740,7 +727,7 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        Args:</span>
 <span class="sd">            input: initial search string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">LineEditor</span><span class="p">(</span><span class="nb">input</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">LineEditor</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="nb">input</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">keys_handler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="p">)</span>
         <span class="c1"># Load the candidate list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh_candidates</span><span class="p">()</span>
         <span class="c1"># Calculate the required height and setup the screen</span>
@@ -749,6 +736,29 @@ that is mapped to the "custom" action.</p>
         <span class="c1"># Filter the items, calculate the screen offset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">(</span><span class="n">erase</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open pzp and return the selected element</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input: initial search string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            item: the selected item</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process_key</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">AcceptAction</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">accept</span><span class="o">.</span><span class="n">selected_item</span>
+        <span class="k">except</span> <span class="n">AbortAction</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">refresh_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Load/reload the candidate list&quot;</span>
@@ -761,44 +771,9 @@ that is mapped to the "custom" action.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Confirm&quot;</span>
-        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Cancel&quot;</span>
-        <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Move one line down&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="mi">1</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Move one line up&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="mi">1</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">page_down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Move one page down&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">page_up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Move one page up&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
-
-    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="s2">&quot;Do nothing&quot;</span>
-        <span class="k">pass</span>
-
     <span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Process the pressed key&quot;</span>
-        <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handlers</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+        <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
@@ -809,7 +784,9 @@ that is mapped to the "custom" action.</p>
 
     <span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Filter the items, calculate the screen offset&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">pattern</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">),</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span>
+        <span class="p">)</span>
         <span class="c1"># Adject selected</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
         <span class="c1"># Calculate the offset</span>
@@ -843,10 +820,10 @@ that is mapped to the "custom" action.</p>
             <span class="n">is_selected</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">is_selected</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">RED</span><span class="si">}{</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">bold</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">RED</span><span class="si">}{</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">bold</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span><span class="p">(</span><span class="n">item</span><span class="p">))</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">space</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span><span class="p">(</span><span class="n">item</span><span class="p">))</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">print_empty_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Print empty lines&quot;</span>
@@ -856,11 +833,11 @@ that is mapped to the "custom" action.</p>
     <span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Print info&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_style</span> <span class="o">==</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">YELLOW</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">space</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">YELLOW</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">print_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Print prompt&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CYAN</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CYAN</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -872,6 +849,41 @@ that is mapped to the "custom" action.</p>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Confirm&quot;</span>
+        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Cancel&quot;</span>
+        <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-j&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-n&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Move one line down&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-k&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-p&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Move one line up&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="s2">&quot;pgdn&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">page_down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Move one page down&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="s2">&quot;pgup&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">page_up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Move one page up&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
+
+    <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="s2">&quot;Do nothing&quot;</span>
+        <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -892,7 +904,7 @@ that is mapped to the "custom" action.</p>
 
 
 <h3 id="pzp.finder.Finder.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">actions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">matcher</span><span class="o">=</span><span class="n">ExtendedMatcher</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1003,13 +1015,23 @@ that is mapped to the "custom" action.</p>
           </td>
         </tr>
         <tr>
-          <td><code>actions</code></td>
+          <td><code>keys_binding</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Dict">Dict</span>[str, <span title="typing.Sequence">Sequence</span>[str]]]</code>
+                <code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>
           </td>
-          <td><p>Custom key binding</p></td>
+          <td><p>Custom keys binding</p></td>
           <td>
                 <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>matcher</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>, <span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>]]</code>
+          </td>
+          <td><p>Matcher</p></td>
+          <td>
+                <code>ExtendedMatcher</code>
           </td>
         </tr>
         <tr>
@@ -1027,8 +1049,7 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 71</span>
-<span class="normal"> 72</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 72</span>
 <span class="normal"> 73</span>
 <span class="normal"> 74</span>
 <span class="normal"> 75</span>
@@ -1075,7 +1096,10 @@ that is mapped to the "custom" action.</p>
 <span class="normal">116</span>
 <span class="normal">117</span>
 <span class="normal">118</span>
-<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">candidates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
     <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -1086,7 +1110,8 @@ that is mapped to the "custom" action.</p>
     <span class="n">pointer_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_POINTER</span><span class="p">,</span>
     <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROMPT</span><span class="p">,</span>
     <span class="n">header_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HEADER</span><span class="p">,</span>
-    <span class="n">actions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">matcher</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Matcher</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">Matcher</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ExtendedMatcher</span><span class="p">,</span>
     <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1102,10 +1127,11 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        pointer_str: Pointer to the current line</span>
 <span class="sd">        prompt_str: Input prompt</span>
 <span class="sd">        header_str: Header</span>
-<span class="sd">        actions: Custom key binding</span>
+<span class="sd">        keys_binding: Custom keys binding</span>
+<span class="sd">        matcher: Matcher</span>
 <span class="sd">        output_stream: Output stream</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_binding</span><span class="o">=</span><span class="n">keys_binding</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen</span> <span class="o">=</span> <span class="n">fullscreen</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span> <span class="o">=</span> <span class="n">format_fn</span>
@@ -1115,8 +1141,8 @@ that is mapped to the "custom" action.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointer_str</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span> <span class="o">=</span> <span class="n">prompt_str</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">header_str</span> <span class="o">=</span> <span class="n">header_str</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span> <span class="o">=</span> <span class="n">matcher</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">matcher</span><span class="p">)</span> <span class="k">else</span> <span class="n">matcher</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">output_stream</span> <span class="o">=</span> <span class="n">output_stream</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">keys_handlers</span> <span class="o">=</span> <span class="n">KeysHandlers</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
     <span class="c1"># Get the candidates</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span> <span class="ow">or</span> <span class="n">callable</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_items_fn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">candidates</span>
@@ -1146,10 +1172,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Cancel&quot;</span>
     <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
@@ -1175,10 +1201,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Confirm&quot;</span>
     <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
@@ -1204,20 +1230,24 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">263</span>
-<span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Filter the items, calculate the screen offset&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matcher</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">pattern</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">),</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span>
+    <span class="p">)</span>
     <span class="c1"># Adject selected</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
     <span class="c1"># Calculate the offset</span>
@@ -1253,10 +1283,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">candidates_len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of candidates&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">)</span>
@@ -1282,10 +1312,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-j&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-n&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one line down&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1315,10 +1345,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">header_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of header lines&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">NL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_str</span> <span class="k">else</span> <span class="mi">0</span>
@@ -1344,10 +1374,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Do nothing&quot;</span>
     <span class="k">pass</span>
@@ -1377,10 +1407,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">info_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of info lines&quot;</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_style</span> <span class="o">==</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span> <span class="k">else</span> <span class="mi">0</span>
@@ -1410,10 +1440,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">margin_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Screen margin&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_lines</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt_lines</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_lines</span>
@@ -1443,10 +1473,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">matching_candidates_len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of matching candidates&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">)</span>
@@ -1476,10 +1506,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">max_candidates_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Maximun number of candidates printables on the screen&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin_lines</span>
@@ -1505,10 +1535,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="s2">&quot;pgdn&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">page_down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one page down&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
@@ -1534,10 +1564,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="s2">&quot;pgup&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">page_up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one page up&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span>
@@ -1563,12 +1593,12 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
-<span class="normal">325</span>
-<span class="normal">326</span>
-<span class="normal">327</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="s2">&quot;Output the selected item, if any&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
@@ -1596,10 +1626,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_empty_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_empty_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Print empty lines&quot;</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_items_len</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">nl</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
@@ -1625,10 +1655,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">288</span>
-<span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Print header&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_str</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_str</span><span class="p">)</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
@@ -1654,13 +1684,13 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Print info&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_style</span> <span class="o">==</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">YELLOW</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">space</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">YELLOW</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates_len</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1683,25 +1713,25 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">293</span>
-<span class="normal">294</span>
-<span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span>
-<span class="normal">301</span>
-<span class="normal">302</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Print candidates&quot;</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen_items</span><span class="p">):</span>
         <span class="n">is_selected</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">is_selected</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">RED</span><span class="si">}{</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">bold</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">RED</span><span class="si">}{</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">bold</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span><span class="p">(</span><span class="n">item</span><span class="p">))</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLACK_BG</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">no_pointer_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">space</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_fn</span><span class="p">(</span><span class="n">item</span><span class="p">))</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span><span class="o">.</span><span class="n">nl</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1724,12 +1754,12 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
-<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Print prompt&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CYAN</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CYAN</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1753,18 +1783,18 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
-<span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Process the pressed key&quot;</span>
-    <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handlers</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
@@ -1798,10 +1828,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">prompt_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of prompt lines&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">NL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
@@ -1827,16 +1857,16 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">209</span>
 <span class="normal">210</span>
 <span class="normal">211</span>
 <span class="normal">212</span>
 <span class="normal">213</span>
 <span class="normal">214</span>
-<span class="normal">215</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">refresh_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">refresh_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Load/reload the candidate list&quot;</span>
     <span class="c1"># Get items</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_items_fn</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">):</span>
@@ -1872,10 +1902,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">screen_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
     <span class="s2">&quot;Candidates to be displayed on the screen&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_candidates_lines</span><span class="p">]</span>
@@ -1905,10 +1935,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">screen_items_len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Number of items on the screen&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen_items</span><span class="p">)</span>
@@ -1958,29 +1988,29 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Setup Finder execution</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        input: initial search string</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">LineEditor</span><span class="p">(</span><span class="nb">input</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">LineEditor</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="nb">input</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">keys_handler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="p">)</span>
     <span class="c1"># Load the candidate list</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">refresh_candidates</span><span class="p">()</span>
     <span class="c1"># Calculate the required height and setup the screen</span>
@@ -2053,28 +2083,28 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Open pzp and return the selected element</span>
 
@@ -2118,10 +2148,10 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-k&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-p&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one line up&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">-</span> <span class="mi">1</span>
@@ -2147,17 +2177,17 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
-<span class="normal">282</span>
-<span class="normal">283</span>
-<span class="normal">284</span>
-<span class="normal">285</span>
-<span class="normal">286</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">erase</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">erase</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Update the screen - erase the old items, print the filtered items and the prompt&quot;</span>
     <span class="k">if</span> <span class="n">erase</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_screen</span><span class="p">()</span>
@@ -2203,13 +2233,13 @@ that is mapped to the "custom" action.</p>
 
         <details class="quote">
           <summary>Source code in <code>pzp/finder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
-<span class="normal">62</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
-<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InfoStyle</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="normal">67</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InfoStyle</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="s2">&quot;Display style of finder info&quot;</span>
 
     <span class="n">DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
@@ -2302,11 +2332,11 @@ that is mapped to the "custom" action.</p>
 
         <details class="quote">
           <summary>Source code in <code>pzp/finder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
-<span class="normal">55</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
-<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Layout</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Layout</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="s2">&quot;Finder layouts&quot;</span>
 
     <span class="n">REVERSE_LIST</span> <span class="o">=</span> <span class="s2">&quot;reverse-list&quot;</span>

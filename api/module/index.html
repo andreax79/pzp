@@ -51,6 +51,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul class="current">
@@ -71,6 +73,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../keys/">pzp.keys</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../line_editor/">pzp.line_editor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../matcher/">pzp.matcher</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
@@ -124,7 +128,7 @@
 
 
 <h2 id="pzp.__version__" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.7&#39;</span></code>
+<code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.10&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -302,7 +306,7 @@ that is mapped to the "custom" action.</p>
 
 
 <h2 id="pzp.pzp" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pzp</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">actions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">pzp</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="o">.</span><span class="n">REVERSE_LIST</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">matcher</span><span class="o">=</span><span class="n">ExtendedMatcher</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h2>
 
@@ -418,13 +422,23 @@ that is mapped to the "custom" action.</p>
           </td>
         </tr>
         <tr>
-          <td><code>actions</code></td>
+          <td><code>keys_binding</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Dict">Dict</span>[str, <span title="typing.Sequence">Sequence</span>[str]]]</code>
+                <code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>
           </td>
-          <td><p>Custom key binding</p></td>
+          <td><p>Custom keys binding</p></td>
           <td>
                 <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>matcher</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>, <span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>]]</code>
+          </td>
+          <td><p>Matcher</p></td>
+          <td>
+                <code>ExtendedMatcher</code>
           </td>
         </tr>
     </tbody>
@@ -450,9 +464,7 @@ that is mapped to the "custom" action.</p>
 
       <details class="quote">
         <summary>Source code in <code>pzp/__init__.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
@@ -497,7 +509,12 @@ that is mapped to the "custom" action.</p>
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pzp</span><span class="p">(</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pzp</span><span class="p">(</span>
     <span class="n">candidates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
     <span class="n">height</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -507,7 +524,8 @@ that is mapped to the "custom" action.</p>
     <span class="n">pointer_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_POINTER</span><span class="p">,</span>
     <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROMPT</span><span class="p">,</span>
     <span class="n">header_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HEADER</span><span class="p">,</span>
-    <span class="n">actions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">matcher</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Matcher</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">Matcher</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ExtendedMatcher</span><span class="p">,</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -527,7 +545,8 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        pointer_str: Pointer to the current line</span>
 <span class="sd">        prompt_str: Input prompt</span>
 <span class="sd">        header_str: Header</span>
-<span class="sd">        actions: Custom key binding</span>
+<span class="sd">        keys_binding: Custom keys binding</span>
+<span class="sd">        matcher: Matcher</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        item: the selected item</span>
@@ -542,7 +561,8 @@ that is mapped to the "custom" action.</p>
         <span class="n">pointer_str</span><span class="o">=</span><span class="n">pointer_str</span><span class="p">,</span>
         <span class="n">prompt_str</span><span class="o">=</span><span class="n">prompt_str</span><span class="p">,</span>
         <span class="n">header_str</span><span class="o">=</span><span class="n">header_str</span><span class="p">,</span>
-        <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">,</span>
+        <span class="n">keys_binding</span><span class="o">=</span><span class="n">keys_binding</span><span class="p">,</span>
+        <span class="n">matcher</span><span class="o">=</span><span class="n">matcher</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">finder</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -562,7 +582,7 @@ that is mapped to the "custom" action.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../examples/number_selector/" class="btn btn-neutral float-left" title="number selector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../examples/text_selector/" class="btn btn-neutral float-left" title="text selector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../actions/" class="btn btn-neutral float-right" title="pzp.actions">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -586,7 +606,7 @@ that is mapped to the "custom" action.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../examples/number_selector/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../examples/text_selector/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../actions/" style="color: #fcfcfc">Next &raquo;</a></span>
