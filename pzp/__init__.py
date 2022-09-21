@@ -5,7 +5,7 @@ from .keys import KeysBinding
 from .matcher import Matcher, ExtendedMatcher
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 "PZP Version"
 
 __all__ = ["pzp", "CustomAction"]
