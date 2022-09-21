@@ -1,6 +1,6 @@
+import pyte
 from pzp.finder import Finder
 from pzp.screen import Screen
-import pyte
 
 
 class FakeIO:
@@ -111,14 +111,7 @@ def test_term():
     finder.apply_filter()
     finder.update_screen()
     assert finder.selected == 0
-
     assert finder.prepare_result() == "0x99"
-    # print(terminal)
-    # assert terminal.cursor.y == finder.height + lines - 1
 
     finder.screen.cleanup()
-    # output_stream.write("done\n")
-    # print(terminal.cursor.y)
-    # print("-----")
-    # print(terminal)
-    # print("-----")
+    assert terminal.cursor.y == 0
