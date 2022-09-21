@@ -3,6 +3,7 @@
 import re
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Sequence, Tuple
+from .commons import first_or_default
 
 __all__ = [
     "Matcher",
@@ -11,6 +12,8 @@ __all__ = [
 ]
 
 SPLIT_ESCAPED_RE = re.compile(r"(?<!\\)\s+")
+PREFIXES = ["!^", "!'", "^", "'", "!"]
+SUFFIXES = ["$"]
 
 
 class Matcher(ABC):
@@ -34,6 +37,7 @@ class ExactMatcher(Matcher):
     """
     Exact matcher
     """
+
     def filter(self, pattern: str, candidates: Sequence[Any], format_fn: Callable[[Any], str] = lambda x: str(x)) -> Sequence[Any]:
         pattern = pattern.lower()
         return [item for item in candidates if pattern in format_fn(item).lower()]
@@ -69,21 +73,8 @@ class ExtendedMatcherFilter:
     @classmethod
     def split(cls, term: str) -> Tuple[str, str, str]:
         "Split term in prefix, term, suffix"
-        term, prefix = [(term[len(p) :], p) for p in ("!^", "!'", "^", "'", "!", "") if term.startswith(p)][0]
-        term, suffix = [(term[:len(term)-len(s)], s) for s in ("$", "") if term.endswith(s)][0]
-        # if term[0:2] in ("!^", "!'"):
-        #     prefix = term[0:2]
-        #     term = term[2:]
-        # elif term[0:1] in ("^", "'", "!"):
-        #     prefix = term[0:1]
-        #     term = term[1:]
-        # else:
-        #     prefix = ""
-        # if term[-1:] == "$":
-        #     suffix = term[-1:]
-        #     term = term[:-1]
-        # else:
-        #     suffix = ""
+        term, prefix = first_or_default([(term[len(p) :], p) for p in PREFIXES if term.startswith(p)], (term, ""))
+        term, suffix = first_or_default([(term[: len(term) - len(s)], s) for s in SUFFIXES if term.endswith(s)], (term, ""))
         return prefix, term, suffix
 
     def __call__(self, txt: str) -> bool:
@@ -121,8 +112,10 @@ class ExtendedMatcher(Matcher):
     """
     Extended Matcher
 
-    This matcher accept multiple patterns delimited by spaces, such as: 'aaa ^bbb ccc$ !ddd
-    If patter is prefixed by a single-quote character ', it is interpreted as an "exact-match" and it will not be splitted by spaces.
+    This matcher accept multiple patterns delimited by spaces, such as: term ^start end$ !not
+
+    If patter is prefixed by a single-quote character ', it will not be splitted by spaces.
+
     A backslash can be prepend to a space to match a literal space character.
 
     A term can be prefixed by ^, or suffixed by $ to become an anchored-match term.

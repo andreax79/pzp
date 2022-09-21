@@ -286,9 +286,6 @@ class Finder(ActionsHandler):
         self.screen.erase_line().write(f"{CYAN}{self.prompt_str}").reset()
         self.input.print(self.screen)
 
-    def match(self, item: Any) -> bool:
-        return str(self.input).lower() in self.format_fn(item).lower()
-
     def prepare_result(self) -> Any:
         "Output the selected item, if any"
         try:

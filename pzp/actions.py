@@ -5,12 +5,12 @@ from typing import Any, Callable, Dict, Optional, Sequence, Union
 from .keys import KeyEvent, KeysHandler, KeysBinding
 from .exceptions import MissingHander
 
-ActionHandler = Union[Callable[[Any], None], Callable[[Any, KeyEvent], None]]
-
 __all__ = [
     "Action",
     "ActionsHandler",
 ]
+
+ActionHandler = Union[Callable[[Any], None], Callable[[Any, KeyEvent], None]]
 
 
 class Action:
@@ -37,7 +37,7 @@ class ActionsHandler:
         keys_binding: Optional[KeysBinding] = None,
     ) -> None:
         """
-        Action handler decorator
+        Action handler
 
         Args:
             keys_handler: Keys handler
@@ -47,12 +47,7 @@ class ActionsHandler:
             actions: map action names to action handlers
             keys_handler: Keys handler
         """
-        if keys_handler:
-            self.keys_handler = keys_handler
-            if keys_binding:
-                keys_handler.update(keys_binding)
-        else:
-            self.keys_handler = KeysHandler(keys_binding)
+        self.keys_handler = keys_handler or KeysHandler()
         # Collect the methods with the Action decorator
         self.actions: Dict[str, ActionHandler] = {}
         for name, member in inspect.getmembers(self):
@@ -66,6 +61,9 @@ class ActionsHandler:
                 keys: Optional[Sequence[str]] = getattr(member, "pzp_keys", None)
                 if keys:
                     self.keys_handler.set_keys_binding(keys, action)
+        # Override keys binding
+        if keys_binding:
+            self.keys_handler.update(keys_binding)
 
     def process_key_event(self, key_event: KeyEvent) -> None:
         """

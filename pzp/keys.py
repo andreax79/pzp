@@ -8,6 +8,7 @@ __all__ = [
     "KeyEvent",
     "KeysHandler",
     "KeysBinding",
+    "key_to_str",
 ]
 
 KeysBinding = Dict[str, Sequence[str]]
@@ -65,6 +66,11 @@ KEYS = {
 }
 
 
+def key_to_str(ch: str) -> str:
+    "Return the textual representation of a char"
+    return f"0x{ord(ch):x}" if len(ch) == 1 else f"{ch}"
+
+
 class KeyEvent:
     def __init__(self, ch: str, action: Optional[str]) -> None:
         """
@@ -82,7 +88,7 @@ class KeyEvent:
         self.action = action
 
     def __str__(self) -> str:
-        return f"<{self.ch}, {self.action or '-'}>"
+        return f"<{key_to_str(self.ch)}, {self.action or '-'}>"  # pragma: no cover
 
 
 class KeysHandler:
@@ -118,3 +124,6 @@ class KeysHandler:
             ch = get_char()
         action = self.keycodes_actions.get(ch)
         return KeyEvent(ch=ch, action=action)
+
+    def __str__(self) -> str:
+        return "\n".join(f"<{key_to_str(ch)}, {action or '-'}>" for ch, action in self.keycodes_actions.items())  # pragma: no cover
