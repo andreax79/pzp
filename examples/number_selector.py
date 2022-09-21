@@ -19,7 +19,7 @@ def main():
             format_fn=num_format,
             fullscreen=args.fullscreen,
             height=args.height,
-            keys_binding={"custom": ["ctrl-o"], "oh-oh": ["!"]},
+            keys_binding={"custom": ["ctrl-o"], "qu-qu": ["ctrl-q"], "oh-oh": ["!"]},
             header_str="Press enter or ctrl-o",
         )
         print(item)
