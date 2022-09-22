@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-from .finder import CustomAction, Finder, Layout, InfoStyle, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER
+from .finder import CustomAction, Finder, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER, DEFAULT_LAYOUT
 from .keys import KeysBinding
 from .matcher import Matcher, ExtendedMatcher
+from .layout import Layout
+from .info import InfoStyle
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
 __version__ = "0.0.11"
@@ -16,7 +18,7 @@ def pzp(
     height: Optional[int] = None,
     fullscreen: bool = True,
     format_fn: Callable[[Any], str] = lambda x: str(x),
-    layout: Layout = Layout.REVERSE_LIST,
+    layout: Union[Type[Layout], str] = DEFAULT_LAYOUT,
     info_style: InfoStyle = InfoStyle.DEFAULT,
     pointer_str: str = DEFAULT_POINTER,
     prompt_str: str = DEFAULT_PROMPT,

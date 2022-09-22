@@ -6,7 +6,13 @@ from pzp.exceptions import AcceptAction, AbortAction, CustomAction
 
 def test_actions():
     candidates = [f"0x{x}" for x in range(0, 100)]
-    finder = Finder(candidates=candidates, height=10, fullscreen=True, keys_binding={"custom": ["ctrl-o"], "ignore": ["ctrl-i"]})
+    finder = Finder(
+        candidates=candidates,
+        height=10,
+        fullscreen=True,
+        layout="reverse-list",
+        keys_binding={"custom": ["ctrl-o"], "ignore": ["ctrl-i"]},
+    )
     finder.setup()
     assert finder.selected == 0
 

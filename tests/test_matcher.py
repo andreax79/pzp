@@ -34,24 +34,24 @@ def test_matcher_in():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = ""
+    finder.line_editor.line = ""
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(finder.candidates)
+    assert len(finder.candidates.matching_candidates) == len(finder.candidates.candidates)
 
-    finder.input.line = "ex"
+    finder.line_editor.line = "ex"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 13
-    assert all(["ex" in item.lower() for item in finder.matching_candidates])
+    assert len(finder.candidates.matching_candidates) == 13
+    assert all(["ex" in item.lower() for item in finder.candidates.matching_candidates])
 
-    finder.input.line = "ex e"
+    finder.line_editor.line = "ex e"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 13
-    assert all(["ex" in item.lower() for item in finder.matching_candidates])
+    assert len(finder.candidates.matching_candidates) == 13
+    assert all(["ex" in item.lower() for item in finder.candidates.matching_candidates])
 
-    finder.input.line = "ex ex"
+    finder.line_editor.line = "ex ex"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 13
-    assert all(["ex" in item.lower() for item in finder.matching_candidates])
+    assert len(finder.candidates.matching_candidates) == 13
+    assert all(["ex" in item.lower() for item in finder.candidates.matching_candidates])
 
 
 def test_matcher_not_in():
@@ -59,24 +59,24 @@ def test_matcher_not_in():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "!ex"
+    finder.line_editor.line = "!ex"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates) - 13
-    assert all(["ex" not in item.lower() for item in finder.matching_candidates])
+    assert len(finder.candidates.matching_candidates) == len(candidates) - 13
+    assert all(["ex" not in item.lower() for item in finder.candidates.matching_candidates])
 
-    finder.input.line = "!ex ex"
+    finder.line_editor.line = "!ex ex"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 0
+    assert len(finder.candidates.matching_candidates) == 0
 
-    finder.input.line = "!ex We"
+    finder.line_editor.line = "!ex We"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 7
-    assert all(["ex" not in item.lower() for item in finder.matching_candidates])
-    assert all(["we" in item.lower() for item in finder.matching_candidates])
+    assert len(finder.candidates.matching_candidates) == 7
+    assert all(["ex" not in item.lower() for item in finder.candidates.matching_candidates])
+    assert all(["we" in item.lower() for item in finder.candidates.matching_candidates])
 
-    finder.input.line = "!"
+    finder.line_editor.line = "!"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates)
+    assert len(finder.candidates.matching_candidates) == len(candidates)
 
 
 def test_matcher_startswith():
@@ -84,21 +84,21 @@ def test_matcher_startswith():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "^We"
+    finder.line_editor.line = "^We"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 2
+    assert len(finder.candidates.matching_candidates) == 2
 
-    finder.input.line = "^We as"
+    finder.line_editor.line = "^We as"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
-    finder.input.line = "as ^We"
+    finder.line_editor.line = "as ^We"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
-    finder.input.line = "as ^bla"
+    finder.line_editor.line = "as ^bla"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 0
+    assert len(finder.candidates.matching_candidates) == 0
 
 
 def test_matcher_not_startswith():
@@ -106,19 +106,19 @@ def test_matcher_not_startswith():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "!^We"
+    finder.line_editor.line = "!^We"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates) - 2
+    assert len(finder.candidates.matching_candidates) == len(candidates) - 2
 
-    finder.input.line = "!^We as"
+    finder.line_editor.line = "!^We as"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 12
+    assert len(finder.candidates.matching_candidates) == 12
 
-    finder.input.line = "as !^We"
+    finder.line_editor.line = "as !^We"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 12
+    assert len(finder.candidates.matching_candidates) == 12
 
-    finder.input.line = "!^bla"
+    finder.line_editor.line = "!^bla"
     finder.apply_filter()
 
 
@@ -127,17 +127,17 @@ def test_matcher_endswith():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = ",$"
+    finder.line_editor.line = ",$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 6
+    assert len(finder.candidates.matching_candidates) == 6
 
-    finder.input.line = "s,$"
+    finder.line_editor.line = "s,$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 3
+    assert len(finder.candidates.matching_candidates) == 3
 
-    finder.input.line = "* s,$"
+    finder.line_editor.line = "* s,$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
 
 def test_matcher_not_endswith():
@@ -145,17 +145,17 @@ def test_matcher_not_endswith():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "!,$"
+    finder.line_editor.line = "!,$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates) - 6
+    assert len(finder.candidates.matching_candidates) == len(candidates) - 6
 
-    finder.input.line = "!s,$"
+    finder.line_editor.line = "!s,$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates) - 3
+    assert len(finder.candidates.matching_candidates) == len(candidates) - 3
 
-    finder.input.line = "* !s,$"
+    finder.line_editor.line = "* !s,$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 17
+    assert len(finder.candidates.matching_candidates) == 17
 
 
 def test_quoted():
@@ -163,17 +163,17 @@ def test_quoted():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "'  "
+    finder.line_editor.line = "'  "
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 6
+    assert len(finder.candidates.matching_candidates) == 6
 
-    finder.input.line = "'to this"
+    finder.line_editor.line = "'to this"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
-    finder.input.line = "!'to this"
+    finder.line_editor.line = "!'to this"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == len(candidates) - 1
+    assert len(finder.candidates.matching_candidates) == len(candidates) - 1
 
 
 def test_line_exact_match():
@@ -181,9 +181,9 @@ def test_line_exact_match():
     finder = Finder(candidates=candidates, height=10, fullscreen=True)
     finder.setup()
 
-    finder.input.line = "^##\\ Scope$"
+    finder.line_editor.line = "^##\\ Scope$"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
 
 def test_exact_matcher():
@@ -191,17 +191,17 @@ def test_exact_matcher():
     finder = Finder(candidates=candidates, height=10, fullscreen=True, matcher=ExactMatcher)
     finder.setup()
 
-    finder.input.line = "  "
+    finder.line_editor.line = "  "
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 6
+    assert len(finder.candidates.matching_candidates) == 6
 
-    finder.input.line = "to this"
+    finder.line_editor.line = "to this"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 1
+    assert len(finder.candidates.matching_candidates) == 1
 
-    finder.input.line = "!'to this"
+    finder.line_editor.line = "!'to this"
     finder.apply_filter()
-    assert len(finder.matching_candidates) == 0
+    assert len(finder.candidates.matching_candidates) == 0
 
 
 def test_extended_matcher():

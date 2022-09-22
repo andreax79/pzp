@@ -43,6 +43,12 @@ pzp(candidates=range(0, 1000), fullscreen=False, height=20)
 
 [![asciicast](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ.svg)](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ?autoplay=1)
 
+You can choose between the following layout using the `layout` option.
+
+* **default** Display from the bottom of the screen
+* **reverse** Display from the top of the screen
+* **reverse-list** Display from the top of the screen, prompt at the bottom
+
 #### Search syntax
 
 The finder starts in "extended-search mode" where you can type in multiple search

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-from pzp import pzp, CustomAction
 import argparse
+from pzp import pzp, CustomAction, Layout
+from pzp.layout import list_layouts
 
 
 def num_format(item):
@@ -12,10 +13,12 @@ def main():
     parser.add_argument("-n", type=int, default=1000)
     parser.add_argument("-f", "--fullscreen", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--height", type=int)
+    parser.add_argument("--layout", choices=list_layouts(), default="reverse-list")
     args = parser.parse_args()
     try:
         item = pzp(
             candidates=range(0, args.n),
+            layout=args.layout,
             format_fn=num_format,
             fullscreen=args.fullscreen,
             height=args.height,

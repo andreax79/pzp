@@ -93,7 +93,7 @@ def test_term():
     assert terminal.cursor.y == lines
 
     candidates = [f"0x{x}" for x in range(0, 100)]
-    finder = Finder(candidates=candidates, height=10, fullscreen=True, output_stream=output_stream)
+    finder = Finder(candidates=candidates, height=10, fullscreen=True, layout="reverse-list", output_stream=output_stream)
     finder.setup()
     assert finder.selected == 0
 
@@ -113,5 +113,5 @@ def test_term():
     assert finder.selected == 0
     assert finder.prepare_result() == "0x99"
 
-    finder.screen.cleanup()
+    finder.layout.screen.cleanup()
     assert terminal.cursor.y == 0
