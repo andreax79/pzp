@@ -11,3 +11,4 @@ mkdocstrings[python]
 mkdocs-material
 markdown_include
 pyte
+grip

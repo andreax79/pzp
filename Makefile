@@ -2,14 +2,15 @@ SHELL=/bin/bash -e
 
 .PHONY: help
 help:
-	@echo - make black ------ Format code
-	@echo - make clean ------ Clean virtual environment
-	@echo - make coverage --- Run tests coverage
-	@echo - make docs ------- Make docs
-	@echo - make lint ------- Run lint
-	@echo - make test ------- Run test
-	@echo - make typecheck -- Typecheck
-	@echo - make venv ------- Create virtual environment
+	@echo - make black ----------- Format code
+	@echo - make clean ----------- Clean virtual environment
+	@echo - make coverage -------- Run tests coverage
+	@echo - make docs ------------ Make docs
+	@echo - make readme-preview -- Readme preview
+	@echo - make lint ------------ Run lint
+	@echo - make test ------------ Run test
+	@echo - make typecheck ------- Typecheck
+	@echo - make venv ------------ Create virtual environment
 
 .PHONY: black
 black:
@@ -29,6 +30,10 @@ coverage:
 docs:
 	@mkdocs build
 	@mkdocs gh-deploy
+
+.PHONY: venv
+readme-preview:
+	@. bin/activate; grip 0.0.0.0:8080
 
 .PHONY: lint
 lint:
