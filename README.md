@@ -92,7 +92,8 @@ except CustomAction as action:
 | ctrl-\                |                       |
 | ctrl-]                |                       |
 | ctrl-^                |                       |
-| ctrl-[a-z]            |                       |
+| ctrl-a - ctrl-z       |                       |
+| f1 - f12              |                       |
 | space                 |                       |
 | tab                   |                       |
 | btab                  | shift-tab             |

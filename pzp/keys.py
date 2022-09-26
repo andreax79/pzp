@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from typing import Dict, Optional, Sequence
-from .input import get_char
+from .input import get_char, KEYS_MAPPING
 
 __all__ = [
     "KEYS",
@@ -13,57 +13,52 @@ __all__ = [
 
 KeysBinding = Dict[str, Sequence[str]]
 
-KEYS = {
-    "ctrl-a": "\x01",
-    "ctrl-b": "\x02",
-    "ctrl-c": "\x03",
-    "ctrl-d": "\x04",
-    "ctrl-e": "\x05",
-    "ctrl-f": "\x06",
-    "ctrl-g": "\x07",
-    "ctrl-h": "\x08",
-    "ctrl-i": "\x09",
-    "ctrl-j": "\x0a",
-    "ctrl-k": "\x0b",
-    "ctrl-l": "\x0c",
-    "ctrl-m": "\x0d",
-    "ctrl-n": "\x0e",
-    "ctrl-o": "\x0f",
-    "ctrl-p": "\x10",
-    "ctrl-q": "\x11",
-    "ctrl-r": "\x12",
-    "ctrl-s": "\x13",
-    "ctrl-t": "\x14",
-    "ctrl-u": "\x15",
-    "ctrl-v": "\x16",
-    "ctrl-w": "\x17",
-    "ctrl-x": "\x18",
-    "ctrl-y": "\x19",
-    "ctrl-z": "\x1a",
-    "ctrl-\\": "\x1c",
-    "ctrl-]": "\x1d",
-    "ctrl-^": "\x1e",
-    "ctrl-/": "\x1f",
-    "pgup": "pgup",
-    "page-up": "pgup",
-    "pgdn": "pgdn",
-    "page-down": "pgdn",
-    "insert": "insert",
-    "del": "del",
-    "space": " ",
-    "null": "\0",
-    "up": "up",
-    "down": "down",
-    "right": "right",
-    "left": "left",
-    "home": "home",
-    "end": "end",
-    "nl": "\n",
-    "enter": "\r",
-    "tab": "\t",
-    "bspace": "\x7f",
-    "esc": "\x1b",
-}
+KEYS = {k: k for k in KEYS_MAPPING.values()}
+KEYS.update(
+    {
+        "ctrl-a": "\x01",
+        "ctrl-b": "\x02",
+        "ctrl-c": "\x03",
+        "ctrl-d": "\x04",
+        "ctrl-e": "\x05",
+        "ctrl-f": "\x06",
+        "ctrl-g": "\x07",
+        "ctrl-h": "\x08",
+        "ctrl-i": "\x09",
+        "ctrl-j": "\x0a",
+        "ctrl-k": "\x0b",
+        "ctrl-l": "\x0c",
+        "ctrl-m": "\x0d",
+        "ctrl-n": "\x0e",
+        "ctrl-o": "\x0f",
+        "ctrl-p": "\x10",
+        "ctrl-q": "\x11",
+        "ctrl-r": "\x12",
+        "ctrl-s": "\x13",
+        "ctrl-t": "\x14",
+        "ctrl-u": "\x15",
+        "ctrl-v": "\x16",
+        "ctrl-w": "\x17",
+        "ctrl-x": "\x18",
+        "ctrl-y": "\x19",
+        "ctrl-z": "\x1a",
+        "ctrl-\\": "\x1c",
+        "ctrl-]": "\x1d",
+        "ctrl-^": "\x1e",
+        "ctrl-/": "\x1f",
+        "space": " ",
+        "null": "\0",
+        "nl": "\n",
+        "enter": "\r",
+        "tab": "\t",
+        "bspace": "\x7f",
+        "bs": "\x7f",
+        "esc": "\x1b",
+        "shift-tab": "btab",
+        "page-up": "pgup",
+        "page-down": "pgdn",
+    }
+)
 
 
 def key_to_str(ch: str) -> str:

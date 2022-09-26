@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__all__ = ["get_char"]
+__all__ = ["get_char", "KEYS_MAPPING"]
 
 import sys
 import termios
@@ -8,6 +8,39 @@ import tty
 
 NULL = "\0"
 ESC = "\x1b"
+KEYS_MAPPING = {
+    "[A": "up",
+    "[B": "down",
+    "[C": "right",
+    "[D": "left",
+    "[Z": "btab",  # shift-tab
+    "[1;2A": "shift-up",
+    "[1;2B": "shift-down",
+    "[1;2C": "shift-right",
+    "[1;2D": "shift-left",
+    "[1~": "home",
+    "[2~": "insert",
+    "[3~": "del",
+    "[4~": "end",
+    "[5~": "pgup",
+    "[6~": "pgdn",
+    "OP": "f1",
+    "[11~": "f1",
+    "OQ": "f2",
+    "[12~": "f2",
+    "OR": "f3",
+    "[13~": "f3",
+    "OS": "f4",
+    "[14~": "f4",
+    "[15~": "f5",
+    "[17~": "f6",
+    "[18~": "f7",
+    "[19~": "f8",
+    "[20~": "f9",
+    "[21~": "f10",
+    "[23~": "f11",
+    "[24~": "f12",
+}
 
 
 def get_char() -> str:
@@ -23,37 +56,15 @@ def get_char() -> str:
         tty.setraw(fd)
         ch = sys.stdin.read(1)
         if ch == ESC:
-            ch = sys.stdin.read(1)
-            if ch == "[":
-                ch = sys.stdin.read(1)
-                if ch == "A":
-                    ch = "up"
-                elif ch == "B":
-                    ch = "down"
-                elif ch == "C":
-                    ch = "right"
-                elif ch == "D":
-                    ch = "left"
-                elif ch == "1":
-                    ch = "home"
-                    sys.stdin.read(1)  # skip ~
-                elif ch == "2":
-                    ch = "insert"
-                    sys.stdin.read(1)  # skip ~
-                elif ch == "3":
-                    ch = "del"
-                    sys.stdin.read(1)  # skip ~
-                elif ch == "4":
-                    ch = "end"
-                    sys.stdin.read(1)  # skip ~
-                elif ch == "5":
-                    ch = "pgup"
-                    sys.stdin.read(1)  # skip ~
-                elif ch == "6":
-                    ch = "pgdn"
-                    sys.stdin.read(1)  # skip ~
-                else:
-                    ch = NULL
+            keys_mapping = KEYS_MAPPING
+            ch = ""
+            while keys_mapping:
+                ch = ch + sys.stdin.read(1)
+                keys_mapping = {k: v for k, v in keys_mapping.items() if k.startswith(ch)}
+                if len(keys_mapping) == 1 and next(iter(keys_mapping.keys())) == ch:
+                    result = next(iter(keys_mapping.values()))
+                    return result
+            return ""
         return ch
     finally:
         termios.tcsetattr(fd, termios.TCSAFLUSH, attrs)
