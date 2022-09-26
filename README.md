@@ -88,12 +88,6 @@ except CustomAction as action:
 
 | Key                   | Synonyms type         |
 | --------------------- | --------------------- |
-| ctrl-/                |                       |
-| ctrl-\                |                       |
-| ctrl-]                |                       |
-| ctrl-^                |                       |
-| ctrl-a - ctrl-z       |                       |
-| f1 - f12              |                       |
 | space                 |                       |
 | tab                   |                       |
 | btab                  | shift-tab             |
@@ -110,6 +104,12 @@ except CustomAction as action:
 | end                   |                       |
 | pgdn                  | page-down             |
 | pgup                  | page-up               |
+| f1 - f12              |                       |
+| ctrl-/                |                       |
+| ctrl-\                |                       |
+| ctrl-]                |                       |
+| ctrl-^                |                       |
+| ctrl-a - ctrl-z       |                       |
 | any single character  |                       |
 
 #### Available Actions

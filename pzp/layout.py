@@ -58,7 +58,7 @@ class Layout(ABC):
         self.candidates = candidates
         self.offset: int = 0
 
-    def __init_subclass__(cls, /, option: str, **kwargs: Dict[str, Any]) -> None:
+    def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
         "Register a subclass"
         super().__init_subclass__(**kwargs)
         layouts[option] = cls

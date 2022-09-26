@@ -7,7 +7,7 @@ from .layout import Layout
 from .info import InfoStyle
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 "PZP Version"
 
 __all__ = ["pzp", "CustomAction"]
