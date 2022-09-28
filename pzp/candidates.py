@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from typing import Any, Callable, Iterator, Sequence, Type, Union
-from .matcher import Matcher
+from .matcher import Matcher, get_matcher
 
 __all__ = [
     "Candidates",
@@ -13,7 +13,7 @@ class Candidates:
         self,
         candidates: Union[Callable[[], Sequence[Any]], Iterator[Any], Sequence[Any]],
         format_fn: Callable[[Any], str],
-        matcher: Union[Matcher, Type[Matcher]],
+        matcher: Union[Matcher, Type[Matcher], str],
     ):
         """
         Candidates
@@ -30,7 +30,7 @@ class Candidates:
             matching_candidates_len: filtered items
         """
         self.format_fn = format_fn
-        self.matcher = matcher() if callable(matcher) else matcher
+        self.matcher = get_matcher(matcher)
         # Get the candidates
         if isinstance(candidates, Iterator) or callable(candidates):
             self.get_items_fn: Union[None, Callable[[], Sequence[Any]], Iterator[Any]] = candidates

@@ -2,21 +2,31 @@
 
 import re
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Sequence, Tuple
+from typing import Any, Callable, Dict, Sequence, Type, Tuple, Union
 from .commons import first_or_default
+from pfzy.score import fzy_scorer
 
 __all__ = [
     "Matcher",
     "ExactMatcher",
     "ExtendedMatcher",
+    "get_matcher",
+    "list_matchers",
 ]
 
 SPLIT_ESCAPED_RE = re.compile(r"(?<!\\)\s+")
 PREFIXES = ["!^", "!'", "^", "'", "!"]
 SUFFIXES = ["$"]
 
+matchers: Dict[str, Type["Matcher"]] = {}
+
 
 class Matcher(ABC):
+    def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
+        "Register a subclass"
+        super().__init_subclass__(**kwargs)
+        matchers[option] = cls
+
     @abstractmethod
     def filter(self, pattern: str, candidates: Sequence[Any], format_fn: Callable[[Any], str] = lambda x: str(x)) -> Sequence[Any]:
         """
@@ -33,7 +43,7 @@ class Matcher(ABC):
         pass  # pragma: no cover
 
 
-class ExactMatcher(Matcher):
+class ExactMatcher(Matcher, option="exact"):
     """
     Exact matcher
     """
@@ -108,7 +118,7 @@ class ExtendedMatcherFilter:
         return f"<{self.prefix}, {self.term}, {self.suffix}>"  # pragma: no cover
 
 
-class ExtendedMatcher(Matcher):
+class ExtendedMatcher(Matcher, option="extended"):
     """
     Extended Matcher
 
@@ -142,3 +152,18 @@ class ExtendedMatcher(Matcher):
             return [pattern.lower()]
         else:
             return [term.replace("\\", "") for term in SPLIT_ESCAPED_RE.split(pattern.lower()) if term]
+
+
+def get_matcher(matcher: Union[Matcher, Type[Matcher], str]) -> Matcher:
+    "Get a matcher instance by name or by class"
+    if isinstance(matcher, Matcher):
+        return matcher
+    elif isinstance(matcher, str):
+        return matchers[matcher]()
+    else:
+        return matcher()
+
+
+def list_matchers() -> Sequence[str]:
+    "List matchers"
+    return list(matchers.keys())

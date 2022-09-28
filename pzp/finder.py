@@ -10,7 +10,7 @@ from .info import InfoStyle
 from .keys import KeyEvent, KeysBinding
 from .layout import Layout, get_layout
 from .line_editor import LineEditor
-from .matcher import Matcher, ExtendedMatcher
+from .matcher import Matcher
 
 __all__ = [
     "Finder",
@@ -19,6 +19,7 @@ __all__ = [
     "DEFAULT_PROMPT",
     "DEFAULT_HEADER",
     "DEFAULT_LAYOUT",
+    "DEFAULT_MATCHER",
 ]
 
 DEFAULT_POINTER = ">"
@@ -29,6 +30,8 @@ DEFAULT_HEADER = ""
 "Default header"
 DEFAULT_LAYOUT = "default"
 "Default layout"
+DEFAULT_MATCHER = "extended"
+"Default matcher"
 
 
 class Finder(ActionsHandler):
@@ -44,7 +47,7 @@ class Finder(ActionsHandler):
         prompt_str: str = DEFAULT_PROMPT,
         header_str: str = DEFAULT_HEADER,
         keys_binding: Optional[KeysBinding] = None,
-        matcher: Union[Matcher, Type[Matcher]] = ExtendedMatcher,
+        matcher: Union[Matcher, Type[Matcher], str] = DEFAULT_MATCHER,
         output_stream: TextIO = sys.stderr,
     ):
         """

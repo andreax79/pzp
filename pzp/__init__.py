@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from .finder import CustomAction, Finder, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER, DEFAULT_LAYOUT
+from .finder import CustomAction, Finder, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER, DEFAULT_LAYOUT, DEFAULT_MATCHER
 from .keys import KeysBinding
-from .matcher import Matcher, ExtendedMatcher
+from .matcher import Matcher
 from .layout import Layout
 from .info import InfoStyle
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
@@ -24,7 +24,7 @@ def pzp(
     prompt_str: str = DEFAULT_PROMPT,
     header_str: str = DEFAULT_HEADER,
     keys_binding: Optional[KeysBinding] = None,
-    matcher: Union[Matcher, Type[Matcher]] = ExtendedMatcher,
+    matcher: Union[Matcher, Type[Matcher], str] = DEFAULT_MATCHER,
     input: Optional[str] = None,
 ) -> Any:
     """
