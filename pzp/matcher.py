@@ -128,7 +128,7 @@ class ExtendedMatcher(Matcher):
         # Prepare the filters
         filters = [ExtendedMatcherFilter(term) for term in self.split_pattern(pattern)]
         # Filter items
-        return [item for item in candidates if self.filter_item(filters, item)]
+        return [item for item in candidates if self.filter_item(filters, item, format_fn)]
 
     def filter_item(
         self, filters: Sequence[ExtendedMatcherFilter], item: Any, format_fn: Callable[[Any], str] = lambda x: str(x)

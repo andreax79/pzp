@@ -6,6 +6,15 @@ tests_dir = Path(__file__).parent
 code_of_conduct = tests_dir.parent / "CODE_OF_CONDUCT.md"
 
 
+class LineItem:
+    def __init__(self, i, line):
+        self.i = i
+        self.line = line
+
+    def __str__(self):
+        return self.line
+
+
 def test_extended_matcher_filter():
     t = ExtendedMatcherFilter("")
     assert t.prefix == "" and t.suffix == "" and t.term == ""
@@ -217,3 +226,24 @@ def test_extended_matcher():
     assert len(result) == 181 - 36
     result = matcher.filter("!^0", candidates)
     assert len(result) == 999
+
+
+def test_matcher_format_fn():
+    candidates = [LineItem(i, line) for i, line in enumerate(code_of_conduct.read_text().split("\n"), start=1)]
+    finder = Finder(
+        candidates=candidates,
+        height=10,
+        fullscreen=True,
+        format_fn=lambda item: f"{item.i:3d}: {item.line}",
+    )
+    finder.setup()
+
+    finder.line_editor.line = "ex"
+    finder.apply_filter()
+    assert len(finder.candidates.matching_candidates) == 13
+    assert all(["ex" in item.line.lower() for item in finder.candidates.matching_candidates])
+
+    finder.line_editor.line = "20:"
+    finder.apply_filter()
+    assert len(finder.candidates.matching_candidates) == 2
+    assert all(["20" in str(x.i) for x in finder.candidates.matching_candidates])
