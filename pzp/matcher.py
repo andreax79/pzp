@@ -4,7 +4,6 @@ import re
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Dict, Sequence, Type, Tuple, Union
 from .commons import first_or_default
-from pfzy.score import fzy_scorer
 
 __all__ = [
     "Matcher",
