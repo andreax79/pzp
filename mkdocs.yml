@@ -16,9 +16,9 @@ plugins:
 nav:
   - Pzp Docs: index.md
   - Examples:
-    - "file selector": examples/file_selector.md
-    - "number selector": examples/number_selector.md
-    - "text selector": examples/text_selector.md
+    - "File picker": examples/file_picker.md
+    - "Number picker": examples/number_picker.md
+    - "Text picker": examples/text_picker.md
   - API:
     - "pzp": api/module.md
     - "pzp.actions": api/actions.md
@@ -30,7 +30,6 @@ nav:
     - "pzp.line_editor": api/line_editor.md
     - "pzp.matcher": api/matcher.md
     - "pzp.screen": api/screen.md
-  - License: license.md
 
 markdown_extensions:
   - markdown_include.include:

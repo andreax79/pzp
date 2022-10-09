@@ -1,7 +1,7 @@
 pzp
 ==============
 
-Pure-python minimal fzf clone
+Pure-python fzf-inspired element picker
 
 [![Build Status](https://github.com/andreax79/pzp/workflows/Tests/badge.svg)](https://github.com/andreax79/pzp/actions)
 [![PyPI version](https://badge.fury.io/py/pzp.svg)](https://badge.fury.io/py/pzp)
