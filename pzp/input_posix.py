@@ -5,10 +5,12 @@ __all__ = ["get_char", "KEYS_MAPPING"]
 import sys
 import termios
 import tty
+import os
 
 NULL = "\0"
 ESC = "\x1b"
 KEYS_MAPPING = {
+    "": ESC,
     "[A": "up",
     "[B": "down",
     "[C": "right",
@@ -54,17 +56,9 @@ def get_char() -> str:
         fd = sys.stdin.fileno()
         attrs = termios.tcgetattr(fd)
         tty.setraw(fd)
-        ch = sys.stdin.read(1)
-        if ch == ESC:
-            keys_mapping = KEYS_MAPPING
-            ch = ""
-            while keys_mapping:
-                ch = ch + sys.stdin.read(1)
-                keys_mapping = {k: v for k, v in keys_mapping.items() if k.startswith(ch)}
-                if len(keys_mapping) == 1 and next(iter(keys_mapping.keys())) == ch:
-                    result = next(iter(keys_mapping.values()))
-                    return result
-            return ""
+        ch = os.read(fd, 32).decode("utf-8", "replace")
+        if ch.startswith(ESC):
+            ch = KEYS_MAPPING.get(ch[1:], NULL)
         return ch
     finally:
         termios.tcsetattr(fd, termios.TCSAFLUSH, attrs)
