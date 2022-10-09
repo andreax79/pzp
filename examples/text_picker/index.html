@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>number selector - pzp documentation</title>
+    <title>Text picker - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "number selector";
-        var mkdocs_page_input_path = "examples/number_selector.md";
+        var mkdocs_page_name = "Text picker";
+        var mkdocs_page_input_path = "examples/text_picker.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -47,11 +47,13 @@
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../file_selector/">file selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../file_picker/">File picker</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">number selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../number_picker/">Number picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../text_selector/">text selector</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Text picker</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -77,10 +79,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../api/screen/">pzp.screen</a>
                   </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
-                </li>
-              </ul>
       </div>
     </div>
     </nav>
@@ -96,7 +94,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Examples &raquo;</li>
-      <li>number selector</li>
+      <li>Text picker</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -105,34 +103,56 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <pre><code>#!/usr/bin/env python
-from pzp import pzp, CustomAction
+                <h1 id="text-line-picker">Text line picker</h1>
+<pre><code>#!/usr/bin/env python
 import argparse
+from pathlib import Path
+from pzp import pzp
+from pzp.layout import list_layouts
+from pzp.matcher import list_matchers
+
+examples_dir = Path(__file__).parent
+code_of_conduct = examples_dir.parent / &quot;CODE_OF_CONDUCT.md&quot;
 
 
-def num_format(item):
-    return f&quot;{item}&quot;
+class LineItem:
+    def __init__(self, i, line):
+        self.i = i
+        self.line = line
+
+    def __str__(self):
+        raise Exception(&quot;Cacca&quot;)
+        return self.line
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument(&quot;-n&quot;, type=int, default=1000)
     parser.add_argument(&quot;-f&quot;, &quot;--fullscreen&quot;, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(&quot;-n&quot;, &quot;--line-numbers&quot;, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument(&quot;--height&quot;, type=int)
+    parser.add_argument(&quot;--layout&quot;, choices=list_layouts(), default=&quot;reverse-list&quot;)
+    parser.add_argument(&quot;--matcher&quot;, choices=list_matchers(), default=&quot;extended&quot;)
     args = parser.parse_args()
-    try:
+    candidates = code_of_conduct.read_text().split(&quot;\n&quot;)
+    if args.line_numbers:
         item = pzp(
-            candidates=range(0, args.n),
-            format_fn=num_format,
+            candidates=[LineItem(i, line) for i, line in enumerate(candidates, start=1)],
+            layout=args.layout,
+            matcher=args.matcher,
             fullscreen=args.fullscreen,
             height=args.height,
-            keys_binding={&quot;custom&quot;: [&quot;ctrl-o&quot;], &quot;oh-oh&quot;: [&quot;!&quot;]},
-            header_str=&quot;Press enter or ctrl-o&quot;,
+            format_fn=lambda item: f&quot;{item.i:3d}: {item.line}&quot;,
         )
-        print(item)
-    except CustomAction as action:
-        print(action.action)
-        print(action.selected_item)
+        item = item.line if item else None
+    else:
+        item = pzp(
+            candidates=candidates,
+            layout=args.layout,
+            matcher=args.matcher,
+            fullscreen=args.fullscreen,
+            height=args.height,
+        )
+    print(item)
 
 
 if __name__ == &quot;__main__&quot;:
@@ -142,8 +162,8 @@ if __name__ == &quot;__main__&quot;:
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../file_selector/" class="btn btn-neutral float-left" title="file selector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../text_selector/" class="btn btn-neutral float-right" title="text selector">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../number_picker/" class="btn btn-neutral float-left" title="Number picker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../api/module/" class="btn btn-neutral float-right" title="pzp">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -166,10 +186,10 @@ if __name__ == &quot;__main__&quot;:
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../file_selector/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../number_picker/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../text_selector/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../api/module/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

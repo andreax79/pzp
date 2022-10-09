@@ -44,16 +44,40 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Pzp Docs</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#install">Install</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#layout">Layout</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#search-syntax">Search syntax</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#keyevent-bindings">Key/Event Bindings</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#available-keys">Available Keys</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#available-actions">Available Actions</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#licence">Licence</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#links">Links</a>
+    </li>
     </ul>
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="examples/file_selector/">file selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="examples/file_picker/">File picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="examples/number_selector/">number selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="examples/number_picker/">Number picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="examples/text_selector/">text selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="examples/text_picker/">Text picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -79,10 +103,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="api/screen/">pzp.screen</a>
                   </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="license/">License</a>
-                </li>
-              </ul>
       </div>
     </div>
     </nav>
@@ -107,11 +127,294 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="pzp">pzp</h1>
+<p>Pure-python fzf-inspired element picker</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Python 3.6+</li>
+</ul>
+<h2 id="install">Install</h2>
+<pre><code>pip install pzp
+</code></pre>
+<h2 id="usage">Usage</h2>
+<pre><code>from pzp import pzp
+pzp(['a', 'b', 'c'])
+</code></pre>
+<h4 id="layout">Layout</h4>
+<p>The finder by default starts in fullscreen mode. You can make it start below the
+cursor with <code>fullscreen=False</code> option.
+Also, with the <code>height</code> argument you can limit the window height.</p>
+<pre><code class="language-python">pzp(candidates=range(0, 1000), fullscreen=False, height=20)
+</code></pre>
+<p><a href="https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ?autoplay=1"><img alt="asciicast" src="https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ.svg" /></a></p>
+<p>You can choose between the following layout using the <code>layout</code> option.</p>
+<ul>
+<li><strong>default</strong> Display from the bottom of the screen</li>
+<li><strong>reverse</strong> Display from the top of the screen</li>
+<li><strong>reverse-list</strong> Display from the top of the screen, prompt at the bottom</li>
+</ul>
+<h4 id="search-syntax">Search syntax</h4>
+<p>The finder starts in "extended-search mode" where you can type in multiple search
+terms delimited by spaces. e.g. <code>^music .mp3$ sbtrkt !fire</code></p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Match type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t1 t2</code></td>
+<td>tokens-match</td>
+<td>Items that include <code>t1</code> and <code>t2</code></td>
+</tr>
+<tr>
+<td><code>'star wars</code></td>
+<td>line-match (not-splitted)</td>
+<td>Items that include <code>star wars</code></td>
+</tr>
+<tr>
+<td><code>^music</code></td>
+<td>prefix-exact-match</td>
+<td>Items that start with <code>music</code></td>
+</tr>
+<tr>
+<td><code>.py$</code></td>
+<td>suffix-exact-match</td>
+<td>Items that end with <code>.py</code></td>
+</tr>
+<tr>
+<td><code>!fire</code></td>
+<td>inverse-exact-match</td>
+<td>Items that do not include <code>fire</code></td>
+</tr>
+<tr>
+<td><code>!^music</code></td>
+<td>inverse-prefix-exact-match</td>
+<td>Items that do not start with <code>music</code></td>
+</tr>
+<tr>
+<td><code>!.py$</code></td>
+<td>inverse-suffix-exact-match</td>
+<td>Items that do not end with <code>.py</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="keyevent-bindings">Key/Event Bindings</h3>
+<p><code>keys_binding</code> argument allows you to bind one or more keys to one action.
+You can use it to customize key bindings or implementing custom behaviors.</p>
+<pre><code class="language-python">try:
+    item = pzp(
+        candidates=candidates,
+        keys_binding={
+            &quot;custom-action&quot;: [&quot;ctrl-o&quot;],
+            &quot;exclamation&quot;: [&quot;!&quot;]
+        },
+    )
+    print(item)
+except CustomAction as action:
+    print(action.action)
+    print(action.selected_item)
+</code></pre>
+<h4 id="available-keys">Available Keys</h4>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Synonyms type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>space</td>
+<td></td>
+</tr>
+<tr>
+<td>tab</td>
+<td></td>
+</tr>
+<tr>
+<td>btab</td>
+<td>shift-tab</td>
+</tr>
+<tr>
+<td>enter</td>
+<td></td>
+</tr>
+<tr>
+<td>esc</td>
+<td></td>
+</tr>
+<tr>
+<td>insert</td>
+<td></td>
+</tr>
+<tr>
+<td>del</td>
+<td></td>
+</tr>
+<tr>
+<td>bspace</td>
+<td>bs</td>
+</tr>
+<tr>
+<td>up</td>
+<td></td>
+</tr>
+<tr>
+<td>down</td>
+<td></td>
+</tr>
+<tr>
+<td>left</td>
+<td></td>
+</tr>
+<tr>
+<td>right</td>
+<td></td>
+</tr>
+<tr>
+<td>home</td>
+<td></td>
+</tr>
+<tr>
+<td>end</td>
+<td></td>
+</tr>
+<tr>
+<td>pgdn</td>
+<td>page-down</td>
+</tr>
+<tr>
+<td>pgup</td>
+<td>page-up</td>
+</tr>
+<tr>
+<td>f1 - f12</td>
+<td></td>
+</tr>
+<tr>
+<td>ctrl-/</td>
+<td></td>
+</tr>
+<tr>
+<td>ctrl-\</td>
+<td></td>
+</tr>
+<tr>
+<td>ctrl-]</td>
+<td></td>
+</tr>
+<tr>
+<td>ctrl-^</td>
+<td></td>
+</tr>
+<tr>
+<td>ctrl-a - ctrl-z</td>
+<td></td>
+</tr>
+<tr>
+<td>any single character</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="available-actions">Available Actions</h4>
+<p>A key can be bound to one of following actions or to a custom action.</p>
+<table>
+<thead>
+<tr>
+<th><em>Action</em>*</th>
+<th><em>Default binding</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>accept</strong></td>
+<td><em>enter</em></td>
+</tr>
+<tr>
+<td><strong>abort</strong></td>
+<td><em>ctrl-c</em>  <em>ctrl-g</em>  <em>ctrl-q</em>  <em>esc</em></td>
+</tr>
+<tr>
+<td><strong>beginning-of-line</strong></td>
+<td><em>ctrl-a</em>  <em>home</em></td>
+</tr>
+<tr>
+<td><strong>backward-char</strong></td>
+<td><em>ctrl-b</em> <em>left</em></td>
+</tr>
+<tr>
+<td><strong>forward-char</strong></td>
+<td><em>ctrl-f</em>  <em>right</em></td>
+</tr>
+<tr>
+<td><strong>end-of-line</strong></td>
+<td><em>ctrl-e</em>  <em>end</em></td>
+</tr>
+<tr>
+<td><strong>backward-delete-char</strong></td>
+<td><em>ctrl-h</em>  <em>bspace</em></td>
+</tr>
+<tr>
+<td><strong>delete-char</strong></td>
+<td><em>del</em></td>
+</tr>
+<tr>
+<td><strong>up</strong></td>
+<td><em>ctrl-k</em>  <em>ctrl-p</em>  <em>up</em></td>
+</tr>
+<tr>
+<td><strong>down</strong></td>
+<td><em>ctrl-j</em>  <em>ctrl-n</em>  <em>down</em></td>
+</tr>
+<tr>
+<td><strong>page-down</strong></td>
+<td><em>pgdn</em></td>
+</tr>
+<tr>
+<td><strong>page-up</strong></td>
+<td><em>pgup</em></td>
+</tr>
+<tr>
+<td><strong>ignore</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="licence">Licence</h2>
+<p>The MIT License (MIT)</p>
+<p>Copyright (c) 2013-2022 Andrea Bonomi <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#97;&#46;&#98;&#111;&#110;&#111;&#109;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#97;&#110;&#100;&#114;&#101;&#97;&#46;&#98;&#111;&#110;&#111;&#109;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://github.com/junegunn/fzf">fzf</a></li>
+<li><a href="https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797">ANSI Escape Sequences</a></li>
+<li><a href="https://github.com/selectel/pyte">pyte, python terminal emulator</a></li>
+<li><a href="https://github.com/joeyespo/grip">Grip, GitHub Readme Instant Preview</a></li>
+<li><a href="https://github.com/psf/black">Black, The Uncompromising Code Formatter</a></li>
+<li><a href="https://github.com/mkdocstrings/mkdocstrings">mkdocstrings, Automatic documentation from sources</a></li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="examples/file_selector/" class="btn btn-neutral float-right" title="file selector">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="examples/file_picker/" class="btn btn-neutral float-right" title="File picker">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -135,7 +438,7 @@
     
     
     
-      <span><a href="examples/file_selector/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="examples/file_picker/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
@@ -154,5 +457,5 @@
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-09-20 07:54:30.884757+00:00
+Build Date UTC : 2022-10-09 09:51:20.443970+00:00
 -->

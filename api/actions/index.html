@@ -47,11 +47,11 @@
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/file_selector/">file selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/file_picker/">File picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/number_picker/">Number picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -78,10 +78,6 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
-                </li>
               </ul>
       </div>
     </div>
@@ -326,16 +322,14 @@
 <span class="normal">83</span>
 <span class="normal">84</span>
 <span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ActionsHandler</span><span class="p">:</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ActionsHandler</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Action handler decorator</span>
+<span class="sd">        Action handler</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            keys_handler: Keys handler</span>
@@ -345,12 +339,7 @@
 <span class="sd">            actions: map action names to action handlers</span>
 <span class="sd">            keys_handler: Keys handler</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">keys_handler</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">keys_handler</span>
-            <span class="k">if</span> <span class="n">keys_binding</span><span class="p">:</span>
-                <span class="n">keys_handler</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">KeysHandler</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">keys_handler</span> <span class="ow">or</span> <span class="n">KeysHandler</span><span class="p">()</span>
         <span class="c1"># Collect the methods with the Action decorator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ActionHandler</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -364,6 +353,9 @@
                 <span class="n">keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="s2">&quot;pzp_keys&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">keys</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">set_keys_binding</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+        <span class="c1"># Override keys binding</span>
+        <span class="k">if</span> <span class="n">keys_binding</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">process_key_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -411,7 +403,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>Action handler decorator</p>
+      <p>Action handler</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -506,15 +498,13 @@
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Action handler decorator</span>
+<span class="sd">    Action handler</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        keys_handler: Keys handler</span>
@@ -524,12 +514,7 @@
 <span class="sd">        actions: map action names to action handlers</span>
 <span class="sd">        keys_handler: Keys handler</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">keys_handler</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">keys_handler</span>
-        <span class="k">if</span> <span class="n">keys_binding</span><span class="p">:</span>
-            <span class="n">keys_handler</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">KeysHandler</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span> <span class="o">=</span> <span class="n">keys_handler</span> <span class="ow">or</span> <span class="n">KeysHandler</span><span class="p">()</span>
     <span class="c1"># Collect the methods with the Action decorator</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ActionHandler</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -543,6 +528,9 @@
             <span class="n">keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="s2">&quot;pzp_keys&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">keys</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">set_keys_binding</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+    <span class="c1"># Override keys binding</span>
+    <span class="k">if</span> <span class="n">keys_binding</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -607,7 +595,9 @@
 
       <details class="quote">
         <summary>Source code in <code>pzp/actions.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
 <span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
@@ -623,9 +613,7 @@
 <span class="normal">83</span>
 <span class="normal">84</span>
 <span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute the action hander for a give key event</span>
 

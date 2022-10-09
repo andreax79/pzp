@@ -47,11 +47,11 @@
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/file_selector/">file selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/file_picker/">File picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/number_selector/">number selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/number_picker/">Number picker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_selector/">text selector</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -78,10 +78,6 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../screen/">pzp.screen</a>
                   </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
-                </li>
               </ul>
       </div>
     </div>
@@ -159,18 +155,24 @@
 
       <details class="quote">
         <summary>Source code in <code>pzp/input_win.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read a keypress and return the resulting character as a string.</span>
 
@@ -178,9 +180,15 @@
 <span class="sd">        char: the pressed key or the key description (e.g. &quot;home&quot;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">WIN_ESC</span><span class="p">:</span>  <span class="c1"># When reading arrow/insert/del key, the first call returnx 0xe0</span>
-        <span class="n">ch</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">()</span>  <span class="c1"># The second call returns the key code</span>
-        <span class="k">return</span> <span class="n">KEYS_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">NULL</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">WIN_ESC</span> <span class="ow">or</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">:</span>  <span class="c1"># When reading arrow/insert/del key, the first call returnx 0xe0</span>
+        <span class="n">keys_mapping</span> <span class="o">=</span> <span class="n">KEYS_MAPPING</span>
+        <span class="k">while</span> <span class="n">keys_mapping</span><span class="p">:</span>
+            <span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span> <span class="o">+</span> <span class="n">getwch</span><span class="p">()</span>
+            <span class="n">keys_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">keys_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">ch</span><span class="p">)}</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys_mapping</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">keys_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="o">==</span> <span class="n">ch</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">keys_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+                <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ch</span>
 </code></pre></div></td></tr></table></div>
       </details>
