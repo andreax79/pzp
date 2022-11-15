@@ -34,8 +34,8 @@ pzp(['a', 'b', 'c'])
 #### Layout
 
 The finder by default starts in fullscreen mode. You can make it start below the
-cursor with `fullscreen=False` option.
-Also, with the `height` argument you can limit the window height.
+cursor with [`fullscreen=False`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) option.
+Also, with the [`height`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) argument you can limit the window height.
 
 ```python
 pzp(candidates=range(0, 1000), fullscreen=False, height=20)
@@ -43,7 +43,7 @@ pzp(candidates=range(0, 1000), fullscreen=False, height=20)
 
 [![asciicast](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ.svg)](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ?autoplay=1)
 
-You can choose between the following layout using the `layout` option.
+You can choose between the following layout using the [`layout`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) option.
 
 * **default** Display from the bottom of the screen
 * **reverse** Display from the top of the screen
@@ -66,7 +66,7 @@ terms delimited by spaces. e.g. `^music .mp3$ sbtrkt !fire`
 
 ### Key/Event Bindings
 
-`keys_binding` argument allows you to bind one or more keys to one action.
+[`keys_binding`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) argument allows you to bind one or more keys to one action.
 You can use it to customize key bindings or implementing custom behaviors.
 
 ```python
