@@ -31,7 +31,7 @@ pzp(['a', 'b', 'c'])
 ```
 
 
-#### Layout
+### Layout
 
 The finder by default starts in fullscreen mode. You can make it start below the
 cursor with [`fullscreen=False`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) option.
@@ -49,7 +49,7 @@ You can choose between the following layout using the [`layout`](https://pzp.rea
 * **reverse** Display from the top of the screen
 * **reverse-list** Display from the top of the screen, prompt at the bottom
 
-#### Search syntax
+### Search syntax
 
 The finder starts in "extended-search mode" where you can type in multiple search
 terms delimited by spaces. e.g. `^music .mp3$ sbtrkt !fire`
@@ -131,6 +131,12 @@ A key can be bound to one of following actions or to a custom action.
 | **page-down**             | *pgdn*                                |
 | **page-up**               | *pgup*                                |
 | **ignore**                |                                       |
+
+### Lazy Mode
+
+[`lazy`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) argument allows you to enable the lazy mode.
+If the Lazy mode is enabled, starts the finder only if the candidates are more than one.
+If there is only one match returns the only match, if there is no match returns None.
 
 Licence
 -------

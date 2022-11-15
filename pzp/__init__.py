@@ -31,7 +31,7 @@ def pzp(
     """
     Open pzp and return the selected element
 
-    If the Lazy mode is enabled, starts the finder only if the candidates are more than one
+    If the Lazy mode is enabled, starts the finder only if the candidates are more than one.
     If there is only one match returns the only match, if there is no match returns None.
 
     Examples:
