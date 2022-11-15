@@ -52,6 +52,7 @@ def get_char() -> str:
     Returns:
         char: the pressed key or the key description (e.g. "home")
     """
+    fd = None
     try:
         fd = sys.stdin.fileno()
         attrs = termios.tcgetattr(fd)
@@ -61,4 +62,5 @@ def get_char() -> str:
             ch = KEYS_MAPPING.get(ch[1:], NULL)
         return ch
     finally:
-        termios.tcsetattr(fd, termios.TCSAFLUSH, attrs)
+        if fd is not None:
+            termios.tcsetattr(fd, termios.TCSAFLUSH, attrs)

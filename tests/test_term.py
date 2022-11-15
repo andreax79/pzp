@@ -1,4 +1,6 @@
+import pytest
 import pyte
+from pzp import pzp
 from pzp.finder import Finder
 from pzp.screen import Screen
 
@@ -115,3 +117,9 @@ def test_term():
 
     finder.layout.screen.cleanup()
     assert terminal.cursor.y == 0
+
+
+@pytest.mark.timeout(5)
+def test_lazy():
+    assert pzp([1], lazy=True) == 1
+    assert pzp([], lazy=True) is None
