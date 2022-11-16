@@ -15,7 +15,7 @@ from .info import InfoStyle
 from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
-__version__ = "0.0.15"
+__version__ = "0.0.16"
 "PZP Version"
 
 __all__ = [
