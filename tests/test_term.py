@@ -123,3 +123,5 @@ def test_term():
 def test_lazy():
     assert pzp([1], lazy=True) == 1
     assert pzp([], lazy=True) is None
+    assert pzp(["a", "b", "c"], input="a", lazy=True) == "a"
+    assert pzp(["a", "b", "c"], input="d", lazy=True) is None

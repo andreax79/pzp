@@ -40,6 +40,7 @@ class Config:
         pointer_str: str,
         prompt_str: str,
         header_str: str,
+        lazy: bool,
         output_stream: TextIO,
     ):
         """
@@ -53,6 +54,7 @@ class Config:
             pointer_str: Pointer to the current line
             prompt_str: Input prompt
             header_str: Header
+            lazy: Lazy mode, starts the finder only if the candidates are more than one
             output_stream: Output stream
         """
         self.fullscreen = fullscreen
@@ -63,6 +65,7 @@ class Config:
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
         self.header_str = header_str
+        self.lazy = lazy
         self.output_stream = output_stream
 
     @property

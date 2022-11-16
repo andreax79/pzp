@@ -1,16 +1,29 @@
 #!/usr/bin/env python
 
-from .finder import CustomAction, Finder, DEFAULT_POINTER, DEFAULT_PROMPT, DEFAULT_HEADER, DEFAULT_LAYOUT, DEFAULT_MATCHER
+from .finder import (
+    Finder,
+    DEFAULT_POINTER,
+    DEFAULT_PROMPT,
+    DEFAULT_HEADER,
+    DEFAULT_LAYOUT,
+    DEFAULT_MATCHER,
+)
 from .keys import KeysBinding
 from .matcher import Matcher
 from .layout import Layout
 from .info import InfoStyle
+from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
 from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
 
 __version__ = "0.0.15"
 "PZP Version"
 
-__all__ = ["pzp", "CustomAction"]
+__all__ = [
+    "pzp",
+    "CustomAction",
+    "GenericAction",
+    "Finder",
+]
 
 
 def pzp(
@@ -67,10 +80,11 @@ def pzp(
         header_str=header_str,
         keys_binding=keys_binding,
         matcher=matcher,
+        lazy=lazy,
     )
-    if lazy:
-        if finder.candidates.candidates_len == 0:
-            return None
-        elif finder.candidates.candidates_len == 1:
-            return finder.candidates.candidates[0]
-    return finder.show(input=input)
+    try:
+        finder.show(input=input)
+    except AcceptAction as accept:
+        return accept.selected_item
+    except AbortAction:
+        return None

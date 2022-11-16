@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Sequence, Type, Tuple, Union
+from typing import Any, Dict, Sequence, Type, Tuple, Optional, Union
 from .candidates import Candidates
 from .config import Config
 from .info import InfoStyle
@@ -57,6 +57,7 @@ class Layout(ABC):
         self.config = config
         self.candidates = candidates
         self.offset: int = 0
+        self.screen: Optional[Screen] = None
 
     def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
         "Register a subclass"
@@ -85,8 +86,9 @@ class Layout(ABC):
 
     def cleanup(self) -> None:
         "Clean the screen when the finder is closed"
-        self.clear_screen(erase=True)
-        self.screen.flush()
+        if self.screen is not None:
+            self.clear_screen(erase=True)
+            self.screen.flush()
 
     @property
     def max_candidates_lines(self) -> int:

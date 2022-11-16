@@ -14,7 +14,6 @@ from .matcher import Matcher
 
 __all__ = [
     "Finder",
-    "CustomAction",
     "DEFAULT_POINTER",
     "DEFAULT_PROMPT",
     "DEFAULT_HEADER",
@@ -48,6 +47,7 @@ class Finder(ActionsHandler):
         header_str: str = DEFAULT_HEADER,
         keys_binding: Optional[KeysBinding] = None,
         matcher: Union[Matcher, Type[Matcher], str] = DEFAULT_MATCHER,
+        lazy: bool = False,
         output_stream: TextIO = sys.stderr,
     ):
         """
@@ -65,10 +65,11 @@ class Finder(ActionsHandler):
             header_str: Header
             keys_binding: Custom keys binding
             matcher: Matcher
+            lazy: Lazy mode, starts the finder only if the candidates are more than one
             output_stream: Output stream
         """
         super().__init__(keys_binding=keys_binding)
-        self.config = Config(fullscreen, height, format_fn, info_style, pointer_str, prompt_str, header_str, output_stream)
+        self.config = Config(fullscreen, height, format_fn, info_style, pointer_str, prompt_str, header_str, lazy, output_stream)
         self.candidates = Candidates(candidates=candidates, format_fn=format_fn, matcher=matcher)
         self.layout: Layout = get_layout(layout=layout, config=self.config, candidates=self.candidates)
 
@@ -84,6 +85,9 @@ class Finder(ActionsHandler):
         self.refresh_candidates()
         # Filter the items, calculate the screen offset
         self.apply_filter()
+        # If lazy mode is enabled, starts the finder only if the candidates are more than one
+        if self.config.lazy and self.candidates.matching_candidates_len <= 1:
+            raise AcceptAction(action="lazy-accept", ch=None, selected_item=self.prepare_result())
         # Calculate the required height and setup the screen
         self.layout.screen_setup(self.line_editor)
 
@@ -94,19 +98,17 @@ class Finder(ActionsHandler):
         Args:
             input: initial search string
 
-        Returns:
-            item: the selected item
+        Raises:
+            AcceptAction: Raises when the user presses a key that is mapped to the "accept" action.
+            AbortAction: Raises when the user presses a key that is mapped to the "abort" action.
+            CustomAction: Raises when the user presses a key that is mapped to the "custom" action.
         """
-        self.setup(input=input)
         try:
+            self.setup(input=input)
             while True:
                 self.process_key()
                 self.apply_filter()
                 self.update_screen()
-        except AcceptAction as accept:
-            return accept.selected_item
-        except AbortAction:
-            return None
         finally:
             self.layout.cleanup()
 
