@@ -3,6 +3,7 @@ import pyte
 from pzp import pzp
 from pzp.finder import Finder
 from pzp.screen import Screen
+from pzp.exceptions import AcceptAction
 
 
 class FakeIO:
@@ -125,3 +126,11 @@ def test_lazy():
     assert pzp([], lazy=True) is None
     assert pzp(["a", "b", "c"], input="a", lazy=True) == "a"
     assert pzp(["a", "b", "c"], input="d", lazy=True) is None
+
+    with pytest.raises(AcceptAction) as ex:
+        pzp(["a", "b", "c"], input="a", lazy=True, handle_actions=None)
+    assert ex.value.selected_item == "a"
+
+    with pytest.raises(AcceptAction) as ex:
+        pzp(["a", "b", "c"], input="d", lazy=True, handle_actions=None)
+    assert ex.value.selected_item is None

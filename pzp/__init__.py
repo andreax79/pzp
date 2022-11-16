@@ -13,7 +13,7 @@ from .matcher import Matcher
 from .layout import Layout
 from .info import InfoStyle
 from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
-from typing import Any, Callable, Iterator, Optional, Sequence, Type, Union
+from typing import Any, Callable, Iterator, Optional, Sequence, Set, Type, Union
 
 __version__ = "0.0.16"
 "PZP Version"
@@ -38,8 +38,9 @@ def pzp(
     header_str: str = DEFAULT_HEADER,
     keys_binding: Optional[KeysBinding] = None,
     matcher: Union[Matcher, Type[Matcher], str] = DEFAULT_MATCHER,
-    input: Optional[str] = None,
     lazy: bool = False,
+    handle_actions: Set[Type[GenericAction]] = {AcceptAction, AbortAction},
+    input: Optional[str] = None,
 ) -> Any:
     """
     Open pzp and return the selected element
@@ -64,6 +65,7 @@ def pzp(
         keys_binding: Custom keys binding
         matcher: Matcher
         lazy: Lazy mode, starts the finder only if the candidates are more than one
+        handle_actions: Actions to be handled
 
     Returns:
         item: the selected item
@@ -84,7 +86,8 @@ def pzp(
     )
     try:
         finder.show(input=input)
-    except AcceptAction as accept:
-        return accept.selected_item
-    except AbortAction:
-        return None
+    except GenericAction as ex:
+        if type(ex) in (handle_actions or set()):
+            return ex.selected_item if isinstance(ex, AcceptAction) else None
+        else:
+            raise
