@@ -118,7 +118,7 @@
                 <h1 id="number-picker">Number picker</h1>
 <pre><code>#!/usr/bin/env python
 import argparse
-from pzp import pzp, CustomAction, Layout
+from pzp import Finder, GenericAction
 from pzp.layout import list_layouts
 
 
@@ -130,23 +130,25 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(&quot;-n&quot;, type=int, default=1000)
     parser.add_argument(&quot;-f&quot;, &quot;--fullscreen&quot;, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(&quot;--lazy&quot;, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument(&quot;--height&quot;, type=int)
     parser.add_argument(&quot;--layout&quot;, choices=list_layouts(), default=&quot;reverse-list&quot;)
+    parser.add_argument(&quot;--input&quot;, type=str)
     args = parser.parse_args()
     try:
-        item = pzp(
+        finder = Finder(
             candidates=range(0, args.n),
-            layout=args.layout,
-            format_fn=num_format,
             fullscreen=args.fullscreen,
             height=args.height,
-            keys_binding={&quot;custom&quot;: [&quot;ctrl-o&quot;], &quot;qu-qu&quot;: [&quot;ctrl-q&quot;], &quot;oh-oh&quot;: [&quot;!&quot;]},
+            layout=args.layout,
+            format_fn=num_format,
+            keys_binding={&quot;custom&quot;: [&quot;ctrl-o&quot;, &quot;enter&quot;], &quot;qu-qu&quot;: [&quot;ctrl-q&quot;], &quot;oh-oh&quot;: [&quot;!&quot;]},
             header_str=&quot;Press enter or ctrl-o&quot;,
+            lazy=args.lazy,
         )
-        print(item)
-    except CustomAction as action:
-        print(action.action)
-        print(action.selected_item)
+        finder.show(input=args.input)
+    except GenericAction as action:
+        print(f&quot;action: {action.action} selected item: {action.selected_item}&quot;)
 
 
 if __name__ == &quot;__main__&quot;:
