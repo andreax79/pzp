@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Text picker - pzp documentation</title>
+    <title>User input - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Text picker";
-        var mkdocs_page_input_path = "examples/text_picker.md";
+        var mkdocs_page_name = "User input";
+        var mkdocs_page_input_path = "examples/prompt.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -63,11 +63,11 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../number_picker/">Number picker</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Text picker</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../text_picker/">Text picker</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">User input</a>
     <ul class="current">
     </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../prompt/">User input</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -110,7 +110,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Examples &raquo;</li>
-      <li>Text picker</li>
+      <li>User input</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -119,56 +119,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="text-line-picker">Text line picker</h1>
+                <h1 id="prompts-a-user-for-input">Prompts a user for input</h1>
 <pre><code>#!/usr/bin/env python
-import argparse
-from pathlib import Path
-from pzp import pzp
-from pzp.layout import list_layouts
-from pzp.matcher import list_matchers
-
-examples_dir = Path(__file__).parent
-code_of_conduct = examples_dir.parent / &quot;CODE_OF_CONDUCT.md&quot;
-
-
-class LineItem:
-    def __init__(self, i, line):
-        self.i = i
-        self.line = line
-
-    def __str__(self):
-        raise Exception(&quot;Cacca&quot;)
-        return self.line
+from pzp import prompt
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(&quot;-f&quot;, &quot;--fullscreen&quot;, action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument(&quot;-n&quot;, &quot;--line-numbers&quot;, action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument(&quot;--height&quot;, type=int)
-    parser.add_argument(&quot;--layout&quot;, choices=list_layouts(), default=&quot;reverse-list&quot;)
-    parser.add_argument(&quot;--matcher&quot;, choices=list_matchers(), default=&quot;extended&quot;)
-    args = parser.parse_args()
-    candidates = code_of_conduct.read_text().split(&quot;\n&quot;)
-    if args.line_numbers:
-        item = pzp(
-            candidates=[LineItem(i, line) for i, line in enumerate(candidates, start=1)],
-            layout=args.layout,
-            matcher=args.matcher,
-            fullscreen=args.fullscreen,
-            height=args.height,
-            format_fn=lambda item: f&quot;{item.i:3d}: {item.line}&quot;,
-        )
-        item = item.line if item else None
-    else:
-        item = pzp(
-            candidates=candidates,
-            layout=args.layout,
-            matcher=args.matcher,
-            fullscreen=args.fullscreen,
-            height=args.height,
-        )
-    print(item)
+    test = prompt(&quot;write something&quot;)
+    print()
+    print(&quot;-&quot; * 100)
+    print(test)
 
 
 if __name__ == &quot;__main__&quot;:
@@ -178,8 +138,8 @@ if __name__ == &quot;__main__&quot;:
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../number_picker/" class="btn btn-neutral float-left" title="Number picker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../prompt/" class="btn btn-neutral float-right" title="User input">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../text_picker/" class="btn btn-neutral float-left" title="Text picker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../api/module/" class="btn btn-neutral float-right" title="pzp">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -202,10 +162,10 @@ if __name__ == &quot;__main__&quot;:
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../number_picker/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../text_picker/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../prompt/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../api/module/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
