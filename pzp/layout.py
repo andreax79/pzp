@@ -57,7 +57,7 @@ class Layout(ABC):
         self.config = config
         self.candidates = candidates
         self.offset: int = 0
-        self.screen: Optional[Screen] = None
+        self.screen: Screen = None
 
     def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
         "Register a subclass"
@@ -111,7 +111,7 @@ class Layout(ABC):
         height: int = (
             self.config.height if self.config.height is not None else self.candidates.candidates_len + self.config.margin_lines
         )
-        self.screen: Screen = Screen(stream=self.config.output_stream, fullscreen=self.config.fullscreen, height=height)
+        self.screen = Screen(stream=self.config.output_stream, fullscreen=self.config.fullscreen, height=height)
         self.update_screen(selected=0, erase=False)
 
     def calculate_offset(self, selected: int) -> None:

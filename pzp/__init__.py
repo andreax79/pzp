@@ -13,9 +13,10 @@ from .matcher import Matcher
 from .layout import Layout
 from .info import InfoStyle
 from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
+from .prompt import Prompt
 from typing import Any, Callable, Iterator, Optional, Sequence, Set, Type, Union
 
-__version__ = "0.0.17"
+__version__ = "0.0.18"
 "PZP Version"
 
 __all__ = [
@@ -91,3 +92,42 @@ def pzp(
             return ex.selected_item if isinstance(ex, AcceptAction) else None
         else:
             raise
+
+
+def prompt(
+    text: str = "",
+    default: Optional[Any] = None,
+    prompt_suffix: str = ": ",
+    show_default: bool = True,
+    input: Optional[str] = None,
+) -> Any:
+    """
+    Ask for user input.
+
+    Examples:
+        >>> prompt("Name")
+        your input
+
+    Args:
+        text: Prompt text
+        default: default value to use if no input happens.
+                 If this is not given it will prompt until it's aborted.
+        prompt_suffix: Suffix that should be added to the prompt
+        show_default: Show default value
+
+    Returns:
+        item: the selected item
+    """
+    if default is not None and show_default:
+        prompt_str = f"{text} [{default}]{prompt_suffix}".lstrip()
+    else:
+        prompt_str = f"{text}{prompt_suffix}"
+    prompt = Prompt(prompt_str=prompt_str)
+    while True:
+        try:
+            prompt.show(input=input)
+        except AcceptAction as ex:
+            if ex.selected_item:
+                return ex.selected_item
+            if default is not None:
+                return default

@@ -22,6 +22,7 @@ nav:
     - "File picker": examples/file_picker.md
     - "Number picker": examples/number_picker.md
     - "Text picker": examples/text_picker.md
+    - "User input": examples/prompt.md
   - API:
     - "pzp": api/module.md
     - "pzp.actions": api/actions.md
@@ -32,6 +33,7 @@ nav:
     - "pzp.keys": api/keys.md
     - "pzp.line_editor": api/line_editor.md
     - "pzp.matcher": api/matcher.md
+    - "pzp.prompt": api/prompt.md
     - "pzp.screen": api/screen.md
 
 markdown_extensions:
