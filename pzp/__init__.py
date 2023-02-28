@@ -16,7 +16,7 @@ from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
 from .prompt import Prompt
 from typing import Any, Callable, Iterator, Optional, Sequence, Set, Type, Union
 
-__version__ = "0.0.19"
+__version__ = "0.0.20"
 "PZP Version"
 
 __all__ = [
