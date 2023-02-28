@@ -140,7 +140,7 @@
 
 
 <h2 id="pzp.__version__" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.18&#39;</span></code>
+<code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.19&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -217,6 +217,16 @@ that is mapped to the "custom" action.</p>
               <em>required</em>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -248,20 +258,19 @@ that is mapped to the "custom" action.</p>
           </td>
           <td><p>pressed key</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
 
         <details class="quote">
           <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -271,7 +280,16 @@ that is mapped to the "custom" action.</p>
 <span class="normal"> 97</span>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
-<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The CustomAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;custom&quot; action.</span>
@@ -280,15 +298,17 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        selected_item: selected item, if any</span>
 <span class="sd">        ch: pressed key</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        selected_item: selected item, if any</span>
 <span class="sd">        ch: pressed key</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -529,7 +549,7 @@ that is mapped to the "custom" action.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">()</span>
         <span class="c1"># If lazy mode is enabled, starts the finder only if the candidates are more than one</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lazy</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">matching_candidates_len</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;lazy-accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;lazy-accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
         <span class="c1"># Calculate the required height and setup the screen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">screen_setup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="p">)</span>
 
@@ -568,7 +588,7 @@ that is mapped to the "custom" action.</p>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
+                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 
     <span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Filter the items&quot;</span>
@@ -589,12 +609,12 @@ that is mapped to the "custom" action.</p>
     <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Confirm&quot;</span>
-        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
+        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 
     <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Cancel&quot;</span>
-        <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 
     <span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-j&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-n&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -898,7 +918,7 @@ that is mapped to the "custom" action.</p>
 <span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Cancel&quot;</span>
-    <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -927,7 +947,7 @@ that is mapped to the "custom" action.</p>
 <span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Confirm&quot;</span>
-    <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
+    <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1146,7 +1166,7 @@ that is mapped to the "custom" action.</p>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
+            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1252,7 +1272,7 @@ that is mapped to the "custom" action.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">()</span>
     <span class="c1"># If lazy mode is enabled, starts the finder only if the candidates are more than one</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lazy</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">matching_candidates_len</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;lazy-accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">())</span>
+        <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;lazy-accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
     <span class="c1"># Calculate the required height and setup the screen</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">screen_setup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1499,6 +1519,16 @@ that is mapped to the "custom" action.</p>
                 <code>None</code>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -1530,6 +1560,12 @@ that is mapped to the "custom" action.</p>
           </td>
           <td><p>selected item, if any</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
@@ -1555,7 +1591,10 @@ that is mapped to the "custom" action.</p>
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GenericAction</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GenericAction</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic Action Event</span>
 
@@ -1563,18 +1602,21 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_item</span> <span class="o">=</span> <span class="n">selected_item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
 </code></pre></div></td></tr></table></div>
         </details>
 

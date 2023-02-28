@@ -196,6 +196,16 @@ that is mapped to the "abort" action.</p>
                 <code>None</code>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -227,18 +237,19 @@ that is mapped to the "abort" action.</p>
           </td>
           <td><p>selected item, if any</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
 
         <details class="quote">
           <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
 <span class="normal">71</span>
@@ -250,7 +261,14 @@ that is mapped to the "abort" action.</p>
 <span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
-<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AbortAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AbortAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The AbortAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;abort&quot; action.</span>
@@ -259,15 +277,17 @@ that is mapped to the "abort" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -351,6 +371,16 @@ that is mapped to the "accept" action.</p>
                 <code>None</code>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -382,16 +412,19 @@ that is mapped to the "accept" action.</p>
           </td>
           <td><p>selected item, if any</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
 
         <details class="quote">
           <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -405,7 +438,12 @@ that is mapped to the "accept" action.</p>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AcceptAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AcceptAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The AcceptAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;accept&quot; action.</span>
@@ -414,15 +452,17 @@ that is mapped to the "accept" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -506,6 +546,16 @@ that is mapped to the "custom" action.</p>
               <em>required</em>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -537,20 +587,19 @@ that is mapped to the "custom" action.</p>
           </td>
           <td><p>pressed key</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
 
         <details class="quote">
           <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -560,7 +609,16 @@ that is mapped to the "custom" action.</p>
 <span class="normal"> 97</span>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
-<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The CustomAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;custom&quot; action.</span>
@@ -569,15 +627,17 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        selected_item: selected item, if any</span>
 <span class="sd">        ch: pressed key</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        selected_item: selected item, if any</span>
 <span class="sd">        ch: pressed key</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -660,6 +720,16 @@ that is mapped to the "custom" action.</p>
                 <code>None</code>
           </td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>user input</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
     </tbody>
   </table>
 
@@ -691,6 +761,12 @@ that is mapped to the "custom" action.</p>
           </td>
           <td><p>selected item, if any</p></td>
         </tr>
+        <tr>
+          <td><code>line</code></td>
+          <td>
+          </td>
+          <td><p>user input</p></td>
+        </tr>
     </tbody>
   </table>
 
@@ -716,7 +792,10 @@ that is mapped to the "custom" action.</p>
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GenericAction</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GenericAction</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic Action Event</span>
 
@@ -724,18 +803,21 @@ that is mapped to the "custom" action.</p>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        action: action</span>
 <span class="sd">        ch: pressed key</span>
 <span class="sd">        selected_item: selected item, if any</span>
+<span class="sd">        line: user input</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_item</span> <span class="o">=</span> <span class="n">selected_item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -839,23 +921,23 @@ that is mapped to the "custom" action.</p>
 
         <details class="quote">
           <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span>
 <span class="normal">118</span>
-<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MissingHander</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MissingHander</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The MissingHander exception is raised when there is no handler for an action.</span>
 
