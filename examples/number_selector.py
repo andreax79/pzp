@@ -30,7 +30,7 @@ def main():
         )
         finder.show(input=args.input)
     except GenericAction as action:
-        print(f"action: {action.action} selected item: {action.selected_item}")
+        print(f"action: {action.action} selected item: {action.selected_item} line: {action.line}")
 
 
 if __name__ == "__main__":

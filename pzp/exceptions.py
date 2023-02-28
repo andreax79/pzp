@@ -26,18 +26,21 @@ class GenericAction(PZPException):
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
 
     Attributes:
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None):
+    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
         super().__init__(action)
         self.action = action
         self.ch = ch
         self.selected_item = selected_item
+        self.line = line
 
 
 class AcceptAction(GenericAction):
@@ -49,15 +52,17 @@ class AcceptAction(GenericAction):
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
 
     Attributes:
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None):
-        super().__init__(action, ch, selected_item)
+    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+        super().__init__(action, ch, selected_item, line)
 
 
 class AbortAction(GenericAction):
@@ -69,15 +74,17 @@ class AbortAction(GenericAction):
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
 
     Attributes:
         action: action
         ch: pressed key
         selected_item: selected item, if any
+        line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None):
-        super().__init__(action, ch, selected_item)
+    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+        super().__init__(action, ch, selected_item, line)
 
 
 class CustomAction(GenericAction):
@@ -89,15 +96,17 @@ class CustomAction(GenericAction):
         action: action
         selected_item: selected item, if any
         ch: pressed key
+        line: user input
 
     Attributes:
         action: action
         selected_item: selected item, if any
         ch: pressed key
+        line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None):
-        super().__init__(action, ch, selected_item)
+    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+        super().__init__(action, ch, selected_item, line)
 
 
 class MissingHander(PZPException):

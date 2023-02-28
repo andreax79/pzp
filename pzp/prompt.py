@@ -69,7 +69,7 @@ class Prompt(ActionsHandler):
             try:
                 self.process_key_event(key_event)
             except MissingHander:
-                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result())  # type: ignore
+                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)  # type: ignore
 
     def update_screen(self) -> None:
         "Update the screen"
@@ -84,7 +84,7 @@ class Prompt(ActionsHandler):
     @Action("accept", keys=["enter"])
     def accept(self, key_event: KeyEvent) -> None:
         "Confirm"
-        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result())
+        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)
 
     @Action("abort", keys=["ctrl-c", "ctrl-g", "ctrl-q", "esc"])
     def abort(self, key_event: KeyEvent) -> None:

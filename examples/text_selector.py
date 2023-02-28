@@ -15,8 +15,7 @@ class LineItem:
         self.line = line
 
     def __str__(self):
-        raise Exception("Cacca")
-        return self.line
+        raise Exception("Missing format_fn")
 
 
 def main():

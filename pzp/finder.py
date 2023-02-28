@@ -87,7 +87,7 @@ class Finder(ActionsHandler):
         self.apply_filter()
         # If lazy mode is enabled, starts the finder only if the candidates are more than one
         if self.config.lazy and self.candidates.matching_candidates_len <= 1:
-            raise AcceptAction(action="lazy-accept", ch=None, selected_item=self.prepare_result())
+            raise AcceptAction(action="lazy-accept", ch=None, selected_item=self.prepare_result(), line=self.line_editor.line)
         # Calculate the required height and setup the screen
         self.layout.screen_setup(self.line_editor)
 
@@ -126,7 +126,7 @@ class Finder(ActionsHandler):
             try:
                 self.process_key_event(key_event)
             except MissingHander:
-                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result())  # type: ignore
+                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)  # type: ignore
 
     def apply_filter(self) -> None:
         "Filter the items"
@@ -147,12 +147,12 @@ class Finder(ActionsHandler):
     @Action("accept", keys=["enter"])
     def accept(self, key_event: KeyEvent) -> None:
         "Confirm"
-        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result())
+        raise AcceptAction(action="accept", ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)
 
     @Action("abort", keys=["ctrl-c", "ctrl-g", "ctrl-q", "esc"])
     def abort(self, key_event: KeyEvent) -> None:
         "Cancel"
-        raise AbortAction(action="abort", ch=key_event.ch)
+        raise AbortAction(action="abort", ch=key_event.ch, line=self.line_editor.line)
 
     @Action("down", keys=["ctrl-j", "ctrl-n", "down"])
     def down(self) -> None:
