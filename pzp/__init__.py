@@ -99,6 +99,8 @@ def prompt(
     default: Optional[Any] = None,
     prompt_suffix: str = ": ",
     show_default: bool = True,
+    type: Optional[Any] = None,
+    value_proc: Optional[Callable[[str], Any]] = None,
     input: Optional[str] = None,
 ) -> Any:
     """
@@ -110,10 +112,12 @@ def prompt(
 
     Args:
         text: Prompt text
-        default: default value to use if no input happens.
+        default: Default value to use if no input happens.
                  If this is not given it will prompt until it's aborted.
         prompt_suffix: Suffix that should be added to the prompt
-        show_default: Show default value
+        show_default: Show default value in the prompt
+        type: The type to use to check the value against
+        value_proc: Type conversion function
 
     Returns:
         item: the selected item
@@ -122,7 +126,7 @@ def prompt(
         prompt_str = f"{text} [{default}]{prompt_suffix}".lstrip()
     else:
         prompt_str = f"{text}{prompt_suffix}"
-    prompt = Prompt(prompt_str=prompt_str)
+    prompt = Prompt(prompt_str=prompt_str, default=default, type=type, value_proc=value_proc)
     while True:
         try:
             prompt.show(input=input)

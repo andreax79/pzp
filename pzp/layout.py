@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Sequence, Type, Tuple, Optional, Union
+from typing import Any, Dict, Sequence, Type, Tuple, Union
 from .candidates import Candidates
 from .config import Config
 from .info import InfoStyle

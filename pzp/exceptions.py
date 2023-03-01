@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from typing import Any
+from typing import Any, Optional
 
 __all__ = [
     "PZPException",
@@ -35,7 +35,7 @@ class GenericAction(PZPException):
         line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+    def __init__(self, action: str, ch: Optional[str], selected_item: Any = None, line: Optional[str] = None):
         super().__init__(action)
         self.action = action
         self.ch = ch
@@ -61,7 +61,7 @@ class AcceptAction(GenericAction):
         line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+    def __init__(self, action: str, ch: Optional[str], selected_item: Any = None, line: Optional[str] = None):
         super().__init__(action, ch, selected_item, line)
 
 
@@ -83,7 +83,7 @@ class AbortAction(GenericAction):
         line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+    def __init__(self, action: str, ch: Optional[str], selected_item: Any = None, line: Optional[str] = None):
         super().__init__(action, ch, selected_item, line)
 
 
@@ -105,7 +105,7 @@ class CustomAction(GenericAction):
         line: user input
     """
 
-    def __init__(self, action: str, ch: str, selected_item: Any = None, line: str = None):
+    def __init__(self, action: str, ch: Optional[str], selected_item: Any = None, line: Optional[str] = None):
         super().__init__(action, ch, selected_item, line)
 
 
@@ -122,7 +122,7 @@ class MissingHander(PZPException):
         ch: pressed key
     """
 
-    def __init__(self, action: str, ch: str):
+    def __init__(self, action: str, ch: Optional[str]):
         super().__init__(action)
         self.action = action
         self.ch = ch
