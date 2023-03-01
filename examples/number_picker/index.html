@@ -124,6 +124,7 @@
 import argparse
 from pzp import Finder, GenericAction
 from pzp.layout import list_layouts
+from pzp.info import InfoStyle
 
 
 def num_format(item):
@@ -137,8 +138,10 @@ def main():
     parser.add_argument(&quot;--lazy&quot;, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument(&quot;--height&quot;, type=int)
     parser.add_argument(&quot;--layout&quot;, choices=list_layouts(), default=&quot;reverse-list&quot;)
+    parser.add_argument(&quot;--info&quot;, choices=[&quot;default&quot;, &quot;hidden&quot;], default=&quot;default&quot;)
     parser.add_argument(&quot;--input&quot;, type=str)
     args = parser.parse_args()
+    info = InfoStyle.DEFAULT if args.info == &quot;default&quot; else InfoStyle.HIDDEN
     try:
         finder = Finder(
             candidates=range(0, args.n),
@@ -146,6 +149,7 @@ def main():
             height=args.height,
             layout=args.layout,
             format_fn=num_format,
+            info_style=info,
             keys_binding={&quot;custom&quot;: [&quot;ctrl-o&quot;, &quot;enter&quot;], &quot;qu-qu&quot;: [&quot;ctrl-q&quot;], &quot;oh-oh&quot;: [&quot;!&quot;]},
             header_str=&quot;Press enter or ctrl-o&quot;,
             lazy=args.lazy,
