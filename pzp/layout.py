@@ -139,9 +139,9 @@ class Layout(ABC):
                 self.screen.write(f"{BLACK_BG}{self.config.no_pointer_str}").reset()
             self.screen.space(1).write(self.config.format_fn(item)).reset().nl()
 
-    def print_empty_lines(self) -> None:
+    def print_empty_lines(self, delta: int = 0) -> None:
         "Print empty lines"
-        lines = self.max_candidates_lines - self.screen_items_len
+        lines = self.max_candidates_lines - self.screen_items_len + delta
         self.screen.nl(lines)
 
     def print_info(self) -> None:
@@ -194,11 +194,11 @@ class ReverseLayout(Layout, option="reverse"):
         self.calculate_offset(selected)
         self.clear_screen(erase)
         self.print_header()
+        self.screen.nl()  # skip this line for the prompt
         self.print_info()
-        self.screen.nl()
         self.print_items(selected)
-        self.print_empty_lines()
-        self.screen.move_up(self.max_candidates_lines + 1)
+        self.print_empty_lines(delta=-1 if self.config.fullscreen else 0)
+        self.screen.move_up(self.max_candidates_lines + 1 + self.config.info_lines)  # jump back to the prompt line
         self.print_prompt()
         self.screen.flush()
 
@@ -213,7 +213,7 @@ class ReverseLayout(Layout, option="reverse"):
     def clear_screen(self, erase: bool) -> None:
         "Clean the screen"
         if erase:
-            lines: int = self.config.info_lines + self.config.header_lines + self.config.prompt_lines - 1
+            lines: int = self.config.header_lines + self.config.prompt_lines - 2
             self.screen.move_up(lines)
             self.screen.erase_lines(self.screen.height)
 
