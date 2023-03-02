@@ -19,7 +19,7 @@ class InfoStyle(Enum):
 
 def list_styles() -> Sequence[str]:
     "List styles"
-    return [InfoStyle.DEFAULT, InfoStyle.HIDDEN]
+    return [InfoStyle.DEFAULT.value, InfoStyle.HIDDEN.value]
 
 
 def get_style(style: Union[str, InfoStyle]) -> InfoStyle:
