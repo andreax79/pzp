@@ -41,7 +41,7 @@ class Finder(ActionsHandler):
         height: Optional[int] = None,
         format_fn: Callable[[Any], str] = lambda x: str(x),
         layout: Union[Type[Layout], str] = DEFAULT_LAYOUT,
-        info_style: InfoStyle = InfoStyle.DEFAULT,
+        info_style: Union[InfoStyle, str] = InfoStyle.DEFAULT,
         pointer_str: str = DEFAULT_POINTER,
         prompt_str: str = DEFAULT_PROMPT,
         header_str: str = DEFAULT_HEADER,

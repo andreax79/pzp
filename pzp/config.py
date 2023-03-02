@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from typing import Any, Callable, Optional, TextIO
-from .info import InfoStyle
+from typing import Any, Callable, Optional, TextIO, Union
+from .info import InfoStyle, get_style
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -36,7 +36,7 @@ class Config:
         fullscreen: bool,
         height: Optional[int],
         format_fn: Callable[[Any], str],
-        info_style: InfoStyle,
+        info_style: Union[InfoStyle, str],
         pointer_str: str,
         prompt_str: str,
         header_str: str,
@@ -60,7 +60,7 @@ class Config:
         self.fullscreen = fullscreen
         self.height = height
         self.format_fn = format_fn
-        self.info_style: InfoStyle = info_style
+        self.info_style: InfoStyle = get_style(info_style)
         self.pointer_str = pointer_str
         self.no_pointer_str = " " * len(pointer_str)
         self.prompt_str = prompt_str
