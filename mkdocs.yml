@@ -23,6 +23,7 @@ nav:
     - "Number picker": examples/number_picker.md
     - "Text picker": examples/text_picker.md
     - "User input": examples/prompt.md
+    - "Yes/No picker": examples/yesno.md
   - API:
     - "pzp": api/module.md
     - "pzp.actions": api/actions.md
