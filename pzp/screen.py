@@ -2,6 +2,7 @@
 
 import shutil
 import sys
+from os import terminal_size
 from typing import List, Optional, TextIO
 from .ansi import (  # noqa
     ESC,
@@ -45,27 +46,30 @@ class Screen:
             data: Data to be written on the stream
             fullscreen: Full screen mode
             height: Screen height
+            width: Screen width
         """
         self.stream: TextIO = stream
         self.data: List[str] = []
         self.fullscreen = fullscreen
+        size: terminal_size = self.get_terminal_size()
         if self.fullscreen or height is None:
-            self.height: int = self.get_terminal_height()
+            self.height: int = size.lines
         else:
-            self.height = min(height, self.get_terminal_height())
+            self.height = min(height, size.lines)
+        self.width = size.columns
         # Save cursor position
         self.write(f"{CURSOR_SAVE_POS}")
         self.flush()
 
     @classmethod
-    def get_terminal_height(cls) -> int:
+    def get_terminal_size(cls) -> terminal_size:
         """
-        Get the terminal height
+        Get the terminal size
 
         Returns:
-            height: terminal height
+            terminal_size: terminal window size (columns, lines)
         """
-        return shutil.get_terminal_size(fallback=(DEFAULT_WIDTH, DEFAULT_HEIGHT)).lines
+        return shutil.get_terminal_size(fallback=(DEFAULT_WIDTH, DEFAULT_HEIGHT))
 
     def write(self, line: str) -> "Screen":
         "Add data to be written on the stream"
