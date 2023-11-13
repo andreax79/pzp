@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import math
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Sequence, Type, Tuple, Union
 from .candidates import Candidates
@@ -30,6 +31,7 @@ from .ansi import (  # noqa
     RESET,
     BOLD,
     NEGATIVE,
+    ansi_len,
 )
 
 __all__ = ["Layout", "DefaultLayout", "ReverseLayout", "ReverseListLayout", "get_layout", "list_layouts"]
@@ -58,6 +60,7 @@ class Layout(ABC):
         self.candidates = candidates
         self.offset: int = 0
         self.screen: Screen = None
+        self.prompt_len: int = ansi_len(self.config.no_pointer_str) + 1
 
     def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
         "Register a subclass"
@@ -92,13 +95,30 @@ class Layout(ABC):
 
     @property
     def max_candidates_lines(self) -> int:
-        "Maximun number of candidates printables on the screen"
+        "Maximun number of lines for printing the candidates"
         return self.screen.height - self.config.margin_lines
 
     @property
     def screen_items(self) -> Sequence[Any]:
         "Candidates to be displayed on the screen"
-        return self.candidates.matching_candidates[self.offset : self.offset + self.max_candidates_lines]
+        items = []
+        lines = 0
+        for item in self.candidates.matching_candidates[self.offset :]:
+            item_len = ansi_len(str(item)) + self.prompt_len
+            lines += math.ceil(item_len / self.screen.width)
+            if lines > self.max_candidates_lines:
+                break
+            items.append(item)
+        return items
+
+    @property
+    def screen_items_lines(self) -> int:
+        "Number of candidates lines (height on the screen)"
+        lines = 0
+        for item in self.screen_items:
+            item_len = ansi_len(str(item)) + self.prompt_len
+            lines += math.ceil(item_len / self.screen.width)
+        return lines
 
     @property
     def screen_items_len(self) -> int:
@@ -108,16 +128,23 @@ class Layout(ABC):
     def screen_setup(self, line_editor: LineEditor) -> None:
         "Calculate the required height and setup the screen"
         self.line_editor = line_editor
-        height: int = (
-            self.config.height if self.config.height is not None else self.candidates.candidates_len + self.config.margin_lines
-        )
+        if self.config.height is not None:
+            height: int = self.config.height
+        else:
+            # Calculate the required height
+            height = self.config.margin_lines
+            width = Screen.get_terminal_size().columns
+            for item in self.candidates.candidates:
+                item_len = ansi_len(str(item)) + self.prompt_len
+                height += math.ceil(item_len / width)
         self.screen = Screen(stream=self.config.output_stream, fullscreen=self.config.fullscreen, height=height)
         self.update_screen(selected=0, erase=False)
 
     def calculate_offset(self, selected: int) -> None:
         "Calculate the screen offset"
-        if selected >= self.offset + self.max_candidates_lines:
-            self.offset = selected - self.max_candidates_lines + 1
+        l = self.screen_items_len
+        if selected >= self.offset + self.screen_items_len:
+            self.offset = selected - self.screen_items_len + 1
         elif selected < self.offset:
             self.offset = selected
         if self.offset < 0:
@@ -141,7 +168,7 @@ class Layout(ABC):
 
     def print_empty_lines(self, delta: int = 0) -> None:
         "Print empty lines"
-        lines = self.max_candidates_lines - self.screen_items_len + delta
+        lines = self.max_candidates_lines - self.screen_items_lines + delta
         self.screen.nl(lines)
 
     def print_info(self) -> None:
@@ -149,6 +176,7 @@ class Layout(ABC):
         if self.config.info_style == InfoStyle.DEFAULT:
             matching_candidates_len = self.candidates.matching_candidates_len
             candidates_len = self.candidates.candidates_len
+            offset = self.offset
             self.screen.erase_line().space(2).write(f"{YELLOW}{matching_candidates_len}/{candidates_len}").reset().nl()
 
     def print_prompt(self) -> None:
