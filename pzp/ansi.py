@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import re
+
 __all__ = [
     "ESC",
     "NL",
@@ -26,6 +28,7 @@ __all__ = [
     "RESET",
     "BOLD",
     "NEGATIVE",
+    "ansi_len",
 ]
 
 ESC = "\u001b"
@@ -79,3 +82,10 @@ BOLD = f"{ESC}[1m"
 "Set bold mode"
 NEGATIVE = f"{ESC}[7m"
 "Set inverse mode"
+
+ANSI_RE = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+
+
+def ansi_len(s: str) -> int:
+    "Get string length, excluding ansi sequences"
+    return len(ANSI_RE.sub("", s))
