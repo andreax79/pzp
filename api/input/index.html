@@ -8,7 +8,7 @@
     <title>pzp.input - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href="../.." class="icon icon-home"> pzp documentation
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -66,6 +65,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/prompt/">User input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/yesno/">Yes/No picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -108,9 +109,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>API &raquo;</li>
-      <li>pzp.input</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">pzp.input</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,6 +121,7 @@
             <div class="section" itemprop="articleBody">
               
                 <div class="doc doc-object doc-module">
+
 
 
 <a id="pzp.input"></a>
@@ -137,12 +139,14 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="pzp.input.get_char" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_char</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_char</span><span class="p">()</span></code>
 
 </h2>
 
@@ -151,27 +155,33 @@
   
       <p>Read a keypress and return the resulting character as a string.</p>
 
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>char</code></td>          <td>
-                <code>str</code>
-          </td>
-          <td><p>the pressed key or the key description (e.g. "home")</p></td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/input_win.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>char</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>the pressed key or the key description (e.g. "home")</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/input_win.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
@@ -189,7 +199,7 @@
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read a keypress and return the resulting character as a string.</span>
 
 <span class="sd">    Returns:</span>
@@ -207,7 +217,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ch</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -254,14 +264,15 @@
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

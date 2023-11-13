@@ -8,7 +8,7 @@
     <title>pzp.finder - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href="../.." class="icon icon-home"> pzp documentation
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -66,6 +65,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/prompt/">User input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/yesno/">Yes/No picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -108,9 +109,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>API &raquo;</li>
-      <li>pzp.finder</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">pzp.finder</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,6 +121,7 @@
             <div class="section" itemprop="articleBody">
               
                 <div class="doc doc-object doc-module">
+
 
 
 <a id="pzp.finder"></a>
@@ -139,8 +141,9 @@
 
 
 
+
 <h2 id="pzp.finder.DEFAULT_HEADER" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_HEADER</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></code>
+          <code class="highlight language-python"><span class="n">DEFAULT_HEADER</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -160,8 +163,9 @@
 
 
 
+
 <h2 id="pzp.finder.DEFAULT_LAYOUT" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_LAYOUT</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span></code>
+          <code class="highlight language-python"><span class="n">DEFAULT_LAYOUT</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -181,8 +185,9 @@
 
 
 
+
 <h2 id="pzp.finder.DEFAULT_MATCHER" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_MATCHER</span> <span class="o">=</span> <span class="s1">&#39;extended&#39;</span></code>
+          <code class="highlight language-python"><span class="n">DEFAULT_MATCHER</span> <span class="o">=</span> <span class="s1">&#39;extended&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -202,8 +207,9 @@
 
 
 
+
 <h2 id="pzp.finder.DEFAULT_POINTER" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_POINTER</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span></code>
+          <code class="highlight language-python"><span class="n">DEFAULT_POINTER</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -223,8 +229,9 @@
 
 
 
+
 <h2 id="pzp.finder.DEFAULT_PROMPT" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">DEFAULT_PROMPT</span> <span class="o">=</span> <span class="s1">&#39;&gt; &#39;</span></code>
+          <code class="highlight language-python"><span class="n">DEFAULT_PROMPT</span> <span class="o">=</span> <span class="s1">&#39;&gt; &#39;</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -245,23 +252,22 @@
 
 
 
+
 <h2 id="pzp.finder.Finder" class="doc doc-heading">
-        <code>Finder</code>
+          <code>Finder</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
 
 
-
-        <details class="quote">
-          <summary>Source code in <code>pzp/finder.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 36</span>
-<span class="normal"> 37</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/finder.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 37</span>
 <span class="normal"> 38</span>
 <span class="normal"> 39</span>
 <span class="normal"> 40</span>
@@ -404,7 +410,13 @@
 <span class="normal">177</span>
 <span class="normal">178</span>
 <span class="normal">179</span>
-<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finder</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Finder</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">candidates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
@@ -412,7 +424,7 @@
         <span class="n">height</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">format_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
         <span class="n">layout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Layout</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_LAYOUT</span><span class="p">,</span>
-        <span class="n">info_style</span><span class="p">:</span> <span class="n">InfoStyle</span> <span class="o">=</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
+        <span class="n">info_style</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InfoStyle</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
         <span class="n">pointer_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_POINTER</span><span class="p">,</span>
         <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROMPT</span><span class="p">,</span>
         <span class="n">header_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HEADER</span><span class="p">,</span>
@@ -421,7 +433,7 @@
         <span class="n">lazy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializate Finder object</span>
 
 <span class="sd">        Args:</span>
@@ -445,7 +457,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span> <span class="n">Layout</span> <span class="o">=</span> <span class="n">get_layout</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Setup Finder execution</span>
 
 <span class="sd">        Args:</span>
@@ -463,7 +475,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">screen_setup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open pzp and return the selected element</span>
 
 <span class="sd">        Args:</span>
@@ -497,7 +509,12 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span>
+                    <span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span>
+                    <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span>
+                    <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
+                <span class="p">)</span>  <span class="c1"># type: ignore</span>
 
     <span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Filter the items&quot;</span>
@@ -550,7 +567,7 @@
         <span class="s2">&quot;Do nothing&quot;</span>
         <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -564,12 +581,14 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">DEFAULT_LAYOUT</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">matcher</span><span class="o">=</span><span class="n">DEFAULT_MATCHER</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="n">DEFAULT_LAYOUT</span><span class="p">,</span> <span class="n">info_style</span><span class="o">=</span><span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span> <span class="n">pointer_str</span><span class="o">=</span><span class="n">DEFAULT_POINTER</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="n">DEFAULT_PROMPT</span><span class="p">,</span> <span class="n">header_str</span><span class="o">=</span><span class="n">DEFAULT_HEADER</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">matcher</span><span class="o">=</span><span class="n">DEFAULT_MATCHER</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
 
 </h3>
 
@@ -578,154 +597,154 @@
   
       <p>Initializate Finder object</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>candidates</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Callable">Callable</span>[[], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]], <span title="typing.Iterator">Iterator</span>[<span title="typing.Any">Any</span>], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]]</code>
-          </td>
-          <td><p>Candidates</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>fullscreen</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>Full screen mode</p></td>
-          <td>
-                <code>True</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>height</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[int]</code>
-          </td>
-          <td><p>Finder window height</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>format_fn</code></td>
-          <td>
-                <code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], str]</code>
-          </td>
-          <td><p>Items format function</p></td>
-          <td>
-                <code>lambda x: str(x)</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>layout</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Type">Type</span>[<span title="pzp.layout.Layout">Layout</span>], str]</code>
-          </td>
-          <td><p>Finder layout</p></td>
-          <td>
-                <code>DEFAULT_LAYOUT</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>info_style</code></td>
-          <td>
-                <code><span title="pzp.info.InfoStyle">InfoStyle</span></code>
-          </td>
-          <td><p>Determines the display style of finder info</p></td>
-          <td>
-                <code>InfoStyle.DEFAULT</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>pointer_str</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>Pointer to the current line</p></td>
-          <td>
-                <code>DEFAULT_POINTER</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>prompt_str</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>Input prompt</p></td>
-          <td>
-                <code>DEFAULT_PROMPT</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>header_str</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>Header</p></td>
-          <td>
-                <code>DEFAULT_HEADER</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>keys_binding</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>
-          </td>
-          <td><p>Custom keys binding</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>matcher</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>, <span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>], str]</code>
-          </td>
-          <td><p>Matcher</p></td>
-          <td>
-                <code>DEFAULT_MATCHER</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>lazy</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>Lazy mode, starts the finder only if the candidates are more than one</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>output_stream</code></td>
-          <td>
-                <code><span title="typing.TextIO">TextIO</span></code>
-          </td>
-          <td><p>Output stream</p></td>
-          <td>
-                <code>sys.stderr</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
-<span class="normal">38</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>candidates</code></b>
+                  (<code><span title="typing.Union">Union</span>[<span title="typing.Callable">Callable</span>[[], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]], <span title="typing.Iterator">Iterator</span>[<span title="typing.Any">Any</span>], <span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Candidates</p>
+              </div>
+            </li>
+            <li>
+              <b><code>fullscreen</code></b>
+                  (<code>bool</code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Full screen mode</p>
+              </div>
+            </li>
+            <li>
+              <b><code>height</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[int]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Finder window height</p>
+              </div>
+            </li>
+            <li>
+              <b><code>format_fn</code></b>
+                  (<code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], str]</code>, default:
+                      <code>lambda : str(x)</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Items format function</p>
+              </div>
+            </li>
+            <li>
+              <b><code>layout</code></b>
+                  (<code><span title="typing.Union">Union</span>[<span title="typing.Type">Type</span>[<span title="pzp.layout.Layout">Layout</span>], str]</code>, default:
+                      <code><a class="autorefs autorefs-internal" title="pzp.finder.DEFAULT_LAYOUT" href="#pzp.finder.DEFAULT_LAYOUT">DEFAULT_LAYOUT</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Finder layout</p>
+              </div>
+            </li>
+            <li>
+              <b><code>info_style</code></b>
+                  (<code><span title="typing.Union">Union</span>[<span title="pzp.info.InfoStyle">InfoStyle</span>, str]</code>, default:
+                      <code><span title="pzp.info.InfoStyle.DEFAULT">DEFAULT</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Determines the display style of finder info</p>
+              </div>
+            </li>
+            <li>
+              <b><code>pointer_str</code></b>
+                  (<code>str</code>, default:
+                      <code><a class="autorefs autorefs-internal" title="pzp.finder.DEFAULT_POINTER" href="#pzp.finder.DEFAULT_POINTER">DEFAULT_POINTER</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Pointer to the current line</p>
+              </div>
+            </li>
+            <li>
+              <b><code>prompt_str</code></b>
+                  (<code>str</code>, default:
+                      <code><a class="autorefs autorefs-internal" title="pzp.finder.DEFAULT_PROMPT" href="#pzp.finder.DEFAULT_PROMPT">DEFAULT_PROMPT</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Input prompt</p>
+              </div>
+            </li>
+            <li>
+              <b><code>header_str</code></b>
+                  (<code>str</code>, default:
+                      <code><a class="autorefs autorefs-internal" title="pzp.finder.DEFAULT_HEADER" href="#pzp.finder.DEFAULT_HEADER">DEFAULT_HEADER</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Header</p>
+              </div>
+            </li>
+            <li>
+              <b><code>keys_binding</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Custom keys binding</p>
+              </div>
+            </li>
+            <li>
+              <b><code>matcher</code></b>
+                  (<code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>, <span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="../matcher/#pzp.matcher.Matcher">Matcher</a>], str]</code>, default:
+                      <code><a class="autorefs autorefs-internal" title="pzp.finder.DEFAULT_MATCHER" href="#pzp.finder.DEFAULT_MATCHER">DEFAULT_MATCHER</a></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Matcher</p>
+              </div>
+            </li>
+            <li>
+              <b><code>lazy</code></b>
+                  (<code>bool</code>, default:
+                      <code>False</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Lazy mode, starts the finder only if the candidates are more than one</p>
+              </div>
+            </li>
+            <li>
+              <b><code>output_stream</code></b>
+                  (<code><span title="typing.TextIO">TextIO</span></code>, default:
+                      <code><span title="sys.stderr">stderr</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Output stream</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
@@ -761,14 +780,15 @@
 <span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">candidates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
     <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">height</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">format_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
     <span class="n">layout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Layout</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_LAYOUT</span><span class="p">,</span>
-    <span class="n">info_style</span><span class="p">:</span> <span class="n">InfoStyle</span> <span class="o">=</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">info_style</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InfoStyle</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">InfoStyle</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">pointer_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_POINTER</span><span class="p">,</span>
     <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROMPT</span><span class="p">,</span>
     <span class="n">header_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HEADER</span><span class="p">,</span>
@@ -777,7 +797,7 @@
     <span class="n">lazy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializate Finder object</span>
 
 <span class="sd">    Args:</span>
@@ -800,17 +820,19 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span> <span class="o">=</span> <span class="n">Candidates</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="n">format_fn</span><span class="p">,</span> <span class="n">matcher</span><span class="o">=</span><span class="n">matcher</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span> <span class="n">Layout</span> <span class="o">=</span> <span class="n">get_layout</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.abort" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">abort</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">abort</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
 
 </h3>
 
@@ -819,27 +841,29 @@
   
       <p>Cancel</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Cancel&quot;</span>
     <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.accept" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">accept</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">accept</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
 
 </h3>
 
@@ -848,27 +872,29 @@
   
       <p>Confirm</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Confirm&quot;</span>
     <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.apply_filter" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">apply_filter</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">apply_filter</span><span class="p">()</span></code>
 
 </h3>
 
@@ -877,27 +903,29 @@
   
       <p>Filter the items</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Filter the items&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">apply_filter</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">matching_candidates_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.down" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">down</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">down</span><span class="p">()</span></code>
 
 </h3>
 
@@ -906,27 +934,29 @@
   
       <p>Move one line down</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-j&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-n&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-j&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-n&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one line down&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">move_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="n">lines</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.ignore" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">ignore</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">ignore</span><span class="p">()</span></code>
 
 </h3>
 
@@ -935,27 +965,29 @@
   
       <p>Do nothing</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Do nothing&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.page_down" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">page_down</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">page_down</span><span class="p">()</span></code>
 
 </h3>
 
@@ -964,27 +996,29 @@
   
       <p>Move one page down</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="s2">&quot;pgdn&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-down&quot;</span><span class="p">,</span> <span class="s2">&quot;pgdn&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">page_down</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one page down&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">move_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="n">pages</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.page_up" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">page_up</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">page_up</span><span class="p">()</span></code>
 
 </h3>
 
@@ -993,27 +1027,29 @@
   
       <p>Move one page up</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="s2">&quot;pgup&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page-up&quot;</span><span class="p">,</span> <span class="s2">&quot;pgup&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">page_up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one page up&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">move_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="n">pages</span><span class="o">=+</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.prepare_result" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">prepare_result</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">prepare_result</span><span class="p">()</span></code>
 
 </h3>
 
@@ -1022,31 +1058,33 @@
   
       <p>Output the selected item, if any</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="s2">&quot;Output the selected item, if any&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">matching_candidates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.process_key" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">process_key</span><span class="p">(</span><span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">process_key</span><span class="p">(</span><span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1055,10 +1093,9 @@
   
       <p>Process the pressed key</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
-<span class="normal">121</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
@@ -1066,7 +1103,13 @@
 <span class="normal">126</span>
 <span class="normal">127</span>
 <span class="normal">128</span>
-<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Process the pressed key&quot;</span>
     <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -1075,19 +1118,26 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span>
+                <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span>
+                <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
+            <span class="p">)</span>  <span class="c1"># type: ignore</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.refresh_candidates" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">refresh_candidates</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">refresh_candidates</span><span class="p">()</span></code>
 
 </h3>
 
@@ -1096,27 +1146,29 @@
   
       <p>Load/reload the candidate list</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
-<span class="normal">116</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">116</span>
 <span class="normal">117</span>
-<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">refresh_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">refresh_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Load/reload the candidate list&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">refresh_candidates</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.setup" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1125,34 +1177,36 @@
   
       <p>Setup Finder execution</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>input</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>initial search string</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
-<span class="normal">77</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>input</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>initial search string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
 <span class="normal">80</span>
@@ -1167,8 +1221,9 @@
 <span class="normal">89</span>
 <span class="normal">90</span>
 <span class="normal">91</span>
-<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Setup Finder execution</span>
 
 <span class="sd">    Args:</span>
@@ -1185,17 +1240,19 @@
     <span class="c1"># Calculate the required height and setup the screen</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">screen_setup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.show" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">show</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">show</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1204,64 +1261,74 @@
   
       <p>Open pzp and return the selected element</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>input</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>initial search string</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-  <p><strong>Raises:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AcceptAction" href="../exceptions/#pzp.exceptions.AcceptAction">AcceptAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "accept" action.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AbortAction" href="../exceptions/#pzp.exceptions.AbortAction">AbortAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "abort" action.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.CustomAction" href="../exceptions/#pzp.exceptions.CustomAction">CustomAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "custom" action.</p></td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
-<span class="normal"> 95</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>input</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>initial search string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AcceptAction" href="../exceptions/#pzp.exceptions.AcceptAction">AcceptAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "accept" action.</p>
+              </div>
+            </li>
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AbortAction" href="../exceptions/#pzp.exceptions.AbortAction">AbortAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "abort" action.</p>
+              </div>
+            </li>
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.CustomAction" href="../exceptions/#pzp.exceptions.CustomAction">CustomAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "custom" action.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
 <span class="normal"> 96</span>
 <span class="normal"> 97</span>
 <span class="normal"> 98</span>
@@ -1279,8 +1346,9 @@
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
-<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">113</span>
+<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Open pzp and return the selected element</span>
 
 <span class="sd">    Args:</span>
@@ -1300,17 +1368,19 @@
     <span class="k">finally</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.up" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">up</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">up</span><span class="p">()</span></code>
 
 </h3>
 
@@ -1319,27 +1389,29 @@
   
       <p>Move one line up</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-k&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-p&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-k&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-p&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move one line up&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">move_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="n">lines</span><span class="o">=+</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.finder.Finder.update_screen" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">update_screen</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">update_screen</span><span class="p">()</span></code>
 
 </h3>
 
@@ -1348,15 +1420,15 @@
   
       <p>Update the screen - erase the old items, print the filtered items and the prompt</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/finder.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/finder.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Update the screen - erase the old items, print the filtered items and the prompt&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">update_screen</span><span class="p">(</span><span class="n">selected</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -1412,14 +1484,15 @@
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

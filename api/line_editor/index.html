@@ -8,7 +8,7 @@
     <title>pzp.line_editor - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href="../.." class="icon icon-home"> pzp documentation
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -66,6 +65,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/prompt/">User input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/yesno/">Yes/No picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -108,9 +109,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>API &raquo;</li>
-      <li>pzp.line_editor</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">pzp.line_editor</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,6 +121,7 @@
             <div class="section" itemprop="articleBody">
               
                 <div class="doc doc-object doc-module">
+
 
 
 <a id="pzp.line_editor"></a>
@@ -140,23 +142,22 @@
 
 
 
+
 <h2 id="pzp.line_editor.LineEditor" class="doc doc-heading">
-        <code>LineEditor</code>
+          <code>LineEditor</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
 
 
-
-        <details class="quote">
-          <summary>Source code in <code>pzp/line_editor.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
-<span class="normal">15</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/line_editor.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
@@ -234,9 +235,10 @@
 <span class="normal">90</span>
 <span class="normal">91</span>
 <span class="normal">92</span>
-<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">LineEditor</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
+<span class="normal">93</span>
+<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">LineEditor</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Line editor</span>
 
 <span class="sd">        Args:</span>
@@ -299,7 +301,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">:</span> <span class="s2">&quot;Screen&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the line and set the cursor position</span>
 
 <span class="sd">        Args:</span>
@@ -315,7 +317,7 @@
         <span class="s2">&quot;Return the line&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -329,12 +331,14 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -343,44 +347,46 @@
   
       <p>Line editor</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>Initial value</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>keys_handler</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="pzp.keys.KeysHandler" href="../keys/#pzp.keys.KeysHandler">KeysHandler</a>]</code>
-          </td>
-          <td><p>Keys handler</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
-<span class="normal">16</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>line</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Initial value</p>
+              </div>
+            </li>
+            <li>
+              <b><code>keys_handler</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="pzp.keys.KeysHandler" href="../keys/#pzp.keys.KeysHandler">KeysHandler</a>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Keys handler</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
@@ -389,8 +395,9 @@
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">keys_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Line editor</span>
 
 <span class="sd">    Args:</span>
@@ -401,17 +408,19 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.__len__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__len__</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="fm">__len__</span><span class="p">()</span></code>
 
 </h3>
 
@@ -420,25 +429,27 @@
   
       <p>Return line length</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="s2">&quot;Return line length&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.__str__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__str__</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="fm">__str__</span><span class="p">()</span></code>
 
 </h3>
 
@@ -447,25 +458,27 @@
   
       <p>Return the line</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="s2">&quot;Return the line&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.adj_cursor_pos" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="n">characters</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="n">characters</span><span class="p">)</span></code>
 
 </h3>
 
@@ -474,25 +487,27 @@
   
       <p>Set cursor position (relative to current position)</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adj_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adj_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Set cursor position (relative to current position)&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="n">characters</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.backward_char" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">backward_char</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">backward_char</span><span class="p">()</span></code>
 
 </h3>
 
@@ -501,27 +516,29 @@
   
       <p>Move the cursor back one character</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
-<span class="normal">42</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
 <span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-b&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">])</span>
+<span class="normal">44</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-b&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor back one character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.beginning_of_line" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">beginning_of_line</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">beginning_of_line</span><span class="p">()</span></code>
 
 </h3>
 
@@ -530,27 +547,29 @@
   
       <p>Move the cursor to the line start</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
-<span class="normal">52</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-a&quot;</span><span class="p">,</span> <span class="s2">&quot;home&quot;</span><span class="p">])</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;beginning-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-a&quot;</span><span class="p">,</span> <span class="s2">&quot;home&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">beginning_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor to the line start&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.delete_backward_char" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">delete_backward_char</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">delete_backward_char</span><span class="p">()</span></code>
 
 </h3>
 
@@ -559,31 +578,33 @@
   
       <p>Delete the previous character</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
-<span class="normal">62</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-h&quot;</span><span class="p">,</span> <span class="s2">&quot;bspace&quot;</span><span class="p">])</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;backward-delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-h&quot;</span><span class="p">,</span> <span class="s2">&quot;bspace&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">delete_backward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Delete the previous character&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="p">:]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.delete_char" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">delete_char</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">delete_char</span><span class="p">()</span></code>
 
 </h3>
 
@@ -592,29 +613,31 @@
   
       <p>Delete the current character</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
-<span class="normal">69</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">69</span>
 <span class="normal">70</span>
 <span class="normal">71</span>
-<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-d&quot;</span><span class="p">,</span> <span class="s2">&quot;del&quot;</span><span class="p">])</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;delete-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-d&quot;</span><span class="p">,</span> <span class="s2">&quot;del&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">delete_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Delete the current character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.end_of_line" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">end_of_line</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">end_of_line</span><span class="p">()</span></code>
 
 </h3>
 
@@ -623,27 +646,29 @@
   
       <p>Move the cursor to the line end</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
-<span class="normal">57</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-e&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">])</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;end-of-line&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-e&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">end_of_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor to the line end&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.forward_char" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">forward_char</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">forward_char</span><span class="p">()</span></code>
 
 </h3>
 
@@ -652,27 +677,29 @@
   
       <p>Move the cursor forward one character</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
-<span class="normal">47</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
 <span class="normal">48</span>
-<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-f&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">])</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;forward-char&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-f&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">forward_char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Move the cursor forward one character&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.insert" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">insert</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">insert</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></code>
 
 </h3>
 
@@ -681,29 +708,31 @@
   
       <p>Insert characters at the current cursor position</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
-<span class="normal">36</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Insert characters at the current cursor position&quot;</span>
     <span class="k">if</span> <span class="n">ch</span> <span class="o">&gt;=</span> <span class="n">SPACE</span><span class="p">:</span>  <span class="c1"># Add the character to line</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">ch</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adj_cursor_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.print" class="doc doc-heading">
-<code class="highlight language-python"><span class="nb">print</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="nb">print</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></code>
 
 </h3>
 
@@ -712,41 +741,42 @@
   
       <p>Print the line and set the cursor position</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>screen</code></td>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.screen.Screen" href="../screen/#pzp.screen.Screen">Screen</a></code>
-          </td>
-          <td><p>Screen instance</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">78</span>
-<span class="normal">79</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>screen</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="pzp.screen.Screen" href="../screen/#pzp.screen.Screen">Screen</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>Screen instance</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">79</span>
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
 <span class="normal">83</span>
 <span class="normal">84</span>
-<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">:</span> <span class="s2">&quot;Screen&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">:</span> <span class="s2">&quot;Screen&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Print the line and set the cursor position</span>
 
 <span class="sd">    Args:</span>
@@ -754,17 +784,19 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">move_left</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.line_editor.LineEditor.set_cursor_pos" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_cursor_pos</span><span class="p">(</span><span class="n">cursor_pos</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">set_cursor_pos</span><span class="p">(</span><span class="n">cursor_pos</span><span class="p">)</span></code>
 
 </h3>
 
@@ -773,15 +805,15 @@
   
       <p>Set cursor position (absolute)</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/line_editor.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor_pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/line_editor.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor_pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Set cursor position (absolute)&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">cursor_pos</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -837,14 +869,15 @@
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

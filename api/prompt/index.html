@@ -8,7 +8,7 @@
     <title>pzp.prompt - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href="../.." class="icon icon-home"> pzp documentation
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -66,6 +65,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/prompt/">User input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/yesno/">Yes/No picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -108,9 +109,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>API &raquo;</li>
-      <li>pzp.prompt</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">pzp.prompt</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,6 +121,7 @@
             <div class="section" itemprop="articleBody">
               
                 <div class="doc doc-object doc-module">
+
 
 
 <a id="pzp.prompt"></a>
@@ -140,23 +142,22 @@
 
 
 
+
 <h2 id="pzp.prompt.Prompt" class="doc doc-heading">
-        <code>Prompt</code>
+          <code>Prompt</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.actions.ActionsHandler" href="../actions/#pzp.actions.ActionsHandler">ActionsHandler</a></code></p>
 
 
-
-        <details class="quote">
-          <summary>Source code in <code>pzp/prompt.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 16</span>
-<span class="normal"> 17</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/prompt.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 17</span>
 <span class="normal"> 18</span>
 <span class="normal"> 19</span>
 <span class="normal"> 20</span>
@@ -264,7 +265,13 @@
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
-<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Prompt</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Prompt</span><span class="p">(</span><span class="n">ActionsHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -274,7 +281,7 @@
         <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializate Prompt object</span>
 
 <span class="sd">        Args:</span>
@@ -299,7 +306,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">value_proc</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Setup Prompt execution</span>
 
 <span class="sd">        Args:</span>
@@ -310,7 +317,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open pzp and return the selected element</span>
 
 <span class="sd">        Args:</span>
@@ -335,7 +342,12 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+                <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span>
+                    <span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span>
+                    <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span>
+                    <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
+                <span class="p">)</span>  <span class="c1"># type: ignore</span>
 
     <span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Update the screen&quot;</span>
@@ -375,7 +387,7 @@
         <span class="s2">&quot;Do nothing&quot;</span>
         <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -389,12 +401,14 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value_proc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prompt_str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value_proc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></code>
 
 </h3>
 
@@ -403,84 +417,86 @@
   
       <p>Initializate Prompt object</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>default</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>The default value to use if no input happens</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>prompt_str</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>The input prompt</p></td>
-          <td>
-                <code>&#39;&#39;</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>type</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
-          </td>
-          <td><p>The type to use to check the value against</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>value_proc</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Callable">Callable</span>[[str], <span title="typing.Any">Any</span>]]</code>
-          </td>
-          <td><p>Type conversion function</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>keys_binding</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>
-          </td>
-          <td><p>Custom keys binding</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>output_stream</code></td>
-          <td>
-                <code><span title="typing.TextIO">TextIO</span></code>
-          </td>
-          <td><p>Output stream</p></td>
-          <td>
-                <code>sys.stderr</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>default</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The default value to use if no input happens</p>
+              </div>
+            </li>
+            <li>
+              <b><code>prompt_str</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The input prompt</p>
+              </div>
+            </li>
+            <li>
+              <b><code>type</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The type to use to check the value against</p>
+              </div>
+            </li>
+            <li>
+              <b><code>value_proc</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="typing.Callable">Callable</span>[[str], <span title="typing.Any">Any</span>]]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Type conversion function</p>
+              </div>
+            </li>
+            <li>
+              <b><code>keys_binding</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="pzp.keys.KeysBinding">KeysBinding</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Custom keys binding</p>
+              </div>
+            </li>
+            <li>
+              <b><code>output_stream</code></b>
+                  (<code><span title="typing.TextIO">TextIO</span></code>, default:
+                      <code><span title="sys.stderr">stderr</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Output stream</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
@@ -510,7 +526,8 @@
 <span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span>
-<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">prompt_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -519,7 +536,7 @@
     <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">output_stream</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializate Prompt object</span>
 
 <span class="sd">    Args:</span>
@@ -543,17 +560,19 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value_proc</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.abort" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">abort</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">abort</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
 
 </h3>
 
@@ -562,27 +581,29 @@
   
       <p>Cancel</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ctrl-c&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-g&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl-q&quot;</span><span class="p">,</span> <span class="s2">&quot;esc&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Cancel&quot;</span>
     <span class="k">raise</span> <span class="n">AbortAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.accept" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">accept</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">accept</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span></code>
 
 </h3>
 
@@ -591,18 +612,18 @@
   
       <p>Confirm</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
-<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enter&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_event</span><span class="p">:</span> <span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Confirm&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -613,17 +634,19 @@
         <span class="k">return</span>
     <span class="k">raise</span> <span class="n">AcceptAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;accept&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.ignore" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">ignore</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">ignore</span><span class="p">()</span></code>
 
 </h3>
 
@@ -632,27 +655,29 @@
   
       <p>Do nothing</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@Action</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;insert&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">ignore</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Do nothing&quot;</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.prepare_result" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">prepare_result</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">prepare_result</span><span class="p">()</span></code>
 
 </h3>
 
@@ -661,17 +686,17 @@
   
       <p>Return the line converted to the correct type or the default value if the line is empty</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
 <span class="normal">103</span>
-<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="s2">&quot;Return the line converted to the correct type or the default value if the line is empty&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
@@ -681,17 +706,19 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.process_key" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">process_key</span><span class="p">(</span><span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">process_key</span><span class="p">(</span><span class="n">ch</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -700,10 +727,9 @@
   
       <p>Process the pressed key</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">78</span>
-<span class="normal">79</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">79</span>
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
@@ -711,7 +737,13 @@
 <span class="normal">84</span>
 <span class="normal">85</span>
 <span class="normal">86</span>
-<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Process the pressed key&quot;</span>
     <span class="n">key_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_handler</span><span class="o">.</span><span class="n">get_key_event</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -720,19 +752,26 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_key_event</span><span class="p">(</span><span class="n">key_event</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">MissingHander</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="k">raise</span> <span class="n">CustomAction</span><span class="p">(</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                <span class="n">ch</span><span class="o">=</span><span class="n">key_event</span><span class="o">.</span><span class="n">ch</span><span class="p">,</span>
+                <span class="n">selected_item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prepare_result</span><span class="p">(),</span>
+                <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
+            <span class="p">)</span>  <span class="c1"># type: ignore</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.setup" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">setup</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -741,34 +780,36 @@
   
       <p>Setup Prompt execution</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>input</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>initial string</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
-<span class="normal">51</span>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>input</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>initial string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
@@ -776,8 +817,9 @@
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Setup Prompt execution</span>
 
 <span class="sd">    Args:</span>
@@ -787,17 +829,19 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_stream</span><span class="p">,</span> <span class="n">fullscreen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.show" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">show</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">show</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -806,64 +850,74 @@
   
       <p>Open pzp and return the selected element</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>input</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>initial string</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
 
-  <p><strong>Raises:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AcceptAction" href="../exceptions/#pzp.exceptions.AcceptAction">AcceptAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "accept" action.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AbortAction" href="../exceptions/#pzp.exceptions.AbortAction">AbortAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "abort" action.</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="pzp.exceptions.CustomAction" href="../exceptions/#pzp.exceptions.CustomAction">CustomAction</a></code>
-          </td>
-          <td><p>Raises when the user presses a key that is mapped to the "custom" action.</p></td>
-        </tr>
-    </tbody>
-  </table>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
-<span class="normal">62</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>input</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>initial string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AcceptAction" href="../exceptions/#pzp.exceptions.AcceptAction">AcceptAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "accept" action.</p>
+              </div>
+            </li>
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.AbortAction" href="../exceptions/#pzp.exceptions.AbortAction">AbortAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "abort" action.</p>
+              </div>
+            </li>
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="pzp.exceptions.CustomAction" href="../exceptions/#pzp.exceptions.CustomAction">CustomAction</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Raises when the user presses a key that is mapped to the "custom" action.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
@@ -877,8 +931,9 @@
 <span class="normal">73</span>
 <span class="normal">74</span>
 <span class="normal">75</span>
-<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Open pzp and return the selected element</span>
 
 <span class="sd">    Args:</span>
@@ -894,17 +949,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">process_key</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_screen</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="pzp.prompt.Prompt.update_screen" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">update_screen</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">update_screen</span><span class="p">()</span></code>
 
 </h3>
 
@@ -913,21 +970,21 @@
   
       <p>Update the screen</p>
 
-      <details class="quote">
-        <summary>Source code in <code>pzp/prompt.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <details class="quote">
+            <summary> <code>pzp/prompt.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Update the screen&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">erase_line</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt_str</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">line_editor</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -983,14 +1040,15 @@
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

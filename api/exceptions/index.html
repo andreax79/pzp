@@ -8,7 +8,7 @@
     <title>pzp.exceptions - pzp documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href="../.." class="icon icon-home"> pzp documentation
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -66,6 +65,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/text_picker/">Text picker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../examples/prompt/">User input</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/yesno/">Yes/No picker</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
@@ -108,9 +109,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>API &raquo;</li>
-      <li>pzp.exceptions</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">pzp.exceptions</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,6 +121,7 @@
             <div class="section" itemprop="articleBody">
               
                 <div class="doc doc-object doc-module">
+
 
 
 <a id="pzp.exceptions"></a>
@@ -140,116 +142,123 @@
 
 
 
+
 <h2 id="pzp.exceptions.AbortAction" class="doc doc-heading">
-        <code>AbortAction</code>
+          <code>AbortAction</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
 
   
       <p>The AbortAction exception is raised when the user presses a key
 that is mapped to the "abort" action.</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>action</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>pressed key</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-                <code><span title="typing.Any">Any</span></code>
-          </td>
-          <td><p>selected item, if any</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>user input</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-          </td>
-          <td><p>action</p></td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-          </td>
-          <td><p>pressed key</p></td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-          </td>
-          <td><p>selected item, if any</p></td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-          </td>
-          <td><p>user input</p></td>
-        </tr>
-    </tbody>
-  </table>
 
 
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+                  (<code><span title="typing.Any">Any</span></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
 <span class="normal">71</span>
@@ -269,7 +278,7 @@ that is mapped to the "abort" action.</p>
 <span class="normal">85</span>
 <span class="normal">86</span>
 <span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AbortAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The AbortAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;abort&quot; action.</span>
 
@@ -289,7 +298,7 @@ that is mapped to the "abort" action.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -315,116 +324,123 @@ that is mapped to the "abort" action.</p>
 
 
 
+
 <h2 id="pzp.exceptions.AcceptAction" class="doc doc-heading">
-        <code>AcceptAction</code>
+          <code>AcceptAction</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
 
   
       <p>The AcceptAction exception is raised when the user presses a key
 that is mapped to the "accept" action.</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>action</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>pressed key</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-                <code><span title="typing.Any">Any</span></code>
-          </td>
-          <td><p>selected item, if any</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>user input</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-          </td>
-          <td><p>action</p></td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-          </td>
-          <td><p>pressed key</p></td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-          </td>
-          <td><p>selected item, if any</p></td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-          </td>
-          <td><p>user input</p></td>
-        </tr>
-    </tbody>
-  </table>
 
 
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+                  (<code><span title="typing.Any">Any</span></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -444,7 +460,7 @@ that is mapped to the "accept" action.</p>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AcceptAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The AcceptAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;accept&quot; action.</span>
 
@@ -464,7 +480,7 @@ that is mapped to the "accept" action.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -490,116 +506,123 @@ that is mapped to the "accept" action.</p>
 
 
 
+
 <h2 id="pzp.exceptions.CustomAction" class="doc doc-heading">
-        <code>CustomAction</code>
+          <code>CustomAction</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.GenericAction" href="#pzp.exceptions.GenericAction">GenericAction</a></code></p>
 
   
       <p>The CustomAction exception is raised when the user presses a key
 that is mapped to the "custom" action.</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>action</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-                <code><span title="typing.Any">Any</span></code>
-          </td>
-          <td><p>selected item, if any</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>pressed key</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>user input</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-          </td>
-          <td><p>action</p></td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-          </td>
-          <td><p>selected item, if any</p></td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-          </td>
-          <td><p>pressed key</p></td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-          </td>
-          <td><p>user input</p></td>
-        </tr>
-    </tbody>
-  </table>
 
 
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+                  (<code><span title="typing.Any">Any</span></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -619,7 +642,7 @@ that is mapped to the "custom" action.</p>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">GenericAction</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The CustomAction exception is raised when the user presses a key</span>
 <span class="sd">    that is mapped to the &quot;custom&quot; action.</span>
 
@@ -639,7 +662,7 @@ that is mapped to the "custom" action.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">selected_item</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">selected_item</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -665,115 +688,122 @@ that is mapped to the "custom" action.</p>
 
 
 
+
 <h2 id="pzp.exceptions.GenericAction" class="doc doc-heading">
-        <code>GenericAction</code>
+          <code>GenericAction</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.PZPException" href="#pzp.exceptions.PZPException">PZPException</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.PZPException" href="#pzp.exceptions.PZPException">PZPException</a></code></p>
 
   
       <p>Generic Action Event</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>action</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>pressed key</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-                <code><span title="typing.Any">Any</span></code>
-          </td>
-          <td><p>selected item, if any</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>user input</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-          </td>
-          <td><p>action</p></td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-          </td>
-          <td><p>pressed key</p></td>
-        </tr>
-        <tr>
-          <td><code>selected_item</code></td>
-          <td>
-          </td>
-          <td><p>selected item, if any</p></td>
-        </tr>
-        <tr>
-          <td><code>line</code></td>
-          <td>
-          </td>
-          <td><p>user input</p></td>
-        </tr>
-    </tbody>
-  </table>
 
 
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+                  (<code><span title="typing.Any">Any</span></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selected_item</code></b>
+              –
+              <div class="doc-md-description">
+                <p>selected item, if any</p>
+              </div>
+            </li>
+            <li>
+              <b><code>line</code></b>
+              –
+              <div class="doc-md-description">
+                <p>user input</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
@@ -796,7 +826,7 @@ that is mapped to the "custom" action.</p>
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">GenericAction</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic Action Event</span>
 
 <span class="sd">    Args:</span>
@@ -819,7 +849,7 @@ that is mapped to the "custom" action.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_item</span> <span class="o">=</span> <span class="n">selected_item</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -845,83 +875,88 @@ that is mapped to the "custom" action.</p>
 
 
 
+
 <h2 id="pzp.exceptions.MissingHander" class="doc doc-heading">
-        <code>MissingHander</code>
+          <code>MissingHander</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.PZPException" href="#pzp.exceptions.PZPException">PZPException</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="pzp.exceptions.PZPException" href="#pzp.exceptions.PZPException">PZPException</a></code></p>
 
   
       <p>The MissingHander exception is raised when there is no handler for an action.</p>
 
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>action</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
-          </td>
-          <td><p>pressed key</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>action</code></td>
-          <td>
-          </td>
-          <td><p>action</p></td>
-        </tr>
-        <tr>
-          <td><code>ch</code></td>
-          <td>
-          </td>
-          <td><p>pressed key</p></td>
-        </tr>
-    </tbody>
-  </table>
 
 
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>action</code></b>
+              –
+              <div class="doc-md-description">
+                <p>action</p>
+              </div>
+            </li>
+            <li>
+              <b><code>ch</code></b>
+              –
+              <div class="doc-md-description">
+                <p>pressed key</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
@@ -938,7 +973,7 @@ that is mapped to the "custom" action.</p>
 <span class="normal">126</span>
 <span class="normal">127</span>
 <span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MissingHander</span><span class="p">(</span><span class="n">PZPException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The MissingHander exception is raised when there is no handler for an action.</span>
 
 <span class="sd">    Args:</span>
@@ -955,7 +990,7 @@ that is mapped to the "custom" action.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -981,32 +1016,32 @@ that is mapped to the "custom" action.</p>
 
 
 
+
 <h2 id="pzp.exceptions.PZPException" class="doc doc-heading">
-        <code>PZPException</code>
+          <code>PZPException</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code>Exception</code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code>Exception</code></p>
 
   
       <p>Generic PZP Exception</p>
 
-
-        <details class="quote">
-          <summary>Source code in <code>pzp/exceptions.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/exceptions.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PZPException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic PZP Exception</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   </div>
 
@@ -1055,14 +1090,15 @@ that is mapped to the "custom" action.</p>
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
