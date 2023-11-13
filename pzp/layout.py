@@ -7,7 +7,7 @@ from .candidates import Candidates
 from .config import Config
 from .info import InfoStyle
 from .line_editor import LineEditor
-from .screen import Screen
+from .screen import Screen, DummyScreen
 from .ansi import (  # noqa
     NL,
     SPACE,
@@ -59,7 +59,7 @@ class Layout(ABC):
         self.config = config
         self.candidates = candidates
         self.offset: int = 0
-        self.screen: Screen = None
+        self.screen: Screen = DummyScreen()
         self.prompt_len: int = ansi_len(self.config.no_pointer_str) + 1
 
     def __init_subclass__(cls, option: str, **kwargs: Dict[str, Any]) -> None:
@@ -89,9 +89,8 @@ class Layout(ABC):
 
     def cleanup(self) -> None:
         "Clean the screen when the finder is closed"
-        if self.screen is not None:
-            self.clear_screen(erase=True)
-            self.screen.flush()
+        self.clear_screen(erase=True)
+        self.screen.flush()
 
     @property
     def max_candidates_lines(self) -> int:

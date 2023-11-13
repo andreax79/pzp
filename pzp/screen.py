@@ -23,7 +23,7 @@ from .ansi import (  # noqa
     NEGATIVE,
 )
 
-__all__ = ["Screen"]
+__all__ = ["Screen", "DummyScreen"]
 
 DEFAULT_HEIGHT = 24
 "Default screen height"
@@ -99,7 +99,7 @@ class Screen:
         Args:
             lines: number of newlines to be added
         """
-        self.data.append(f"{NL}" * lines)
+        self.write(f"{NL}" * lines)
         return self
 
     def space(self, num: int = 1) -> "Screen":
@@ -109,7 +109,7 @@ class Screen:
         Args:
             num: number of spaces
         """
-        self.data.append(" " * num)
+        self.write(" " * num)
         return self
 
     def reset(self) -> "Screen":
@@ -184,4 +184,27 @@ class Screen:
         """
         if characters > 0:
             return self.write(f"{ESC}[{characters}D")
+        return self
+
+
+class DummyScreen(Screen):
+    def __init__(self) -> None:
+        """
+        Initialize dummy screen
+
+        Attributes:
+            fullscreen: Full screen mode (always False)
+            height: Screen height (always 0)
+            width: Screen width (always 0)
+        """
+        self.fullscreen = False
+        self.height = 0
+        self.width = 0
+
+    def write(self, line: str) -> "Screen":
+        "Do nothing"
+        return self
+
+    def flush(self) -> "Screen":
+        "Do nothing"
         return self
