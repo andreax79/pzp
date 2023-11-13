@@ -1,7 +1,9 @@
 import pytest
+
 from pzp import pzp
-from pzp.screen import Screen
 from pzp.exceptions import AcceptAction
+from pzp.screen import Screen
+
 from .commons import FakeTerminal
 
 

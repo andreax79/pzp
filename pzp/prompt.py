@@ -2,8 +2,9 @@
 
 import sys
 from typing import Any, Callable, Optional, TextIO
+
 from .actions import Action, ActionsHandler
-from .exceptions import AcceptAction, AbortAction, CustomAction, MissingHander
+from .exceptions import AbortAction, AcceptAction, CustomAction, MissingHander
 from .keys import KeyEvent, KeysBinding
 from .line_editor import LineEditor
 from .screen import Screen
@@ -84,7 +85,12 @@ class Prompt(ActionsHandler):
             try:
                 self.process_key_event(key_event)
             except MissingHander:
-                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)  # type: ignore
+                raise CustomAction(
+                    action=key_event.action,
+                    ch=key_event.ch,
+                    selected_item=self.prepare_result(),
+                    line=self.line_editor.line,
+                )  # type: ignore
 
     def update_screen(self) -> None:
         "Update the screen"

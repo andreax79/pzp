@@ -2,10 +2,11 @@
 
 import sys
 from typing import Any, Callable, Iterator, Optional, Sequence, TextIO, Type, Union
+
 from .actions import Action, ActionsHandler
 from .candidates import Candidates
 from .config import Config
-from .exceptions import AcceptAction, AbortAction, CustomAction, MissingHander
+from .exceptions import AbortAction, AcceptAction, CustomAction, MissingHander
 from .info import InfoStyle
 from .keys import KeyEvent, KeysBinding
 from .layout import Layout, get_layout
@@ -126,7 +127,12 @@ class Finder(ActionsHandler):
             try:
                 self.process_key_event(key_event)
             except MissingHander:
-                raise CustomAction(action=key_event.action, ch=key_event.ch, selected_item=self.prepare_result(), line=self.line_editor.line)  # type: ignore
+                raise CustomAction(
+                    action=key_event.action,
+                    ch=key_event.ch,
+                    selected_item=self.prepare_result(),
+                    line=self.line_editor.line,
+                )  # type: ignore
 
     def apply_filter(self) -> None:
         "Filter the items"

@@ -2,37 +2,38 @@
 
 import math
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Sequence, Type, Tuple, Union
+from typing import Any, Dict, Sequence, Tuple, Type, Union
+
+from .ansi import (  # noqa
+    BLACK,
+    BLACK_BG,
+    BLUE,
+    BLUE_BG,
+    BOLD,
+    CYAN,
+    CYAN_BG,
+    ERASE_LINE,
+    GREEN,
+    GREEN_BG,
+    NEGATIVE,
+    NL,
+    PURPLE,
+    PURPLE_BG,
+    RED,
+    RED_BG,
+    RESET,
+    SPACE,
+    WHITE,
+    WHITE_BG,
+    YELLOW,
+    YELLOW_BG,
+    ansi_len,
+)
 from .candidates import Candidates
 from .config import Config
 from .info import InfoStyle
 from .line_editor import LineEditor
-from .screen import Screen, DummyScreen
-from .ansi import (  # noqa
-    NL,
-    SPACE,
-    ERASE_LINE,
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    CYAN,
-    WHITE,
-    BLACK_BG,
-    RED_BG,
-    GREEN_BG,
-    YELLOW_BG,
-    BLUE_BG,
-    PURPLE_BG,
-    CYAN_BG,
-    WHITE_BG,
-    RESET,
-    BOLD,
-    NEGATIVE,
-    ansi_len,
-)
+from .screen import DummyScreen, Screen
 
 __all__ = ["Layout", "DefaultLayout", "ReverseLayout", "ReverseListLayout", "get_layout", "list_layouts"]
 
@@ -141,7 +142,6 @@ class Layout(ABC):
 
     def calculate_offset(self, selected: int) -> None:
         "Calculate the screen offset"
-        l = self.screen_items_len
         if selected >= self.offset + self.screen_items_len:
             self.offset = selected - self.screen_items_len + 1
         elif selected < self.offset:
@@ -175,7 +175,6 @@ class Layout(ABC):
         if self.config.info_style == InfoStyle.DEFAULT:
             matching_candidates_len = self.candidates.matching_candidates_len
             candidates_len = self.candidates.candidates_len
-            offset = self.offset
             self.screen.erase_line().space(2).write(f"{YELLOW}{matching_candidates_len}/{candidates_len}").reset().nl()
 
     def print_prompt(self) -> None:

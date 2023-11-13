@@ -4,23 +4,24 @@ import shutil
 import sys
 from os import terminal_size
 from typing import List, Optional, TextIO
+
 from .ansi import (  # noqa
-    ESC,
-    NL,
-    SPACE,
-    CURSOR_SAVE_POS,
-    CURSOR_RESTORE_POS,
-    ERASE_LINE,
-    RED,
-    GREEN,
-    YELLOW,
     BLUE,
-    PURPLE,
-    CYAN,
-    WHITE,
-    RESET,
     BOLD,
+    CURSOR_RESTORE_POS,
+    CURSOR_SAVE_POS,
+    CYAN,
+    ERASE_LINE,
+    ESC,
+    GREEN,
     NEGATIVE,
+    NL,
+    PURPLE,
+    RED,
+    RESET,
+    SPACE,
+    WHITE,
+    YELLOW,
 )
 
 __all__ = ["Screen", "DummyScreen"]

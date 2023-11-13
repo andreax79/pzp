@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import argparse
+
 from pzp import Finder, GenericAction
-from pzp.layout import list_layouts
 from pzp.info import list_styles
+from pzp.layout import list_layouts
 
 
 def main():

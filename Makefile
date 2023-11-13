@@ -3,6 +3,7 @@ SHELL=/bin/bash -e
 .PHONY: help
 help:
 	@echo - make black ----------- Format code
+	@echo - make isort ----------- Sort imports
 	@echo - make clean ----------- Clean virtual environment
 	@echo - make coverage -------- Run tests coverage
 	@echo - make docs ------------ Make docs
@@ -12,8 +13,12 @@ help:
 	@echo - make typecheck ------- Typecheck
 	@echo - make venv ------------ Create virtual environment
 
+.PHONY: isort
+isort:
+	@isort --profile black pzp tests examples setup.py
+
 .PHONY: black
-black:
+black: isort
 	@black -S pzp tests examples setup.py
 
 .PHONY: clean

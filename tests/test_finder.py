@@ -1,7 +1,8 @@
 import pytest
+
+from pzp.exceptions import AbortAction, AcceptAction, CustomAction
 from pzp.finder import Finder
 from pzp.keys import KEYS
-from pzp.exceptions import AcceptAction, AbortAction, CustomAction
 
 
 def test_actions():

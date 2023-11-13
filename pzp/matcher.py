@@ -2,7 +2,8 @@
 
 import re
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Sequence, Type, Tuple, Union
+from typing import Any, Callable, Dict, Sequence, Tuple, Type, Union
+
 from .commons import first_or_default
 
 __all__ = [

@@ -2,8 +2,9 @@
 
 import inspect
 from typing import Any, Callable, Dict, Optional, Sequence, Union
-from .keys import KeyEvent, KeysHandler, KeysBinding
+
 from .exceptions import MissingHander
+from .keys import KeyEvent, KeysBinding, KeysHandler
 
 __all__ = [
     "Action",

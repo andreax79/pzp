@@ -1,4 +1,4 @@
-from pzp.keys import key_to_str, KeysHandler
+from pzp.keys import KeysHandler, key_to_str
 
 
 def test_key_to_str():

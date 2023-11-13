@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from typing import Any, Callable, Iterator, Sequence, Type, Union
+
 from .matcher import Matcher, get_matcher
 
 __all__ = [

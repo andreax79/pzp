@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-from typing import Optional, TYPE_CHECKING
-from .ansi import SPACE
+from typing import TYPE_CHECKING, Optional
+
 from .actions import Action, ActionsHandler
+from .ansi import SPACE
 from .keys import KeyEvent, KeysHandler
 
 if TYPE_CHECKING:

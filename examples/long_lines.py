@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-import os
 import argparse
+import os
 import random
+
 from pzp import Finder, GenericAction
-from pzp.layout import list_layouts
 from pzp.info import list_styles
+from pzp.layout import list_layouts
 
 
 def row():

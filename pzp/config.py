@@ -1,31 +1,32 @@
 #!/usr/bin/env python
 
 from typing import Any, Callable, Optional, TextIO, Union
-from .info import InfoStyle, get_style
+
 from .ansi import (  # noqa
-    NL,
-    SPACE,
-    ERASE_LINE,
     BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    CYAN,
-    WHITE,
     BLACK_BG,
-    RED_BG,
-    GREEN_BG,
-    YELLOW_BG,
+    BLUE,
     BLUE_BG,
-    PURPLE_BG,
-    CYAN_BG,
-    WHITE_BG,
-    RESET,
     BOLD,
+    CYAN,
+    CYAN_BG,
+    ERASE_LINE,
+    GREEN,
+    GREEN_BG,
     NEGATIVE,
+    NL,
+    PURPLE,
+    PURPLE_BG,
+    RED,
+    RED_BG,
+    RESET,
+    SPACE,
+    WHITE,
+    WHITE_BG,
+    YELLOW,
+    YELLOW_BG,
 )
+from .info import InfoStyle, get_style
 
 __all__ = ["Config"]
 

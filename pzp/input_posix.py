@@ -2,10 +2,10 @@
 
 __all__ = ["get_char", "KEYS_MAPPING"]
 
+import os
 import sys
 import termios
 import tty
-import os
 
 NULL = "\0"
 ESC = "\x1b"

@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
+from typing import Any, Callable, Iterator, Optional, Sequence, Set, Type, Union
+
+from .exceptions import AbortAction, AcceptAction, CustomAction, GenericAction
 from .finder import (
-    Finder,
-    DEFAULT_POINTER,
-    DEFAULT_PROMPT,
     DEFAULT_HEADER,
     DEFAULT_LAYOUT,
     DEFAULT_MATCHER,
+    DEFAULT_POINTER,
+    DEFAULT_PROMPT,
+    Finder,
 )
-from .keys import KeysBinding
-from .matcher import Matcher
-from .layout import Layout
 from .info import InfoStyle
-from .exceptions import AcceptAction, AbortAction, CustomAction, GenericAction
+from .keys import KeysBinding
+from .layout import Layout
+from .matcher import Matcher
 from .prompt import Prompt
-from typing import Any, Callable, Iterator, Optional, Sequence, Set, Type, Union
 
 __version__ = "0.0.22"
 "PZP Version"

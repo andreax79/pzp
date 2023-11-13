@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from typing import Dict, Optional, Sequence
-from .input import get_char, KEYS_MAPPING
+
+from .input import KEYS_MAPPING, get_char
 
 __all__ = [
     "KEYS",
