@@ -87,7 +87,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../line_editor/">pzp.line_editor</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">pzp.matcher</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">pzp.matcher</a>
     <ul class="current">
     </ul>
                   </li>
@@ -125,9 +125,9 @@
 
 
 <a id="pzp.matcher"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
 
@@ -142,24 +142,23 @@
 
 
 
-
 <h2 id="pzp.matcher.ExactMatcher" class="doc doc-heading">
-          <code>ExactMatcher</code>
+            <code>ExactMatcher</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="#pzp.matcher.Matcher">Matcher</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="#pzp.matcher.Matcher">Matcher</a></code></p>
 
-  
+
       <p>Exact matcher</p>
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/matcher.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/matcher.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -175,9 +174,9 @@
         <span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">candidates</span> <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">format_fn</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -193,7 +192,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -201,19 +200,18 @@
 
 
 
-
 <h2 id="pzp.matcher.ExtendedMatcher" class="doc doc-heading">
-          <code>ExtendedMatcher</code>
+            <code>ExtendedMatcher</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="#pzp.matcher.Matcher">Matcher</a></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="pzp.matcher.Matcher" href="#pzp.matcher.Matcher">Matcher</a></code></p>
 
-  
+
       <p>Extended Matcher</p>
 <p>This matcher accept multiple patterns delimited by spaces, such as: term ^start end$ !not</p>
 <p>If patter is prefixed by a single-quote character ', it will not be splitted by spaces.</p>
@@ -222,9 +220,9 @@
 Then matcher will search for the lines that start with or end with the given string.</p>
 <p>If a term is prefixed by !, the matcher will exclude the lines that satisfy the term from the result.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/matcher.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/matcher.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
@@ -292,12 +290,11 @@ Then matcher will search for the lines that start with or end with the given str
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">SPLIT_ESCAPED_RE</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="k">if</span> <span class="n">term</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -310,21 +307,19 @@ Then matcher will search for the lines that start with or end with the given str
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcher.split_pattern" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">split_pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">split_pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Split a pattern into terms</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
@@ -336,8 +331,8 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">SPLIT_ESCAPED_RE</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="k">if</span> <span class="n">term</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -345,7 +340,7 @@ Then matcher will search for the lines that start with or end with the given str
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -353,20 +348,19 @@ Then matcher will search for the lines that start with or end with the given str
 
 
 
-
 <h2 id="pzp.matcher.ExtendedMatcherFilter" class="doc doc-heading">
-          <code>ExtendedMatcherFilter</code>
+            <code>ExtendedMatcherFilter</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/matcher.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 56</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/matcher.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 56</span>
 <span class="normal"> 57</span>
 <span class="normal"> 58</span>
 <span class="normal"> 59</span>
@@ -492,9 +486,9 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&gt;&quot;</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -506,25 +500,22 @@ Then matcher will search for the lines that start with or end with the given str
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.__call__" class="doc doc-heading">
-          <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Evaluate the filter on the given text</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">90</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">90</span>
 <span class="normal">91</span>
 <span class="normal">92</span>
 <span class="normal">93</span>
@@ -536,136 +527,121 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.always" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">always</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">always</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Always return True</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">always</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="s2">&quot;Always return True&quot;</span>
     <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.endswith_match" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">endswith_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">endswith_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>True if the text endswith the given term</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">endswith_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="s2">&quot;True if the text endswith the given term&quot;</span>
     <span class="k">return</span> <span class="n">txt</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.exact_match" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">exact_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">exact_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Exact match</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">exact_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="s2">&quot;Exact match&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">==</span> <span class="n">txt</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.in_match" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">in_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">in_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>True if the text contains the given term</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
 <span class="normal">106</span>
 <span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">in_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="s2">&quot;True if the text contains the given term&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="ow">in</span> <span class="n">txt</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.split" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">split</span><span class="p">(</span><span class="n">term</span><span class="p">)</span></code>
-  
+            <code class="highlight language-python"><span class="n">split</span><span class="p">(</span><span class="n">term</span><span class="p">)</span></code>
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
   </span>
@@ -673,13 +649,13 @@ Then matcher will search for the lines that start with or end with the given str
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Split term in prefix, term, suffix</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
 <span class="normal">84</span>
 <span class="normal">85</span>
 <span class="normal">86</span>
@@ -691,37 +667,34 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="n">term</span><span class="p">,</span> <span class="n">suffix</span> <span class="o">=</span> <span class="n">first_or_default</span><span class="p">([(</span><span class="n">term</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)],</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">SUFFIXES</span> <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">s</span><span class="p">)],</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">suffix</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.ExtendedMatcherFilter.startswith_match" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">startswith_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">startswith_match</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>True if the text startswith the given term</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">97</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">97</span>
 <span class="normal">98</span>
 <span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">startswith_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="s2">&quot;True if the text startswith the given term&quot;</span>
     <span class="k">return</span> <span class="n">txt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -729,7 +702,7 @@ Then matcher will search for the lines that start with or end with the given str
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -737,22 +710,21 @@ Then matcher will search for the lines that start with or end with the given str
 
 
 
-
 <h2 id="pzp.matcher.Matcher" class="doc doc-heading">
-          <code>Matcher</code>
+            <code>Matcher</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="abc.ABC">ABC</span></code></p>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="abc.ABC">ABC</span></code></p>
 
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/matcher.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/matcher.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span>
@@ -792,9 +764,9 @@ Then matcher will search for the lines that start with or end with the given str
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
 
@@ -806,25 +778,22 @@ Then matcher will search for the lines that start with or end with the given str
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.Matcher.__init_subclass__" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">__init_subclass__</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">__init_subclass__</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Register a subclass</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">25</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -832,20 +801,17 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">matchers</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.matcher.Matcher.filter" class="doc doc-heading">
-          <code class="highlight language-python"><span class="nb">filter</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></code>
-  
+            <code class="highlight language-python"><span class="nb">filter</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">format_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></code>
+
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
   </span>
@@ -853,10 +819,9 @@ Then matcher will search for the lines that start with or end with the given str
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Filter candidates according to the given pattern</p>
+    <div class="doc doc-contents ">
 
+      <p>Filter candidates according to the given pattern</p>
 
 
 <table class="field-list">
@@ -888,7 +853,7 @@ Then matcher will search for the lines that start with or end with the given str
             <li>
               <b><code>format_fn</code></b>
                   (<code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], str]</code>, default:
-                      <code>lambda : str(x)</code>
+                      <code>lambda x: str(x)</code>
 )
               –
               <div class="doc-md-description">
@@ -901,7 +866,6 @@ Then matcher will search for the lines that start with or end with the given str
   </tbody>
 </table>
 
-
 <table class="field-list">
   <colgroup>
     <col class="field-name" />
@@ -909,24 +873,24 @@ Then matcher will search for the lines that start with or end with the given str
   </colgroup>
   <tbody valign="top">
     <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>result</code></b>(                <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]</code>
-)            –
-            <div class="doc-md-description">
-              <p>Filtered candidates</p>
-            </div>
-          </li>
-      </ul>
-    </td>
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>result</code></b>(                  <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Any">Any</span>]</code>
+)              –
+              <div class="doc-md-description">
+                <p>Filtered candidates</p>
+              </div>
+            </li>
+        </ul>
+      </td>
     </tr>
   </tbody>
 </table>
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
@@ -954,8 +918,8 @@ Then matcher will search for the lines that start with or end with the given str
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -963,30 +927,27 @@ Then matcher will search for the lines that start with or end with the given str
 
   </div>
 
-  </div>
+    </div>
 
 </div>
-
 
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h2 id="pzp.matcher.get_matcher" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">get_matcher</span><span class="p">(</span><span class="n">matcher</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_matcher</span><span class="p">(</span><span class="n">matcher</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Get a matcher instance by name or by class</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
@@ -1002,37 +963,34 @@ Then matcher will search for the lines that start with or end with the given str
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">matcher</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h2 id="pzp.matcher.list_matchers" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">list_matchers</span><span class="p">()</span></code>
+            <code class="highlight language-python"><span class="n">list_matchers</span><span class="p">()</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>List matchers</p>
 
-          <details class="quote">
-            <summary> <code>pzp/matcher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">167</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/matcher.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">167</span>
 <span class="normal">168</span>
 <span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">list_matchers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="s2">&quot;List matchers&quot;</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">matchers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -1040,7 +998,7 @@ Then matcher will search for the lines that start with or end with the given str
 
   </div>
 
-  </div>
+    </div>
 
 </div>
               

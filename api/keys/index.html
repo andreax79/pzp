@@ -83,7 +83,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../input/">pzp.input</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">pzp.keys</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">pzp.keys</a>
     <ul class="current">
     </ul>
                   </li>
@@ -125,9 +125,9 @@
 
 
 <a id="pzp.keys"></a>
-  <div class="doc doc-contents first">
+    <div class="doc doc-contents first">
 
-  
+
 
   <div class="doc doc-children">
 
@@ -142,20 +142,19 @@
 
 
 
-
 <h2 id="pzp.keys.KeyEvent" class="doc doc-heading">
-          <code>KeyEvent</code>
+            <code>KeyEvent</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/keys.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/keys.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
 <span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
@@ -191,12 +190,11 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">key_to_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="si">}</span><span class="s2">&gt;&quot;</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -209,18 +207,15 @@
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.keys.KeyEvent.__init__" class="doc doc-heading">
-          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Key Event represents a key action on the keyboard.</p>
+    <div class="doc doc-contents ">
 
+      <p>Key Event represents a key action on the keyboard.</p>
 
 
 <table class="field-list">
@@ -255,7 +250,6 @@
   </tbody>
 </table>
 
-
 <table class="field-list">
   <colgroup>
     <col class="field-name" />
@@ -285,9 +279,9 @@
     </tr>
   </tbody>
 </table>
-          <details class="quote">
-            <summary> <code>pzp/keys.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/keys.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
@@ -315,8 +309,8 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -324,7 +318,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -332,20 +326,19 @@
 
 
 
-
 <h2 id="pzp.keys.KeysHandler" class="doc doc-heading">
-          <code>KeysHandler</code>
+            <code>KeysHandler</code>
 
 
 </h2>
 
 
-  <div class="doc doc-contents ">
+    <div class="doc doc-contents ">
 
 
-            <details class="quote">
-              <summary>Source code in <code>pzp/keys.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+              <details class="quote">
+                <summary>Source code in <code>pzp/keys.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
 <span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
@@ -380,7 +373,11 @@
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
-<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">KeysHandler</span><span class="p">:</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">KeysHandler</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys_binding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">KeysBinding</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Keys handler is a collection of bindings of keys to actions.</span>
@@ -408,21 +405,24 @@
         <span class="s2">&quot;Add a binding for one key to an action&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">keycodes_actions</span><span class="p">[</span><span class="n">KEYS</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
 
-    <span class="k">def</span> <span class="nf">get_key_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEvent</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_key_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeyEvent</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ch</span> <span class="o">=</span> <span class="n">get_char</span><span class="p">()</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keycodes_actions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+            <span class="n">ch</span> <span class="o">=</span> <span class="n">get_char</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ch</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keycodes_actions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">KeyEvent</span><span class="p">(</span><span class="n">ch</span><span class="o">=</span><span class="n">ch</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">key_to_str</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">action</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="si">}</span><span class="s2">&gt;&quot;</span> <span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keycodes_actions</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div></td></tr></table></div>
-            </details>
+              </details>
 
-  
+
 
   <div class="doc doc-children">
-
 
 
 
@@ -435,18 +435,15 @@
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.keys.KeysHandler.__init__" class="doc doc-heading">
-          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">keys_binding</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Keys handler is a collection of bindings of keys to actions.</p>
+    <div class="doc doc-contents ">
 
+      <p>Keys handler is a collection of bindings of keys to actions.</p>
 
 
 <table class="field-list">
@@ -475,7 +472,6 @@
   </tbody>
 </table>
 
-
 <table class="field-list">
   <colgroup>
     <col class="field-name" />
@@ -498,9 +494,9 @@
     </tr>
   </tbody>
 </table>
-          <details class="quote">
-            <summary> <code>pzp/keys.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 91</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/keys.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 91</span>
 <span class="normal"> 92</span>
 <span class="normal"> 93</span>
 <span class="normal"> 94</span>
@@ -526,59 +522,53 @@
     <span class="k">if</span> <span class="n">keys_binding</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keys_binding</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.keys.KeysHandler.set_key_binding" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">set_key_binding</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">set_key_binding</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Add a binding for one key to an action</p>
 
-          <details class="quote">
-            <summary> <code>pzp/keys.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/keys.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_key_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="s2">&quot;Add a binding for one key to an action&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">keycodes_actions</span><span class="p">[</span><span class="n">KEYS</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h3 id="pzp.keys.KeysHandler.set_keys_binding" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">set_keys_binding</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">set_keys_binding</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></code>
 
 </h3>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Add a binding for one or more keys to an action</p>
 
-          <details class="quote">
-            <summary> <code>pzp/keys.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/keys.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_keys_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -586,8 +576,8 @@
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_key_binding</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -595,37 +585,34 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
-
 
 
 <div class="doc doc-object doc-function">
 
 
-
-
 <h2 id="pzp.keys.key_to_str" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">key_to_str</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">key_to_str</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></code>
 
 </h2>
 
 
-  <div class="doc doc-contents ">
-  
+    <div class="doc doc-contents ">
+
       <p>Return the textual representation of a char</p>
 
-          <details class="quote">
-            <summary> <code>pzp/keys.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
+            <details class="quote">
+              <summary>Source code in <code>pzp/keys.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">key_to_str</span><span class="p">(</span><span class="n">ch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="s2">&quot;Return the textual representation of a char&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;0x</span><span class="si">{</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="si">:</span><span class="s2">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ch</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
+            </details>
+    </div>
 
 </div>
 
@@ -633,7 +620,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 </div>
               
