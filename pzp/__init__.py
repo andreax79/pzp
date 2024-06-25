@@ -17,7 +17,7 @@ from .layout import Layout
 from .matcher import Matcher
 from .prompt import Prompt
 
-__version__ = "0.0.23"
+__version__ = "0.0.24"
 "PZP Version"
 
 __all__ = [
@@ -43,6 +43,7 @@ def pzp(
     lazy: bool = False,
     handle_actions: Set[Type[GenericAction]] = {AcceptAction, AbortAction},
     input: Optional[str] = None,
+    auto_refresh: Optional[int] = None,
 ) -> Any:
     """
     Open pzp and return the selected element
@@ -68,6 +69,7 @@ def pzp(
         matcher: Matcher
         lazy: Lazy mode, starts the finder only if the candidates are more than one
         handle_actions: Actions to be handled
+        auto_refresh: Auto refresh period (in seconds)
 
     Returns:
         item: the selected item
@@ -85,6 +87,7 @@ def pzp(
         keys_binding=keys_binding,
         matcher=matcher,
         lazy=lazy,
+        auto_refresh=auto_refresh,
     )
     try:
         finder.show(input=input)

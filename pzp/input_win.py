@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-from msvcrt import getwch  # type: ignore
+import msvcrt
+import threading
+from typing import List, Optional
 
 __all__ = ["get_char", "KEYS_MAPPING"]
 
@@ -32,15 +34,42 @@ KEYS_MAPPING = {
 }
 
 
-def get_char() -> str:
+class TimeoutException(Exception):
+    pass
+
+
+def getwch(timeout: Optional[int] = None) -> str:
+    if timeout is None:
+        return msvcrt.getwch()  # type: ignore
+
+    chars: List[str] = []
+
+    def read_char() -> None:
+        try:
+            char = msvcrt.getwch()  # type: ignore
+            chars.append(char)
+        except Exception:
+            pass
+
+    read_thread = threading.Thread(target=read_char)
+    read_thread.start()
+    read_thread.join(timeout=timeout)
+    if read_thread.is_alive():
+        return ""
+    return chars[0] if chars else ""
+
+
+def get_char(timeout: Optional[int] = None) -> str:
     """
     Read a keypress and return the resulting character as a string.
 
     Returns:
         char: the pressed key or the key description (e.g. "home")
     """
-    ch: str = getwch()
-    if ch == WIN_ESC or ch == NULL:  # When reading arrow/insert/del key, the first call returnx 0xe0
+    ch: str = getwch(timeout)
+    if ch is None:
+        return ""
+    elif ch == WIN_ESC or ch == NULL:  # When reading arrow/insert/del key, the first call returnx 0xe0
         keys_mapping = KEYS_MAPPING
         while keys_mapping:
             ch = ch + getwch()

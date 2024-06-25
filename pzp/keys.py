@@ -115,10 +115,14 @@ class KeysHandler:
         "Add a binding for one key to an action"
         self.keycodes_actions[KEYS[key] if len(key) > 1 else key] = action
 
-    def get_key_event(self, ch: Optional[str] = None) -> KeyEvent:
+    def get_key_event(self, ch: Optional[str] = None, timeout: Optional[int] = None) -> KeyEvent:
         if ch is None:
-            ch = get_char()
-        action = self.keycodes_actions.get(ch)
+            ch = get_char(timeout)
+        if ch is None:
+            ch = "\0"
+            action = None
+        else:
+            action = self.keycodes_actions.get(ch)
         return KeyEvent(ch=ch, action=action)
 
     def __str__(self) -> str:

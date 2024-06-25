@@ -3,9 +3,11 @@
 __all__ = ["get_char", "KEYS_MAPPING"]
 
 import os
+import signal
 import sys
 import termios
 import tty
+from typing import Any, Optional
 
 NULL = "\0"
 ESC = "\x1b"
@@ -45,9 +47,20 @@ KEYS_MAPPING = {
 }
 
 
-def get_char() -> str:
+class TimeoutException(Exception):
+    pass
+
+
+def timeout_handler(signum: int, frame: Any) -> None:
+    raise TimeoutException
+
+
+def get_char(timeout: Optional[int] = None) -> Optional[str]:
     """
     Read a keypress and return the resulting character as a string.
+
+    Args:
+        timeout (Optional[int]): The time in seconds to wait for input before timing out. Defaults to None.
 
     Returns:
         char: the pressed key or the key description (e.g. "home")
@@ -57,8 +70,21 @@ def get_char() -> str:
         fd = sys.stdin.fileno()
         attrs = termios.tcgetattr(fd)
         tty.setraw(fd)
-        ch = os.read(fd, 32).decode("utf-8", "replace")
-        if ch.startswith(ESC):
+
+        if timeout is not None:
+            old_handler = signal.signal(signal.SIGALRM, timeout_handler)
+            signal.setitimer(signal.ITIMER_REAL, timeout)
+
+        try:
+            ch = os.read(fd, 32).decode("utf-8", "replace")
+        except TimeoutException:
+            ch = NULL
+
+        if timeout is not None:
+            signal.setitimer(signal.ITIMER_REAL, 0)
+            signal.signal(signal.SIGALRM, old_handler)
+
+        if ch is not None and ch.startswith(ESC):
             ch = KEYS_MAPPING.get(ch[1:], NULL)
         return ch
     finally:

@@ -43,6 +43,7 @@ class Config:
         header_str: str,
         lazy: bool,
         output_stream: TextIO,
+        auto_refresh: Optional[int],
     ):
         """
         Finder config
@@ -57,6 +58,7 @@ class Config:
             header_str: Header
             lazy: Lazy mode, starts the finder only if the candidates are more than one
             output_stream: Output stream
+            auto_refresh: Auto refresh period (in seconds)
         """
         self.fullscreen = fullscreen
         self.height = height
@@ -68,6 +70,7 @@ class Config:
         self.header_str = header_str
         self.lazy = lazy
         self.output_stream = output_stream
+        self.auto_refresh = auto_refresh
 
     @property
     def info_lines(self) -> int:

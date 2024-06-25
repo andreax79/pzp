@@ -50,6 +50,7 @@ class Finder(ActionsHandler):
         matcher: Union[Matcher, Type[Matcher], str] = DEFAULT_MATCHER,
         lazy: bool = False,
         output_stream: TextIO = sys.stderr,
+        auto_refresh: Optional[int] = None,
     ):
         """
         Initializate Finder object
@@ -68,9 +69,21 @@ class Finder(ActionsHandler):
             matcher: Matcher
             lazy: Lazy mode, starts the finder only if the candidates are more than one
             output_stream: Output stream
+            auto_refresh: Auto refresh period (in seconds)
         """
         super().__init__(keys_binding=keys_binding)
-        self.config = Config(fullscreen, height, format_fn, info_style, pointer_str, prompt_str, header_str, lazy, output_stream)
+        self.config = Config(
+            fullscreen,
+            height,
+            format_fn,
+            info_style,
+            pointer_str,
+            prompt_str,
+            header_str,
+            lazy,
+            output_stream,
+            auto_refresh,
+        )
         self.candidates = Candidates(candidates=candidates, format_fn=format_fn, matcher=matcher)
         self.layout: Layout = get_layout(layout=layout, config=self.config, candidates=self.candidates)
 
@@ -120,7 +133,7 @@ class Finder(ActionsHandler):
 
     def process_key(self, ch: Optional[str] = None) -> None:
         "Process the pressed key"
-        key_event = self.keys_handler.get_key_event(ch)
+        key_event = self.keys_handler.get_key_event(ch, timeout=self.config.auto_refresh)
         try:
             self.line_editor.process_key_event(key_event)
         except MissingHander:
@@ -136,6 +149,8 @@ class Finder(ActionsHandler):
 
     def apply_filter(self) -> None:
         "Filter the items"
+        if self.config.auto_refresh:
+            self.candidates.refresh_candidates()
         self.candidates.apply_filter(pattern=str(self.line_editor))
         self.selected = max(min(self.selected, self.candidates.matching_candidates_len - 1), 0)
 

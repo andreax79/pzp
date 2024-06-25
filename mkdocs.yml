@@ -24,6 +24,7 @@ nav:
     - "Text picker": examples/text_picker.md
     - "User input": examples/prompt.md
     - "Yes/No picker": examples/yesno.md
+    - "Auto refresh": examples/auto_refresh.md
   - API:
     - "pzp": api/module.md
     - "pzp.actions": api/actions.md
