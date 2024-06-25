@@ -164,7 +164,7 @@
       <td class="field-body">
         <ul class="first simple">
             <li>
-<b><code>char</code></b>(                  <code><span title="typing.Optional">Optional</span>[str]</code>
+<b><code>char</code></b>(                  <code>str</code>
 )              –
               <div class="doc-md-description">
                 <p>the pressed key or the key description (e.g. "home")</p>
@@ -177,32 +177,36 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>pzp/input_win.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_char</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read a keypress and return the resulting character as a string.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        char: the pressed key or the key description (e.g. &quot;home&quot;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">WIN_ESC</span> <span class="ow">or</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">:</span>  <span class="c1"># When reading arrow/insert/del key, the first call returnx 0xe0</span>
+    <span class="n">ch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getwch</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">WIN_ESC</span> <span class="ow">or</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">:</span>  <span class="c1"># When reading arrow/insert/del key, the first call returnx 0xe0</span>
         <span class="n">keys_mapping</span> <span class="o">=</span> <span class="n">KEYS_MAPPING</span>
         <span class="k">while</span> <span class="n">keys_mapping</span><span class="p">:</span>
             <span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span> <span class="o">+</span> <span class="n">getwch</span><span class="p">()</span>
