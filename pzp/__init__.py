@@ -17,7 +17,7 @@ from .layout import Layout
 from .matcher import Matcher
 from .prompt import Prompt
 
-__version__ = "0.0.24"
+__version__ = "0.0.25"
 "PZP Version"
 
 __all__ = [
