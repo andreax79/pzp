@@ -104,7 +104,7 @@ class Layout(ABC):
         items = []
         lines = 0
         for item in self.candidates.matching_candidates[self.offset :]:
-            item_len = ansi_len(str(item)) + self.prompt_len
+            item_len = ansi_len(self.config.format_fn(item)) + self.prompt_len
             lines += math.ceil(item_len / self.screen.width)
             if lines > self.max_candidates_lines:
                 break
@@ -116,7 +116,7 @@ class Layout(ABC):
         "Number of candidates lines (height on the screen)"
         lines = 0
         for item in self.screen_items:
-            item_len = ansi_len(str(item)) + self.prompt_len
+            item_len = ansi_len(self.config.format_fn(item)) + self.prompt_len
             lines += math.ceil(item_len / self.screen.width)
         return lines
 
@@ -135,7 +135,7 @@ class Layout(ABC):
             height = self.config.margin_lines
             width = Screen.get_terminal_size().columns
             for item in self.candidates.candidates:
-                item_len = ansi_len(str(item)) + self.prompt_len
+                item_len = ansi_len(self.config.format_fn(item)) + self.prompt_len
                 height += math.ceil(item_len / width)
         self.screen = Screen(stream=self.config.output_stream, fullscreen=self.config.fullscreen, height=height)
         self.update_screen(selected=0, erase=False)
