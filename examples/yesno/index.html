@@ -126,27 +126,20 @@
 <pre><code>#!/usr/bin/env python
 import argparse
 
-from pzp import Finder, GenericAction
-from pzp.info import list_styles
-from pzp.layout import list_layouts
+from pzp import confirm
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(&quot;-f&quot;, &quot;--fullscreen&quot;, action=argparse.BooleanOptionalAction, default=False, help=&quot;toggle fullscreen&quot;)
-    parser.add_argument(&quot;--info&quot;, choices=list_styles(), default=&quot;hidden&quot;, help=&quot;determines the info style&quot;)
-    parser.add_argument(&quot;--layout&quot;, choices=list_layouts(), default=&quot;reverse&quot;, help=&quot;choose the layout&quot;)
+    parser.add_argument(&quot;--input&quot;, type=str)
     args = parser.parse_args()
-    try:
-        finder = Finder(
-            candidates=[&quot;Yes&quot;, &quot;No&quot;],
-            fullscreen=args.fullscreen,
-            layout=args.layout,
-            info_style=args.info,
-        )
-        finder.show()
-    except GenericAction as action:
-        print(action.selected_item)
+    value = confirm(
+        &quot;Are you sure?&quot;,
+        default=args.input != &quot;no&quot;,
+        fullscreen=args.fullscreen,
+    )
+    print(&quot;yes&quot; if value else &quot;no&quot;)
 
 
 if __name__ == &quot;__main__&quot;:
