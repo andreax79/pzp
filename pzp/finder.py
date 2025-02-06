@@ -87,7 +87,7 @@ class Finder(ActionsHandler):
         self.candidates = Candidates(candidates=candidates, format_fn=format_fn, matcher=matcher)
         self.layout: Layout = get_layout(layout=layout, config=self.config, candidates=self.candidates)
 
-    def setup(self, input: Optional[str] = None) -> None:
+    def setup(self, input: Optional[str] = None, selected: Optional[int] = None) -> None:
         """
         Setup Finder execution
 
@@ -99,11 +99,13 @@ class Finder(ActionsHandler):
         self.refresh_candidates()
         # Filter the items, calculate the screen offset
         self.apply_filter()
+        if selected is not None:
+            self.selected = selected
         # If lazy mode is enabled, starts the finder only if the candidates are more than one
         if self.config.lazy and self.candidates.matching_candidates_len <= 1:
             raise AcceptAction(action="lazy-accept", ch=None, selected_item=self.prepare_result(), line=self.line_editor.line)
         # Calculate the required height and setup the screen
-        self.layout.screen_setup(self.line_editor)
+        self.layout.screen_setup(self.line_editor, self.selected)
 
     def show(self, input: Optional[str] = None) -> Any:
         """
@@ -129,7 +131,7 @@ class Finder(ActionsHandler):
     def refresh_candidates(self) -> None:
         "Load/reload the candidate list"
         self.candidates.refresh_candidates()
-        self.selected: int = 0
+        self.selected = 0
 
     def process_key(self, ch: Optional[str] = None) -> None:
         "Process the pressed key"
@@ -141,11 +143,11 @@ class Finder(ActionsHandler):
                 self.process_key_event(key_event)
             except MissingHander:
                 raise CustomAction(
-                    action=key_event.action,
+                    action=key_event.action,  # type: ignore
                     ch=key_event.ch,
                     selected_item=self.prepare_result(),
                     line=self.line_editor.line,
-                )  # type: ignore
+                )
 
     def apply_filter(self) -> None:
         "Filter the items"

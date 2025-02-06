@@ -22,6 +22,8 @@ __version__ = "0.0.26"
 
 __all__ = [
     "pzp",
+    "prompt",
+    "confirm",
     "CustomAction",
     "GenericAction",
     "Finder",
@@ -141,3 +143,52 @@ def prompt(
                 return default
         finally:
             print()
+
+
+def confirm(
+    text: str,
+    default: Optional[bool] = False,
+    prompt_suffix: str = ": ",
+    fullscreen: bool = False,
+    height: Optional[int] = None,
+) -> bool:
+    """
+    Prompts for confirmation (yes/no question).
+
+    Examples:
+        >>> confirm("Are you sure?", default=True)
+        True
+
+    Args:
+        text: The question to ask
+        default: The default value to use when no input is given
+        prompt_suffix: Suffix that should be added to the prompt
+        fullscreen: Full screen mode
+        height: Finder window height
+
+    Returns:
+        bool: True if the answer is yes, False otherwise
+    """
+    finder = Finder(
+        candidates=[True, False],
+        fullscreen=fullscreen,
+        height=height,
+        format_fn=lambda x: "yes" if x else "no",
+        layout="reverse-list",
+        info_style=InfoStyle.HIDDEN,
+        header_str=f"{text}{prompt_suffix or ''}",
+    )
+    try:
+        try:
+            finder.setup(selected=0 if default else 1)
+            while True:
+                finder.process_key()
+                finder.apply_filter()
+                finder.update_screen()
+        finally:
+            finder.layout.cleanup()
+    except GenericAction as ex:
+        if isinstance(ex, AcceptAction):
+            return ex.selected_item  # type: ignore
+        else:
+            raise

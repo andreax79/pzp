@@ -86,11 +86,11 @@ class Prompt(ActionsHandler):
                 self.process_key_event(key_event)
             except MissingHander:
                 raise CustomAction(
-                    action=key_event.action,
+                    action=key_event.action,  # type: ignore
                     ch=key_event.ch,
                     selected_item=self.prepare_result(),
                     line=self.line_editor.line,
-                )  # type: ignore
+                )
 
     def update_screen(self) -> None:
         "Update the screen"

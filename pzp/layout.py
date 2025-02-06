@@ -125,7 +125,7 @@ class Layout(ABC):
         "Number of items on the screen"
         return len(self.screen_items)
 
-    def screen_setup(self, line_editor: LineEditor) -> None:
+    def screen_setup(self, line_editor: LineEditor, selected: int = 0) -> None:
         "Calculate the required height and setup the screen"
         self.line_editor = line_editor
         if self.config.height is not None:
@@ -138,7 +138,7 @@ class Layout(ABC):
                 item_len = ansi_len(self.config.format_fn(item)) + self.prompt_len
                 height += math.ceil(item_len / width)
         self.screen = Screen(stream=self.config.output_stream, fullscreen=self.config.fullscreen, height=height)
-        self.update_screen(selected=0, erase=False)
+        self.update_screen(selected=selected, erase=False)
 
     def calculate_offset(self, selected: int) -> None:
         "Calculate the screen offset"
