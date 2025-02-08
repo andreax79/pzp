@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--layout", choices=list_layouts(), default="reverse-list")
     parser.add_argument("--info", choices=["default", "hidden"], default="default")
     parser.add_argument("--input", type=str)
+    parser.add_argument("--selected", type=int, default=None)
     args = parser.parse_args()
     info = InfoStyle.DEFAULT if args.info == "default" else InfoStyle.HIDDEN
     try:
@@ -33,7 +34,7 @@ def main():
             header_str="Press enter or ctrl-o",
             lazy=args.lazy,
         )
-        finder.show(input=args.input)
+        finder.show(input=args.input, selected=args.selected)
     except GenericAction as action:
         print(f"action: {action.action} selected item: {action.selected_item} line: {action.line}")
 

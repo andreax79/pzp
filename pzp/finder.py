@@ -92,7 +92,8 @@ class Finder(ActionsHandler):
         Setup Finder execution
 
         Args:
-            input: initial search string
+            input: Initial search string
+            selected: Initial selected line number
         """
         self.line_editor = LineEditor(line=input or "", keys_handler=self.keys_handler)
         # Load the candidate list
@@ -107,12 +108,13 @@ class Finder(ActionsHandler):
         # Calculate the required height and setup the screen
         self.layout.screen_setup(self.line_editor, self.selected)
 
-    def show(self, input: Optional[str] = None) -> Any:
+    def show(self, input: Optional[str] = None, selected: Optional[int] = None) -> Any:
         """
         Open pzp and return the selected element
 
         Args:
-            input: initial search string
+            input: Initial search string
+            selected: Initial selected line number
 
         Raises:
             AcceptAction: Raises when the user presses a key that is mapped to the "accept" action.
@@ -120,7 +122,7 @@ class Finder(ActionsHandler):
             CustomAction: Raises when the user presses a key that is mapped to the "custom" action.
         """
         try:
-            self.setup(input=input)
+            self.setup(input=input, selected=selected)
             while True:
                 self.process_key()
                 self.apply_filter()

@@ -46,6 +46,7 @@ def pzp(
     handle_actions: Set[Type[GenericAction]] = {AcceptAction, AbortAction},
     input: Optional[str] = None,
     auto_refresh: Optional[int] = None,
+    selected: Optional[int] = None,
 ) -> Any:
     """
     Open pzp and return the selected element
@@ -72,6 +73,7 @@ def pzp(
         lazy: Lazy mode, starts the finder only if the candidates are more than one
         handle_actions: Actions to be handled
         auto_refresh: Auto refresh period (in seconds)
+        selected: Selected line number
 
     Returns:
         item: the selected item
@@ -92,7 +94,7 @@ def pzp(
         auto_refresh=auto_refresh,
     )
     try:
-        finder.show(input=input)
+        finder.show(input=input, selected=selected)
     except GenericAction as ex:
         if type(ex) in (handle_actions or set()):
             return ex.selected_item if isinstance(ex, AcceptAction) else None
@@ -138,11 +140,11 @@ def prompt(
             prompt.show(input=input)
         except AcceptAction as ex:
             if ex.selected_item:
+                print()
                 return ex.selected_item
             if default is not None:
+                print()
                 return default
-        finally:
-            print()
 
 
 def confirm(
