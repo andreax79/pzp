@@ -26,8 +26,8 @@ Usage
 -----
 
 ```
-from pzp import pzp
-pzp(['a', 'b', 'c'])
+import pzp
+pzp.pzp(['a', 'b', 'c'])
 ```
 
 
@@ -38,7 +38,7 @@ cursor with [`fullscreen=False`](https://pzp.readthedocs.io/en/latest/api/module
 Also, with the [`height`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.pzp) argument you can limit the window height.
 
 ```python
-pzp(candidates=range(0, 1000), fullscreen=False, height=20)
+pzp.pzp(candidates=range(0, 1000), fullscreen=False, height=20)
 ```
 
 [![asciicast](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ.svg)](https://asciinema.org/a/WtgiYfdtZjlShbeZaHuf5hWCZ?autoplay=1)
@@ -71,7 +71,7 @@ You can use it to customize key bindings or implementing custom behaviors.
 
 ```python
 try:
-    item = pzp(
+    item = pzp.pzp(
         candidates=candidates,
         keys_binding={
             "custom-action": ["ctrl-o"],
@@ -138,6 +138,38 @@ A key can be bound to one of following actions or to a custom action.
 If the Lazy mode is enabled, starts the finder only if the candidates are more than one.
 If there is only one match returns the only match, if there is no match returns None.
 
+User Input Prompts
+------------------
+
+To ask for user input, you can use the [`pzp.prompt()`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.prompt) function.
+This function is designed to be a drop-in replacement for the `click.input()` function.
+By default, it accepts strings, but you can ask for any other type.
+In order to do this, [Click](https://github.com/pallets/click) needs to be installed.
+
+For instance, you can ask for a valid integer:
+
+```python
+value = pzp.prompt('Please enter a valid integer', type=int)
+```
+
+Additionally, the type will be determined automatically if a default value is provided.
+For instance, the following will only accept floats:
+
+```python
+value = pzp.prompt('Please enter a number', default=42.0)
+```
+
+Confirmation Prompts
+--------------------
+
+To ask if a user wants to continue with an action, you can use the [`pzp.confirm()`](https://pzp.readthedocs.io/en/latest/api/module/#pzp.confirm).
+By default, it returns the result of the prompt as a boolean value:
+
+```python
+if pzp.confirm('Are you sure?', default=True):
+    print('Ok')
+```
+
 Licence
 -------
 MIT
@@ -151,3 +183,4 @@ Links
 * [Grip, GitHub Readme Instant Preview](https://github.com/joeyespo/grip)
 * [Black, The Uncompromising Code Formatter](https://github.com/psf/black)
 * [mkdocstrings, Automatic documentation from sources](https://github.com/mkdocstrings/mkdocstrings)
+* [Click, Command Line Interface Creation Kit](https://github.com/pallets/click)
