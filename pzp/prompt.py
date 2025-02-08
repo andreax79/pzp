@@ -116,6 +116,7 @@ class Prompt(ActionsHandler):
             selected_item = self.prepare_result()
         except Exception as ex:
             self.screen.write(f"\nError: The value you entered was invalid: {ex}\n")
+            self.screen.move_up(2)
             self.screen.flush()
             return
         raise AcceptAction(action="accept", ch=key_event.ch, selected_item=selected_item, line=self.line_editor.line)
